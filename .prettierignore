@@ -1,0 +1,21 @@
+node_modules
+.next
+out
+build
+coverage
+pnpm-lock.yaml
+public
+design-source
+src/app/fonts
+Fonts
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# project docs & instructions (kept verbatim)
+.agents
+.claude
+AGENTS.md
+CLAUDE.md
+TASK_*.md

@@ -6,7 +6,8 @@ export const SITE_CONTACT = {
 export const SITE_NAME = "Mgaloblishvili";
 
 export const SITE_DESCRIPTION =
-  "Mgaloblishvili is a Georgian wine estate crafting wine, brandy, and chacha from indigenous grape varieties across Georgia's historic regions.";
+  "Ancient Georgian winemaking reimagined. Bold flavors, modern spirit.";
+("Mgaloblishvili is a Georgian wine estate crafting wine, brandy, and chacha from indigenous grape varieties across Georgia's historic regions.");
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";

@@ -58,7 +58,6 @@ function BrandIntroLayer() {
         className="brand-intro__stack"
         style={{
           position: "relative",
-          width: "min(32vw, 280px)",
           aspectRatio: "245 / 50",
           flexShrink: 0,
         }}

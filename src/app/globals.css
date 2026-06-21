@@ -437,8 +437,26 @@ html::-webkit-scrollbar {
 
 .brand-intro__stack {
   position: relative;
-  width: min(32vw, 280px);
+  width: 188px;
   aspect-ratio: 245 / 50;
+}
+
+@media (min-width: 640px) {
+  .brand-intro__stack {
+    width: 225px;
+  }
+}
+
+@media (min-width: 768px) {
+  .brand-intro__stack {
+    width: 338px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand-intro__stack {
+    width: 350px;
+  }
 }
 
 .brand-intro__logo {

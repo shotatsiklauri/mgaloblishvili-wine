@@ -21,7 +21,7 @@ export function SubtleVideoBackground() {
     <div
       aria-hidden="true"
       tabIndex={-1}
-      className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-surface"
+      className="bg-surface pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {shouldPlay ? (
         <video
@@ -30,12 +30,12 @@ export function SubtleVideoBackground() {
           loop
           playsInline
           preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.13] [filter:grayscale(1)_contrast(0.75)_brightness(1.15)]"
+          className="absolute inset-0 h-full w-full object-cover opacity-[0.27] [filter:grayscale(1)_contrast(0.75)_brightness(1.15)]"
         >
           <source src="/Video_Mgaloblishvili.mp4" type="video/mp4" />
         </video>
       ) : null}
-      <div className="absolute inset-0 bg-surface/80" />
+      <div className="bg-surface/80 absolute inset-0" />
     </div>
   );
 }

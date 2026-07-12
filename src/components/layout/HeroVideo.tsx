@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { focusRing } from "@/lib/focus-ring";
+import { cn } from "@/lib/utils";
 
 const POSTER_DATA_URL =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%2305090a'/></svg>";
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   // Reliable muted autoplay. React's `muted` JSX prop does not dependably set the
   // DOM element's `.muted` property, so autoplay can be treated as non-muted, get
@@ -21,36 +24,21 @@ export function HeroVideo() {
     });
   }, []);
 
-  // Unmute on the first user gesture anywhere — the earliest sound is allowed
-  // without a play button. Never unmute on load (gesture-less sound is blocked and
-  // is what caused the play-button bug). Only flip `.muted`; never restart playback.
-  useEffect(() => {
-    // Only "user activation" events may unmute audio; pointermove/wheel/touchstart
-    // do not qualify (Chrome ignores the unmute or pauses playback). These three
-    // cover mouse (pointerdown), touch/pen (pointerup), and keyboard (keydown).
-    const events = ["pointerdown", "pointerup", "keydown"] as const;
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
 
-    const unmute = () => {
-      try {
-        if (videoRef.current) videoRef.current.muted = false;
-      } catch {
-        // ignore — unmuting outside a valid gesture may be rejected
-      }
-      for (const event of events) {
-        window.removeEventListener(event, unmute);
-      }
-    };
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
 
-    for (const event of events) {
-      window.addEventListener(event, unmute, { once: true });
+    if (!nextMuted) {
+      void video.play().catch(() => {
+        video.muted = true;
+        setIsMuted(true);
+      });
     }
-
-    return () => {
-      for (const event of events) {
-        window.removeEventListener(event, unmute);
-      }
-    };
-  }, []);
+  };
 
   return (
     <>
@@ -73,6 +61,52 @@ export function HeroVideo() {
         aria-hidden="true"
         className="from-surface-dark/70 via-surface-dark/45 to-surface-dark/82 md:from-surface-dark/55 md:via-surface-dark/30 md:to-surface-dark/65 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b"
       />
+
+      <button
+        type="button"
+        aria-label={isMuted ? "Unmute background video" : "Mute background video"}
+        aria-pressed={!isMuted}
+        onClick={toggleSound}
+        className={cn(
+          "absolute right-5 bottom-5 z-20 inline-flex size-10 items-center justify-center border border-ink-inverse/45 bg-surface-dark/35 text-ink-inverse transition-colors hover:bg-surface-dark/65 sm:right-6 sm:bottom-6",
+          focusRing("dark"),
+        )}
+      >
+        {isMuted ? (
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4"
+          >
+            <path d="M11 5 6.5 9H3v6h3.5l4.5 4z" />
+            <path d="m16 9 5 6" />
+            <path d="m21 9-5 6" />
+          </svg>
+        ) : (
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4"
+          >
+            <path d="M11 5 6.5 9H3v6h3.5l4.5 4z" />
+            <path d="M15.5 9.5a3.5 3.5 0 0 1 0 5" />
+            <path d="M18 7a7 7 0 0 1 0 10" />
+          </svg>
+        )}
+        <span className="sr-only">
+          {isMuted ? "Sound is muted" : "Sound is on"}
+        </span>
+      </button>
     </>
   );
 }

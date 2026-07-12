@@ -45,6 +45,7 @@ next-env.d.ts
 design-source/
 
 #AI
+.playwright-mcp
 AGENTS.md
 .agents/*
 .agents

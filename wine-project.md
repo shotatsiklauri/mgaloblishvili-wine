@@ -661,4 +661,3 @@ If editing the project:
 5. Preserve desktop layout unless task asks otherwise.
 6. For mobile issues, add responsive classes instead of rewriting the whole layout.
 7. Run `pnpm lint` after code changes.
-

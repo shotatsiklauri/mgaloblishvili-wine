@@ -25,7 +25,10 @@ export function HeroVideo() {
   // without a play button. Never unmute on load (gesture-less sound is blocked and
   // is what caused the play-button bug). Only flip `.muted`; never restart playback.
   useEffect(() => {
-    const events = ["pointerdown", "keydown", "touchstart", "wheel"] as const;
+    // Only "user activation" events may unmute audio; pointermove/wheel/touchstart
+    // do not qualify (Chrome ignores the unmute or pauses playback). These three
+    // cover mouse (pointerdown), touch/pen (pointerup), and keyboard (keydown).
+    const events = ["pointerdown", "pointerup", "keydown"] as const;
 
     const unmute = () => {
       try {
@@ -68,7 +71,7 @@ export function HeroVideo() {
 
       <div
         aria-hidden="true"
-        className="from-surface-dark/70 via-surface-dark/45 to-surface-dark/82 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b md:from-surface-dark/55 md:via-surface-dark/30 md:to-surface-dark/65"
+        className="from-surface-dark/70 via-surface-dark/45 to-surface-dark/82 md:from-surface-dark/55 md:via-surface-dark/30 md:to-surface-dark/65 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b"
       />
     </>
   );

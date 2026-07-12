@@ -27,6 +27,13 @@ const REGION_FILL_HIGHLIGHT = "rgba(255, 255, 255, 0.32)";
 const KAKHETI_TRANSFORM =
   "translate(1385 678) scale(0.7) translate(-1385 -678)";
 
+const REGION_OFFSETS: Partial<
+  Record<VineyardRegionId, { x: number; y: number }>
+> = {
+  kakheti: { x: 50, y: 0 },
+  kartli: { x: 0, y: 50 },
+};
+
 const REGION_SVG_OVERLAYS: Record<
   VineyardRegionId,
   {
@@ -74,6 +81,12 @@ const REGION_SVG_OVERLAYS: Record<
   },
 };
 
+// Region shapes were hand-calibrated against the original 1920x1080 map. The replacement map
+// has a larger 2230x1203 canvas, with the country artwork inset rather than uniformly enlarged.
+// Keep the visible overlays and their interaction paths in the same remapped coordinate space.
+const MAP_VIEWBOX = "0 0 2230 1203";
+const SOURCE_TO_MAP_TRANSFORM = "matrix(0.85 0 0 0.8 240 180)";
+
 type VineyardRegionsOverlayProps = {
   regions: readonly VineyardRegion[];
   activeRegionId?: VineyardRegionId;
@@ -96,86 +109,99 @@ export function VineyardRegionsOverlay({
     <>
       <svg
         aria-hidden="true"
-        viewBox="0 0 1920 1080"
+        viewBox={MAP_VIEWBOX}
         preserveAspectRatio="xMidYMid slice"
-        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full md:block"
+        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full scale-[1.1] md:block"
       >
-        {regions.map((region) => {
-          const overlay = REGION_SVG_OVERLAYS[region.id];
-          if (!overlay) return null;
+        <g transform={SOURCE_TO_MAP_TRANSFORM}>
+          {regions.map((region) => {
+            const overlay = REGION_SVG_OVERLAYS[region.id];
+            if (!overlay) return null;
 
-          const maskId = `vineyard-region-mask-${region.id}`;
-          return (
-            <g key={region.id}>
-              <mask
-                id={maskId}
-                maskUnits="userSpaceOnUse"
-                x={overlay.x}
-                y={overlay.y}
-                width={overlay.width}
-                height={overlay.height}
-              >
-                <image
-                  href={overlay.href}
-                  x={overlay.x}
-                  y={overlay.y}
+            const offset = REGION_OFFSETS[region.id] ?? { x: 0, y: 0 };
+            const x = overlay.x + offset.x;
+            const y = overlay.y + offset.y;
+            const maskId = `vineyard-region-mask-${region.id}`;
+            return (
+              <g key={region.id}>
+                <mask
+                  id={maskId}
+                  maskUnits="userSpaceOnUse"
+                  x={x}
+                  y={y}
                   width={overlay.width}
                   height={overlay.height}
-                  preserveAspectRatio="none"
+                >
+                  <image
+                    href={overlay.href}
+                    x={x}
+                    y={y}
+                    width={overlay.width}
+                    height={overlay.height}
+                    preserveAspectRatio="none"
+                  />
+                </mask>
+                <rect
+                  x={x}
+                  y={y}
+                  width={overlay.width}
+                  height={overlay.height}
+                  mask={`url(#${maskId})`}
+                  fill={
+                    isHighlighted(region.id)
+                      ? REGION_FILL_HIGHLIGHT
+                      : REGION_FILL
+                  }
+                  className="[transition:fill_180ms_ease] motion-reduce:transition-none"
                 />
-              </mask>
-              <rect
-                x={overlay.x}
-                y={overlay.y}
-                width={overlay.width}
-                height={overlay.height}
-                mask={`url(#${maskId})`}
-                fill={
-                  isHighlighted(region.id)
-                    ? REGION_FILL_HIGHLIGHT
-                    : REGION_FILL
-                }
-                className="[transition:fill_180ms_ease] motion-reduce:transition-none"
-              />
-            </g>
-          );
-        })}
+              </g>
+            );
+          })}
+        </g>
       </svg>
 
       <svg
-        viewBox="0 0 1920 1080"
+        viewBox={MAP_VIEWBOX}
         preserveAspectRatio="xMidYMid slice"
-        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full md:block"
+        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full scale-[1.1] md:block"
       >
-        {regions.map((region) => {
-          const path = REGION_PATHS[region.id];
-          if (!path) return null;
-          return (
-            <path
-              key={region.id}
-              d={path}
-              transform={
-                region.id === "kakheti" ? KAKHETI_TRANSFORM : undefined
-              }
-              role="link"
-              aria-label={region.title}
-              tabIndex={0}
-              onMouseEnter={enter(region.id)}
-              onMouseLeave={leave}
-              onFocus={enter(region.id)}
-              onBlur={leave}
-              onClick={() => go(region.id)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  go(region.id);
-                }
-              }}
-              fill="transparent"
-              className="pointer-events-auto cursor-pointer outline-none"
-            />
-          );
-        })}
+        <g transform={SOURCE_TO_MAP_TRANSFORM}>
+          {regions.map((region) => {
+            const path = REGION_PATHS[region.id];
+            if (!path) return null;
+
+            const offset = REGION_OFFSETS[region.id] ?? { x: 0, y: 0 };
+            const offsetTransform = `translate(${offset.x} ${offset.y})`;
+            const transform =
+              region.id === "kakheti"
+                ? `${offsetTransform} ${KAKHETI_TRANSFORM}`
+                : offsetTransform;
+
+            return (
+              <path
+                key={region.id}
+                d={path}
+                transform={transform}
+                role="link"
+                aria-label={region.title}
+                tabIndex={0}
+                onMouseEnter={enter(region.id)}
+                onMouseLeave={leave}
+                onFocus={enter(region.id)}
+                onBlur={leave}
+                onClick={() => go(region.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    go(region.id);
+                  }
+                }}
+                fill="transparent"
+                className="pointer-events-auto cursor-pointer outline-none"
+              />
+            );
+          })}
+        </g>
       </svg>
 
       <nav

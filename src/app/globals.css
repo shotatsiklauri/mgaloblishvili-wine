@@ -319,16 +319,10 @@ html::-webkit-scrollbar {
 }
 
 .menu-divider-v {
+  /* Figma: 1px vertical line, white at 30% opacity. */
   transform-origin: top;
   animation: menu-divider-grow-v 910ms ease-out both;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 15%,
-    rgba(255, 255, 255, 0.16) 50%,
-    rgba(255, 255, 255, 0.1) 85%,
-    transparent 100%
-  );
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .category-enter-list > li {

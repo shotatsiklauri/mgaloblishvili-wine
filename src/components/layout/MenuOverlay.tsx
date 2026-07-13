@@ -129,7 +129,7 @@ export function MenuOverlay({
                         focusRing("dark", 4),
                       )}
                     >
-                      <NavWord underlineClassName="top-full bottom-auto mt-4">
+                      <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center">
                         {column.title}
                       </NavWord>
                     </Link>
@@ -162,7 +162,9 @@ export function MenuOverlay({
                           className={cn(
                             "menu-divider-v",
                             DIVIDER_STAGGER[idx],
-                            "pointer-events-none absolute -top-[2vh] -right-0 hidden h-[min(54vh,560px)] w-px lg:block",
+                            // Figma: ~500px tall 1px line; kept a touch shorter so
+                            // it doesn't reach the footer.
+                            "pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px lg:block",
                           )}
                         />
                       ) : null}
@@ -175,19 +177,21 @@ export function MenuOverlay({
                           focusRing("dark", 4),
                         )}
                       >
-                        <NavWord underlineClassName="top-full bottom-auto mt-3 md:mt-4">
+                        <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center">
                           {column.title}
                         </NavWord>
                       </Link>
 
-                      <ul className="mt-8 space-y-3.5 text-center">
+                      <ul className="mt-16 space-y-6 text-center">
                         {column.entries.map((entry) => (
                           <li key={entry.label}>
                             <Link
                               href={entry.href}
                               onClick={() => handleOpenChange(false)}
                               className={cn(
-                                "type-submenu",
+                                // Figma menu words: Noto Serif Georgian 300,
+                                // 16px @ 1440 (1.11vw), line-height 100%.
+                                "font-serif text-[clamp(14px,1.11vw,18px)] font-light leading-none",
                                 "text-ink-inverse/55 hover:text-ink-inverse",
                                 "transition-colors duration-200 motion-reduce:transition-none",
                                 focusRing("dark"),

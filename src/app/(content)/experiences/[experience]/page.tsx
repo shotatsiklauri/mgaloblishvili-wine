@@ -41,7 +41,9 @@ export default async function ExperiencePage({ params }: ExperiencePageParams) {
 
   const gastronomyExperience = findExperience(content, "gastronomy");
   const textExperience =
-    experience.id === "winery" && !experience.hasCmsSections && gastronomyExperience
+    experience.id === "winery" &&
+    !experience.hasCmsSections &&
+    gastronomyExperience
       ? gastronomyExperience
       : experience;
 
@@ -69,33 +71,32 @@ function EditorialExperiencePage({
 
   return (
     <div className="flex min-h-svh flex-col">
-      <HeaderContent
-        activeId="experiences"
-        mobileTransparentControls="light"
-      />
-      <main className="bg-surface/88 text-ink flex-1">
-        <section className="relative flex h-[272px] items-center justify-center overflow-hidden md:h-[374px] lg:h-[442px]">
-          <Image
-            src={experience.heroImageUrl ?? "/images/gastronomy.png"}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <div
-            aria-hidden="true"
-            className="from-surface-dark/40 via-surface-dark/20 to-surface-dark/45 absolute inset-0 bg-gradient-to-r"
-          />
-          <div className="relative z-10 px-6 text-center">
-            <h1 className="type-display-hero text-ink-inverse">
-              {experience.title}
-            </h1>
-          </div>
-        </section>
-
+      <HeaderContent activeId="experiences" />
+      <main className="text-ink flex-1 bg-white pt-16 md:pt-24 lg:pt-0">
+        {/* Row 1 — first text block over a frosted image, wine glass alongside */}
         <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
-          <div className="relative order-1 h-[272px] w-full self-start justify-self-start overflow-hidden md:h-[357px] lg:h-[476px] lg:order-none">
+          <div className="relative flex min-h-[380px] overflow-hidden md:min-h-[440px] lg:min-h-[476px]">
+            <Image
+              src={experience.heroImageUrl ?? "/images/gastronomy.jpg"}
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover object-center"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-white/70 backdrop-blur-md"
+            />
+            {firstSection ? (
+              <ExperienceTextBlock
+                section={firstSection}
+                className="relative z-10"
+              />
+            ) : null}
+          </div>
+
+          <div className="relative h-[272px] overflow-hidden md:h-[357px] lg:h-[476px]">
             <Image
               src={experience.image1Url ?? "/images/wine_glass.png"}
               alt=""
@@ -104,26 +105,11 @@ function EditorialExperiencePage({
               className="object-cover object-center"
             />
           </div>
+        </section>
 
-          {firstSection ? (
-            <ExperienceTextBlock
-              section={firstSection}
-              className="order-2 lg:order-none"
-            />
-          ) : (
-            <div className="order-2 lg:order-none" />
-          )}
-
-          {secondSection ? (
-            <ExperienceTextBlock
-              section={secondSection}
-              className="order-4 lg:order-none"
-            />
-          ) : (
-            <div className="order-4 lg:order-none" />
-          )}
-
-          <div className="relative order-3 h-[272px] w-full self-start justify-self-end overflow-hidden md:h-[357px] lg:h-[476px] lg:order-none">
+        {/* Row 2 — people, then the crossroads symbol + second text block */}
+        <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
+          <div className="relative h-[272px] overflow-hidden md:h-[357px] lg:h-[476px]">
             <Image
               src={experience.image2Url ?? "/images/people.png"}
               alt=""
@@ -132,6 +118,12 @@ function EditorialExperiencePage({
               className="object-cover object-center"
             />
           </div>
+
+          {secondSection ? (
+            <ExperienceTextBlock section={secondSection} symbol />
+          ) : (
+            <div />
+          )}
         </section>
 
         <section>
@@ -164,12 +156,25 @@ function EditorialExperiencePage({
 function ExperienceTextBlock({
   section,
   className,
+  symbol = false,
 }: {
   readonly section: ExperienceSection;
   readonly className?: string;
+  readonly symbol?: boolean;
 }) {
   return (
     <EditorialTextCell className={className}>
+      {symbol ? (
+        <div className="relative mb-8 aspect-square w-16 overflow-hidden lg:w-20">
+          <Image
+            src="/images/TheSymbol.jpg"
+            alt=""
+            fill
+            sizes="80px"
+            className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
+          />
+        </div>
+      ) : null}
       <h2 className="type-headline lg:text-[22px] xl:text-[24px]">
         {section.heading}
       </h2>

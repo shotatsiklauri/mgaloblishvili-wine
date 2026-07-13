@@ -223,7 +223,7 @@ These are editorial photos that the client should be able to swap:
 | `bucket.webp` | `vineyardRegion.images[1]` |
 | `wine_page_header.webp` | `wineItem.heroImage` (shared or per-item) |
 | `wine_bottle.png` | `wineItem.bottleImage` |
-| `gastronomy.png` | `experienceItem.heroImage` |
+| `gastronomy.jpg` | `experienceItem.heroImage` |
 | `wine_glass.png` | `experienceItem.image1` |
 | `people.png` | `experienceItem.image2` |
 | `Map-mgaloblishvili.jpg` | `experienceItem.mapImage` |

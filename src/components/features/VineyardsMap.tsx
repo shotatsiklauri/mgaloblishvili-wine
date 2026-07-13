@@ -31,7 +31,7 @@ export async function VineyardsMap({
           alt="Map of Georgian vineyard regions"
           fill
           priority
-          sizes="100vw"
+          sizes="(min-width: 768px) 100vw, 1px"
           className="hidden scale-[1.1] object-cover object-center md:block"
         />
         <Image
@@ -39,7 +39,7 @@ export async function VineyardsMap({
           alt="Map of Georgian vineyard regions"
           fill
           priority
-          sizes="100vw"
+          sizes="(max-width: 767px) 100vw, 1px"
           className="object-cover object-center md:hidden"
         />
         <div

@@ -79,11 +79,11 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
                 {categoryLabel}
               </Link>
 
-              <h2 className="type-headline mt-10">
+              <h2 className="type-headline mt-10 lg:text-[40px]">
                 {wine.name}
               </h2>
 
-              <div className="type-body-editorial text-ink/80 mt-8 space-y-4">
+              <div className="type-body-editorial text-ink/80 mt-8 space-y-4 lg:text-[16px]">
                 {wine.description.map((paragraph, idx) => (
                   <p key={idx}>{paragraph}</p>
                 ))}

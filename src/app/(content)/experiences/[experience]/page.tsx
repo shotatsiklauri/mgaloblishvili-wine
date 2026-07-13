@@ -170,10 +170,10 @@ function ExperienceTextBlock({
 }) {
   return (
     <EditorialTextCell className={className}>
-      <h2 className="type-headline lg:text-[17px] xl:text-[20px]">
+      <h2 className="type-headline lg:text-[22px] xl:text-[24px]">
         {section.heading}
       </h2>
-      <div className="type-body-editorial text-ink/80 mt-5 space-y-4 lg:text-[13px] lg:leading-[1.5] xl:text-[14px]">
+      <div className="type-body-editorial text-ink/80 mt-5 space-y-4 lg:text-[16px]">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

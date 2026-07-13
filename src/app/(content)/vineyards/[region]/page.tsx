@@ -9,6 +9,7 @@ import {
 } from "@/data/content";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
+import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
 import { cn } from "@/lib/utils";
 
 type VineyardRegionParams = {
@@ -78,23 +79,27 @@ export default async function VineyardRegionPage({
             </div>
           </div>
 
-          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-full lg:max-h-[666px] lg:max-w-[851px] lg:justify-self-end">
-            <Image
-              src="/images/vineyard-kakheti.png"
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1468px) 851px, (min-width: 1024px) 58vw, 100vw"
-              className="object-cover"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-y-0 left-0 w-[15%] bg-white/55 backdrop-blur-md"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-y-0 left-[15%] w-[5%] bg-gradient-to-r from-white/18 to-transparent"
-            />
+          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-full lg:max-h-[666px]">
+            <IntroAwareHorizontalReveal className="absolute inset-0">
+              <Image
+                src="/images/vineyard-kakheti.png"
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="object-cover"
+              />
+            </IntroAwareHorizontalReveal>
+
+            <IntroAwareHorizontalReveal
+              delayMs={500}
+              className="absolute inset-y-0 left-0 z-10 w-[15%]"
+            >
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-white/70 backdrop-blur-md"
+              />
+            </IntroAwareHorizontalReveal>
           </div>
         </section>
       </main>

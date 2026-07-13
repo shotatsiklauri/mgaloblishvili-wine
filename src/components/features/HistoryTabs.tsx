@@ -3,7 +3,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import Image from "next/image";
 import type { HistoryItem, HistoryItemId } from "@/data/content";
-import { Container } from "@/components/ui/Container";
 import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
 import { cn, toMtavruliIfGeorgian } from "@/lib/utils";
 import { focusRing } from "@/lib/focus-ring";
@@ -32,43 +31,45 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
         ))}
       </div>
 
-      <div className="border-ink/10 shrink-0 border-t bg-white">
-        <Container className="pt-4 md:pt-5">
-          <Tabs.List
-            aria-label="History sections"
-            className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          >
-            {historyItems.map((tab) => {
-              const isGeorgianTitle = /[ა-ჺ]/.test(tab.title);
-
-              return (
-                <Tabs.Trigger
-                  key={tab.id}
-                  value={tab.id}
-                  className={cn(
-                    "group relative cursor-pointer pt-3 pb-6",
-                    "type-menu nav-word",
-                    isGeorgianTitle && "nav-word--mtavruli",
-                    "transition-colors duration-300 ease-out motion-reduce:transition-none",
-                    focusRing("light"),
-                    "text-ink-muted hover:text-accent focus-visible:text-accent",
-                    "data-[state=active]:text-accent",
-                  )}
-                >
-                  {toMtavruliIfGeorgian(tab.title)}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-ink",
-                      "scale-x-0 transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
-                      "group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[state=active]:scale-x-100",
-                    )}
-                  />
-                </Tabs.Trigger>
-              );
-            })}
-          </Tabs.List>
-        </Container>
+      <div className="shrink-0 bg-white">
+        {/* Figma tab bar: 120px tall, group centered (~982px @ 1440); words
+            Inter 600 / 12px / 0.3em near the top, 3px black underline at the
+            bottom that reveals on hover/active, accent text when active. */}
+        <Tabs.List
+          aria-label="History sections"
+          className={cn(
+            "grid grid-cols-1 sm:grid-cols-3",
+            "lg:mx-auto lg:w-full lg:max-w-[68vw]",
+            "lg:h-[clamp(104px,8.333vw,132px)]",
+          )}
+        >
+          {historyItems.map((tab) => (
+            <Tabs.Trigger
+              key={tab.id}
+              value={tab.id}
+              className={cn(
+                "group relative flex cursor-pointer items-center justify-center py-5",
+                "lg:items-start lg:py-0 lg:pt-[clamp(40px,3.611vw,60px)]",
+                "text-center font-sans font-semibold uppercase leading-none",
+                "text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
+                "transition-colors duration-300 ease-out motion-reduce:transition-none",
+                focusRing("light"),
+                "text-ink-muted hover:text-accent focus-visible:text-accent",
+                "data-[state=active]:text-accent",
+              )}
+            >
+              {toMtavruliIfGeorgian(tab.title)}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black",
+                  "scale-x-0 transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
+                  "group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[state=active]:scale-x-100",
+                )}
+              />
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
       </div>
     </Tabs.Root>
   );

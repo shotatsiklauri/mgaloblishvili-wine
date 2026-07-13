@@ -145,8 +145,8 @@ function EditorialExperiencePage({
           </Link>
         </section>
 
-        <section className="footer-overscroll-fill-dark bg-surface-dark px-6 py-5 md:py-6">
-          <SiteFooterMinimal tone="dark" contact={contact} />
+        <section className="flex shrink-0 items-center justify-center px-6 min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(104px,8.333vw,132px)]">
+          <SiteFooterMinimal tone="light" contact={contact} />
         </section>
       </main>
     </div>

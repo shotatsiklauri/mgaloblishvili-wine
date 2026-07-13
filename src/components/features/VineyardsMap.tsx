@@ -13,14 +13,12 @@ type VineyardsMapProps = {
   regions: readonly VineyardRegion[];
   activeRegionId?: VineyardRegionId;
   mapImageUrl?: string;
-  mapMobileImageUrl?: string;
 };
 
 export async function VineyardsMap({
   regions,
   activeRegionId,
   mapImageUrl,
-  mapMobileImageUrl,
 }: VineyardsMapProps) {
   const locale = await getServerLocale();
   const contact = await getResolvedContact(locale);
@@ -37,7 +35,7 @@ export async function VineyardsMap({
           className="hidden scale-[1.1] object-cover object-center md:block"
         />
         <Image
-          src={mapMobileImageUrl ?? "/images/map-mobile.jpg"}
+          src="/images/map-mobile.jpg"
           alt="Map of Georgian vineyard regions"
           fill
           priority
@@ -66,7 +64,7 @@ export async function VineyardsMap({
                     activeRegionId === region.id ? "page" : undefined
                   }
                   className={cn(
-                    "type-submenu inline-block rounded-sm",
+                    "type-submenu inline-block rounded-sm text-[27px] leading-[1.5]",
                     "text-ink-inverse/62 transition-colors duration-300 ease-out",
                     "hover:text-accent focus-visible:text-accent",
                     "motion-reduce:transition-none",

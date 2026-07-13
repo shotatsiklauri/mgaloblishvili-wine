@@ -206,7 +206,7 @@ RSC = React Server Component (default). All `(content)` pages are **dynamic** (l
 
 | URL | Route file | Renders | Data |
 |---|---|---|---|
-| `/` | `src/app/page.tsx` (RSC) | `<HeroVideo>` (client: video + scrim; unmutes on first interaction), `HeaderHero`, centered `Product_of_Georgia.svg`, bottom `NavLink` row, inline `SiteFooterMinimal` | **static** (home does **not** read CMS) |
+| `/` | `src/app/page.tsx` (RSC) | `<HeroVideo>` (client: muted video + scrim + explicit sound toggle), `HeaderHero`, centered `Product_of_Georgia.svg`, bottom `NavLink` row, inline `SiteFooterMinimal` | **static** (home does **not** read CMS) |
 | `/history` | `(content)/history/page.tsx` | `HeaderContent` + `HistoryTabs` + `ContentFooter` | CMS-first |
 | `/vineyards` | `(content)/vineyards/page.tsx` | `HeaderContent(mobileTransparentControls="light")` + `VineyardsMap` | CMS-first |
 | `/vineyards/[region]` | `(content)/vineyards/[region]/page.tsx` | hero band + 2×2 `EditorialTextCell` grid + `ContentFooter tone="dark"` | CMS-first; `generateStaticParams` from static; `findVineyardRegion` → `notFound()` |
@@ -256,7 +256,7 @@ Paths are under `src/components/`. "C" = Client Component, "S" = Server Componen
 | `HeaderContent.tsx` | S | Content-page header: burger, left/right nav (`lg` only), centered `Wordmark`, `LanguageSwitcher`. Reads locale + builds nav. | `activeId?: NavRouteId`, `mobileTransparentControls?: "dark"\|"light"`, `className` | Wraps children in `HeaderScrollFrame`. Nav labels are **static** (`getContent`). |
 | `HeaderScrollFrame.tsx` | C | Sets `data-scrolled` when `scrollY>8`; `fixed` transparent on mobile → `bg-surface-dark`; `lg:sticky` always dark. `group/header`. | `children`, `className` | Drives all child color inversions via `group-data-[scrolled=true]/header:…`. |
 | `HeaderHero.tsx` | S | Home-only header: burger + `LanguageSwitcher` (no nav words). `absolute top-0`. | `className` | Only on `/`. |
-| `HeroVideo.tsx` | C | Home hero: the full-screen `<video>` + gradient scrim. Autoplays **muted** (set imperatively via the ref so autoplay isn't blocked) and **unmutes on the first user interaction** (pointerdown/pointerup/keydown, one-time listeners) — **no visible control**. | — | Only on `/`; rendered by `page.tsx`. |
+| `HeroVideo.tsx` | C | Home hero: the full-screen `<video>` + gradient scrim. Autoplays **muted** (set imperatively via the ref so autoplay isn't blocked), with a lower-right speaker button that explicitly toggles sound. | — | Only on `/`; rendered by `page.tsx`. |
 | `HamburgerButton.tsx` | C | Icon button; `/svgs/line-pattern.svg` as CSS `mask` (58px mobile / 46px `lg`). `aria-label="Open menu"`. | `tone: "light"\|"dark"`, native button props (forwardRef) | Trigger for `MenuOverlay`. |
 | `MenuOverlay.tsx` | C | Radix `Dialog` full-screen menu: close X, centered `Wordmark`, `LanguageSwitcher`, 4 columns (mobile = 4 direct links; `lg` = titles + `type-submenu` entries + vertical dividers), `SiteFooterMinimal`. | `trigger`, `menuColumns`, `currentLocale` | Column titles use `NavWord`. Staggered via `.menu-stagger--*`. |
 | `LanguageSwitcher.tsx` | C | ENG/GEO buttons calling `setLocale` server action inside `useTransition`. `aria-pressed`. | `current: Locale`, `tone: "dark"\|"light"`, `className` | `type-language`. |
@@ -297,11 +297,11 @@ Point at anything in a screenshot → here is the file(s), the classes/tokens, a
   (`/Video_Mgaloblishvili.mp4`, `.hero-video-enter`, `autoPlay muted loop`) + the `surface-dark`
   gradient scrim. `muted` is also set imperatively via the ref on mount, otherwise React's `muted`
   prop can leave autoplay blocked and show the native play button.
-- **Sound:** no visible control. The video autoplays **muted**, then **unmutes on the first user
-  interaction anywhere** (`pointerdown` / `pointerup` / `keydown`, one-time listeners
-  that self-remove; only `.muted` is flipped, playback isn't restarted). Nothing plays sound before
-  a gesture — gesture-gated, not true autoplay (slightly more aggressive than accessibility.md's
-  "no autoplay sound," but it's the user's explicit action).
+- **Sound:** the video autoplays **muted**. A lower-right icon-only button (`aria-label` toggles
+  between `Unmute background video` and `Mute background video`) is the only control that changes
+  `.muted`; it calls `video.play()` again when enabling sound and falls back to muted if a browser
+  rejects playback. Do **not** restore a global first-click unmute listener: menu and language
+  clicks must not unexpectedly start audio.
 - **Centered logo:** `/svgs/Product_of_Georgia.svg` (`width 603 height 152`, shown
   `w-[270px] sm:w-[320px] md:w-[338px] lg:w-[400px]`) — **NOT** the wordmark. In an `<h1>`.
 - **Top-left burger + top-right ENG/GEO:** `HeaderHero.tsx` (no nav words up here).
@@ -644,6 +644,9 @@ overwrites live client edits + the 3 singletons** with the static baseline.
     `SITE_DESCRIPTION` = "Ancient Georgian winemaking reimagined. Bold flavors, modern spirit."
     Don't rely on either being resolved yet.
 14. **`experiences` map link** opens a hardcoded Google Maps URL unless the CMS `mapUrl` is set.
+15. **Home-video audio cannot be forced on load.** Browsers block audible autoplay for many
+    first-time visitors, and synthetic clicks do not count as user activation. Keep the video
+    muted until the visitor explicitly uses the speaker button in `HeroVideo.tsx`.
 
 ---
 

@@ -2,10 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getServerLocale } from "@/lib/locale";
-import { getContent, getResolvedContent, findVineyardRegion } from "@/data/content";
+import {
+  getContent,
+  getResolvedContent,
+  findVineyardRegion,
+} from "@/data/content";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
-import { EditorialTextCell } from "@/components/layout/EditorialTextCell";
+import { cn } from "@/lib/utils";
 
 type VineyardRegionParams = {
   params: Promise<{ region: string }>;
@@ -35,61 +39,61 @@ export default async function VineyardRegionPage({
   const region = findVineyardRegion(content, regionId);
   if (!region) notFound();
 
-  const splitIndex = Math.ceil(region.body.length / 2);
-  const firstParagraphs = region.body.slice(0, splitIndex);
-  const remainingParagraphs = region.body.slice(splitIndex);
-
   return (
-    <div className="bg-surface-dark flex min-h-svh flex-col">
+    <div className="bg-surface-dark flex min-h-svh flex-col lg:h-svh lg:overflow-hidden">
       <HeaderContent activeId="vineyards" />
-      <main className="text-ink flex-1 bg-white">
-        <section className="flex h-[272px] items-center justify-center bg-white md:h-[374px] lg:h-[442px]">
-          <div className="px-6 text-center">
-            <h1 className="type-display-hero text-ink font-light">
-              {region.title}
-            </h1>
-            {region.subtitle ? (
-              <p className="type-submenu text-ink/70 mt-5">
-                {region.subtitle}
-              </p>
-            ) : null}
-          </div>
-        </section>
+      <main className="text-ink flex-1 bg-white lg:min-h-0 lg:overflow-hidden">
+        <section className="grid w-full items-center bg-white lg:h-full lg:min-h-0 lg:grid-cols-[42%_58%] lg:py-12">
+          <div className="px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:px-[3.5vw] lg:py-0">
+            <div className="relative aspect-square w-24 overflow-hidden lg:w-28">
+              <Image
+                src="/images/TheSymbol.jpg"
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 112px, 96px"
+                className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
+              />
+            </div>
 
-        <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
-          <div className="relative order-1 h-[272px] w-full self-start justify-self-start overflow-hidden md:h-[357px] lg:h-[476px] lg:order-none">
+            <div className="mt-9 max-w-[540px] lg:mt-10">
+              <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px]">
+                {region.title}
+              </h1>
+              {region.subtitle ? (
+                <p
+                  className={cn(
+                    "mt-3 font-sans text-[13px] leading-[1.35] font-normal",
+                    locale === "en" && "uppercase",
+                  )}
+                >
+                  {region.subtitle}
+                </p>
+              ) : null}
+
+              <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9">
+                {region.body.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-full lg:max-h-[666px] lg:max-w-[851px] lg:justify-self-end">
             <Image
-              src={region.image1Url ?? "/images/vazi.webp"}
+              src="/images/vineyard-kakheti.png"
               alt=""
               fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover object-left-top"
+              priority
+              sizes="(min-width: 1468px) 851px, (min-width: 1024px) 58vw, 100vw"
+              className="object-cover"
             />
-          </div>
-
-          <EditorialTextCell className="order-2 lg:order-none">
-            <div className="type-body-editorial text-ink/80 space-y-5">
-              {firstParagraphs.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
-          </EditorialTextCell>
-
-          <EditorialTextCell className="order-4 lg:order-none">
-            <div className="type-body-editorial text-ink/80 space-y-5">
-              {remainingParagraphs.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
-          </EditorialTextCell>
-
-          <div className="relative order-3 h-[272px] w-full self-start justify-self-end overflow-hidden md:h-[357px] lg:h-[476px] lg:order-none">
-            <Image
-              src={region.image2Url ?? "/images/bucket.webp"}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover object-right-top"
+            <div
+              aria-hidden="true"
+              className="absolute inset-y-0 left-0 w-[15%] bg-white/55 backdrop-blur-md"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-y-0 left-[15%] w-[5%] bg-gradient-to-r from-white/18 to-transparent"
             />
           </div>
         </section>

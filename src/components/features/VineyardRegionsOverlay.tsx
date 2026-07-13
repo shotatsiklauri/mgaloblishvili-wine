@@ -223,7 +223,7 @@ export function VineyardRegionsOverlay({
                 onFocus={enter(region.id)}
                 onBlur={leave}
                 className={cn(
-                  "type-submenu inline-block rounded-sm",
+                  "type-submenu inline-block rounded-sm text-[27px] leading-[1.5]",
                   "transition-colors duration-300 ease-out motion-reduce:transition-none",
                   isHighlighted(region.id)
                     ? "text-ink-inverse"

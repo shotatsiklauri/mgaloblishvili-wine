@@ -21,6 +21,17 @@ type HeaderContentProps = {
   mobileTransparentControls?: "dark" | "light";
 };
 
+// Desktop nav word positions as % of the 1440px Figma canvas (left edge of each
+// word), so the header matches Figma exactly at 1440 and scales fluidly on either
+// side. Order matches buildPrimaryNav: history, vineyards, wines, experiences.
+// History 154, Vineyards 358, Wines 980, Experiences 1175 (÷1440).
+const NAV_LEFT_POS = [
+  "lg:left-[10.694%]",
+  "lg:left-[24.861%]",
+  "lg:left-[68.056%]",
+  "lg:left-[81.597%]",
+] as const;
+
 export async function HeaderContent({
   activeId,
   className,
@@ -30,16 +41,15 @@ export async function HeaderContent({
   const content = getContent(locale);
   const primaryNav = buildPrimaryNav(content);
   const menuColumns = buildMenuColumns(content);
-  const [left, right] = [primaryNav.slice(0, 2), primaryNav.slice(2)];
   const usesLightMobileControls = mobileTransparentControls === "light";
 
   return (
     <HeaderScrollFrame className={cn("site-header--compact", className)}>
       <div
         className={cn(
-          "grid w-full items-center",
-          "h-16 md:h-24 lg:h-24",
-          "grid-cols-[auto_1fr_auto] lg:grid-cols-[auto_1fr_auto_1fr_auto]",
+          "relative flex w-full items-center",
+          // Figma desktop frame height = 120px @ 1440 (8.333vw), clamped.
+          "h-16 md:h-24 lg:h-[clamp(104px,8.333vw,136px)]",
           "px-5 md:px-6 lg:px-6",
         )}
       >
@@ -59,27 +69,29 @@ export async function HeaderContent({
           />
         </div>
 
-        <nav
-          aria-label="Primary (left)"
-          className={cn(
-            "hidden min-w-0 items-center justify-center self-stretch lg:h-full",
-            "gap-x-10 lg:flex lg:gap-x-20 xl:gap-x-28",
-          )}
-        >
-          {left.map((item) => (
+        {/* Desktop nav words — absolutely positioned at their exact Figma x. */}
+        {primaryNav.map((item, index) => (
+          <div
+            key={item.id}
+            className={cn(
+              "absolute inset-y-0 hidden items-center lg:flex",
+              NAV_LEFT_POS[index],
+            )}
+          >
             <NavLink
-              key={item.id}
               href={item.href}
               active={activeId === item.id}
               edgeUnderline
-              underlineClassName="lg:-right-12 lg:-left-12 lg:h-[2px]"
+              underlineClassName="lg:-right-8 lg:-left-8 lg:h-[2px]"
+              className="h-full px-0"
             >
               {item.label}
             </NavLink>
-          ))}
-        </nav>
+          </div>
+        ))}
 
-        <div className="flex shrink-0 items-center justify-center">
+        {/* Logo — centered on the frame (Figma center 720 = 1440 / 2). */}
+        <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center">
           <Link
             href="/"
             aria-label="Mgaloblishvili — Home"
@@ -89,31 +101,15 @@ export async function HeaderContent({
               focusRing("dark"),
             )}
           >
-            <Wordmark size="header" />
+            {/* Figma logo width = 253px @ 1440 (17.57vw), clamped. */}
+            <Wordmark
+              size="header"
+              className="lg:w-[clamp(220px,17.57vw,280px)]"
+            />
           </Link>
         </div>
 
-        <nav
-          aria-label="Primary (right)"
-          className={cn(
-            "hidden min-w-0 items-center justify-center self-stretch lg:h-full",
-            "gap-x-10 lg:flex lg:gap-x-20 xl:gap-x-28",
-          )}
-        >
-          {right.map((item) => (
-            <NavLink
-              key={item.id}
-              href={item.href}
-              active={activeId === item.id}
-              edgeUnderline
-              underlineClassName="lg:-right-12 lg:-left-12 lg:h-[2px]"
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="flex items-center justify-end">
+        <div className="ml-auto flex items-center justify-end">
           <LanguageSwitcher
             current={locale}
             tone={usesLightMobileControls ? "dark" : "light"}

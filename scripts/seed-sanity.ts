@@ -320,9 +320,9 @@ enContent.experiences.items.forEach((experience: Experience, index: number) => {
     label: `Experience — ${experience.title}`,
     build: async () => {
       const kaExperience = kaExperiencesById.get(id);
-      const heroImage = await imageField("gastronomy.jpg");
+      const heroImage = await imageField("gastronomy.png");
       const image1 = await imageField("wine_glass.png");
-      const image2 = await imageField("people.png");
+      const image2 = await imageField("people.jpg");
       const mapImage = await imageField("Map-mgaloblishvili.jpg");
 
       const sections =

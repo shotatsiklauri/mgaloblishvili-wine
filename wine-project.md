@@ -300,7 +300,7 @@ Images:
 
 - Hero image: `gastronomy.png`
 - First grid image: `wine_glass.png`
-- Second grid image: `people.png`
+- Second grid image: `people.jpg`
 - Map image: `Map-mgaloblishvili.jpg`
 
 Layout:
@@ -309,7 +309,7 @@ Layout:
 - Hero image with title over it.
 - Editorial 2x2 grid:
   - Desktop row 1: `wine_glass.png` left, first text block right.
-  - Desktop row 2: second text block left, `people.png` right.
+  - Desktop row 2: second text block left, `people.jpg` right.
   - Mobile order: image, related text, image, related text.
 - Static map image is shown after the grid.
 - Map image is clickable and opens Google Maps in a new tab.
@@ -549,7 +549,7 @@ public/images/vazi.webp
 public/images/bucket.webp
 public/images/gastronomy.png
 public/images/wine_glass.png
-public/images/people.png
+public/images/people.jpg
 public/images/Map-mgaloblishvili.jpg
 public/images/wine_page_header.webp
 public/images/wine_bottle.png

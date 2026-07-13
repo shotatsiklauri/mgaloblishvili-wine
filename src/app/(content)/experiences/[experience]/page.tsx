@@ -77,7 +77,7 @@ function EditorialExperiencePage({
         <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
           <div className="relative flex min-h-[380px] overflow-hidden md:min-h-[440px] lg:min-h-[476px]">
             <Image
-              src={experience.heroImageUrl ?? "/images/gastronomy.jpg"}
+              src={experience.heroImageUrl ?? "/images/gastronomy.png"}
               alt=""
               fill
               priority
@@ -111,7 +111,7 @@ function EditorialExperiencePage({
         <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
           <div className="relative h-[272px] overflow-hidden md:h-[357px] lg:h-[476px]">
             <Image
-              src={experience.image2Url ?? "/images/people.png"}
+              src={experience.image2Url ?? "/images/people.jpg"}
               alt=""
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"

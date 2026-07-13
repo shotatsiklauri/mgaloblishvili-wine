@@ -435,11 +435,7 @@ html::-webkit-scrollbar {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(5, 9, 10, 0.82) 0%,
-    rgba(5, 9, 10, 0.92) 100%
-  );
+  background: rgba(0, 0, 0, 0.7);
   -webkit-backdrop-filter: blur(16px) saturate(0.9);
   backdrop-filter: blur(16px) saturate(0.9);
   pointer-events: none;

@@ -4,21 +4,37 @@ import { getServerLocale } from "@/lib/locale";
 import { getResolvedContact } from "@/lib/sanity/contact";
 
 type ContentFooterProps = {
-  tone?: "light" | "dark";
+  // Footer background fill. Transparent (default) lets the page show through;
+  // "black" is a solid bar used on /wines/*/* and /vineyards/*.
+  background?: "transparent" | "black";
+  // Text color. Defaults to light on the black bar and dark on transparent
+  // footers; override to "light" for transparent footers over dark pages
+  // (e.g. /history, whose root is surface-dark behind the footer).
+  text?: "dark" | "light";
 };
 
-export async function ContentFooter({ tone = "dark" }: ContentFooterProps) {
+export async function ContentFooter({
+  background = "transparent",
+  text,
+}: ContentFooterProps) {
   const locale = await getServerLocale();
   const contact = await getResolvedContact(locale);
+  const isBlack = background === "black";
+  const lightText = (text ?? (isBlack ? "light" : "dark")) === "light";
 
   return (
     <div
       className={cn(
-        "shrink-0 px-6 py-4 md:py-5",
-        tone === "dark" && "footer-overscroll-fill-dark bg-surface-dark",
+        // Figma footer height = 120px @ 1440 (8.33vw), text centered.
+        "flex shrink-0 items-center justify-center px-6",
+        "min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(104px,8.33vw,132px)]",
+        isBlack ? "footer-overscroll-fill-dark bg-black" : "bg-transparent",
       )}
     >
-      <SiteFooterMinimal tone={tone} contact={contact} />
+      <SiteFooterMinimal
+        tone={lightText ? "dark" : "light"}
+        contact={contact}
+      />
     </div>
   );
 }

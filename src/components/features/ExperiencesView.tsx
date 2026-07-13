@@ -16,14 +16,14 @@ type ExperiencesViewProps = {
 
 export function ExperiencesView({ experiences }: ExperiencesViewProps) {
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
+    <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       <AnimatedCategoryList className="space-y-1 text-center md:text-left">
         {experiences.map((experience) => (
           <li key={experience.id}>
             <Link
               href={routes.experience(experience.id)}
               className={cn(
-                "type-category-large inline-block rounded-sm",
+                "type-category-large category-index-word inline-block rounded-sm",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 "text-ink hover:text-accent focus-visible:text-accent",
                 focusRing("light"),

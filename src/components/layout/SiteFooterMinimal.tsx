@@ -9,6 +9,8 @@ type SiteFooterMinimalProps = {
   contact?: ResolvedContact;
 };
 
+// Footer text adapts to the footer background: dark text on the transparent
+// (light-page) footers, soft white on the solid-black footers.
 const TONE_TEXT = {
   light: "text-ink-muted",
   dark: "text-ink-inverse/55",
@@ -18,6 +20,10 @@ const TONE_DOT = {
   light: "text-ink-muted/60",
   dark: "text-ink-inverse/40",
 } as const;
+
+// Figma: Inter (font-sans), 400, 12px @ 1440 (0.83vw), line-height 100%, centered.
+const FOOTER_TYPE =
+  "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none";
 
 export function SiteFooterMinimal({
   tone = "light",
@@ -32,7 +38,8 @@ export function SiteFooterMinimal({
       <footer
         className={cn(
           "flex w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5",
-          "type-meta text-center",
+          FOOTER_TYPE,
+          "text-center",
           TONE_TEXT[tone],
           className,
         )}
@@ -49,8 +56,9 @@ export function SiteFooterMinimal({
   return (
     <footer
       className={cn(
-        "flex w-full flex-col items-center gap-0.5",
-        "type-meta",
+        "flex w-full flex-col items-center gap-1.5",
+        FOOTER_TYPE,
+        "text-center",
         TONE_TEXT[tone],
         className,
       )}

@@ -91,6 +91,25 @@
   line-height: 1.2;
 }
 
+/* Desktop size for the category index words (Wines / Experiences).
+   Figma: 36px @ 1440 (2.5vw), line-height 100%. Mobile keeps type-category-large.
+   Unlayered so it wins over the utilities-layer type-category-large at md+. */
+@media (min-width: 768px) {
+  .category-index-word {
+    font-size: clamp(30px, 2.5vw, 44px);
+    line-height: 1;
+  }
+}
+
+/* Wine category list items (Figma: 16px @ 1440 = 1.11vw, line-height 100%).
+   Desktop only; mobile keeps type-submenu. Unlayered to win over the utility. */
+@media (min-width: 768px) {
+  .wine-list-word {
+    font-size: clamp(14px, 1.11vw, 18px);
+    line-height: 1;
+  }
+}
+
 @utility type-meta {
   font-family: var(--font-sans);
   font-weight: 400;

@@ -21,8 +21,9 @@ export function WinesView({
 
   const CategoryList = isIndex ? AnimatedCategoryList : "ul";
 
+  // Same spacing in both states so the words don't shift when the list opens.
   const categoryLinks = (
-    <CategoryList className={cn(isIndex ? "space-y-[15px] text-center md:text-left" : "space-y-1")}>
+    <CategoryList className="space-y-[15px] text-center md:text-left">
       {categories.map((category) => {
         const active = category.id === activeCategoryId;
         return (
@@ -31,7 +32,7 @@ export function WinesView({
               href={category.href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "type-category-large inline-block rounded-sm",
+                "type-category-large category-index-word inline-block rounded-sm",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 active ? "text-accent" : "text-ink hover:text-accent",
                 focusRing("light"),
@@ -47,25 +48,31 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
+      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
         {categoryLinks}
       </div>
     );
   }
 
+  // Open state: words stay pinned at their index position (md:items-start — no
+  // vertical re-centering), the list sits to their right at Figma left 473
+  // (words block 217 + 3px), and is raised so the words sit within it (Figma
+  // list top 186 ≈ 128px above the words top).
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
+    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       <div
         className={cn(
-          "flex w-full max-w-[820px] flex-col items-center gap-10",
-          "md:flex-row md:items-center md:justify-start md:gap-16 lg:gap-24",
+          "flex w-full flex-col items-center gap-10",
+          "md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px]",
         )}
       >
-        <div className="shrink-0 text-center md:w-[260px] md:text-left">
+        <div className="shrink-0 text-center md:w-[15.07vw] md:text-left">
           {categoryLinks}
         </div>
 
-        <WineScrollList wines={wines} categoryId={activeCategoryId} />
+        <div className="w-full md:mt-[-5.76vw] md:w-auto">
+          <WineScrollList wines={wines} categoryId={activeCategoryId} />
+        </div>
       </div>
     </div>
   );

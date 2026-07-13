@@ -19,7 +19,7 @@ export default async function HistoryPage() {
       <main className="flex flex-1 flex-col bg-white pt-16 md:pt-24 lg:min-h-0 lg:overflow-hidden lg:pt-0">
         <HistoryTabs items={content.history.items} />
       </main>
-      <ContentFooter />
+      <ContentFooter text="light" />
     </div>
   );
 }

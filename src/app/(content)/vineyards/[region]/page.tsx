@@ -103,7 +103,7 @@ export default async function VineyardRegionPage({
           </div>
         </section>
       </main>
-      <ContentFooter tone="dark" />
+      <ContentFooter background="black" />
     </div>
   );
 }

@@ -82,15 +82,17 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
   return (
     <div
       key={categoryId}
-      className="wine-list-enter flex w-full items-stretch justify-center gap-8 md:w-auto md:gap-3"
+      className="wine-list-enter flex w-full items-stretch justify-center gap-8 md:w-auto md:gap-[2.5vw]"
     >
-      <div className="wine-scroll-area flex w-full items-center justify-center md:w-[220px]">
+      <div className="wine-scroll-area flex w-full items-start justify-center md:w-auto">
         <ul
           ref={listRef}
           aria-label="Wine list"
           className={cn(
-            "wine-scroll-fade no-scrollbar max-h-full w-full space-y-3 text-center",
-            "md:overflow-y-auto md:pr-2 md:text-left",
+            "wine-scroll-fade no-scrollbar w-full space-y-4 text-center",
+            // Fixed viewport height so the list scrolls (shows the scrollbar) and
+            // stays bounded regardless of item count; keeps thumb ~120px (0.33 cap).
+            "max-h-full md:h-[360px] md:overflow-y-auto md:pr-2 md:text-left md:whitespace-nowrap",
             scrollState.canScrollUp && "wine-scroll-fade--top",
             scrollState.canScrollDown && "wine-scroll-fade--bottom",
           )}
@@ -100,7 +102,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
               <Link
                 href={routes.wineItem(categoryId, wine.id)}
                 className={cn(
-                  "type-submenu text-ink/85 hover:text-accent inline-block rounded-sm",
+                  "type-submenu wine-list-word text-ink/85 hover:text-accent inline-block rounded-sm",
                   "transition-colors duration-200 motion-reduce:transition-none",
                   focusRing("light"),
                 )}

@@ -22,7 +22,7 @@ export function WinesView({
   const CategoryList = isIndex ? AnimatedCategoryList : "ul";
 
   const categoryLinks = (
-    <CategoryList className={cn(isIndex ? "space-y-[15px] text-center" : "space-y-1")}>
+    <CategoryList className={cn(isIndex ? "space-y-[15px] text-center md:text-left" : "space-y-1")}>
       {categories.map((category) => {
         const active = category.id === activeCategoryId;
         return (
@@ -47,18 +47,18 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="flex flex-1 items-center justify-center px-6 py-10">
+      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
         {categoryLinks}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-6">
+    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
       <div
         className={cn(
           "flex w-full max-w-[820px] flex-col items-center gap-10",
-          "md:flex-row md:items-center md:justify-center md:gap-16 lg:gap-24",
+          "md:flex-row md:items-center md:justify-start md:gap-16 lg:gap-24",
         )}
       >
         <div className="shrink-0 text-center md:w-[260px] md:text-left">

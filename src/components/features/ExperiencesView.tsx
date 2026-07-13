@@ -16,8 +16,8 @@ type ExperiencesViewProps = {
 
 export function ExperiencesView({ experiences }: ExperiencesViewProps) {
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-10">
-      <AnimatedCategoryList className="space-y-1 text-center">
+    <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[13vw]">
+      <AnimatedCategoryList className="space-y-1 text-center md:text-left">
         {experiences.map((experience) => (
           <li key={experience.id}>
             <Link

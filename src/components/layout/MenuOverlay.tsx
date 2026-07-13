@@ -65,59 +65,54 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="grid h-16 shrink-0 grid-cols-[auto_1fr_auto] items-center px-5 md:h-24 md:px-6 lg:h-28 lg:px-7">
-            <div className="justify-self-start">
-              <Dialog.Close
-                className={cn(
-                  "menu-stagger menu-stagger--close",
-                  "inline-flex h-9 w-9 items-center justify-center",
-                  "text-ink-inverse/85 hover:text-accent cursor-pointer transition-colors duration-200",
-                  focusRing("dark"),
-                )}
-                aria-label="Close menu"
+          <div className="flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6 lg:h-28 lg:px-7">
+            <Dialog.Close
+              className={cn(
+                "menu-stagger menu-stagger--close",
+                "inline-flex h-9 w-9 items-center justify-center",
+                "text-ink-inverse/85 hover:text-accent cursor-pointer transition-colors duration-200",
+                focusRing("dark"),
+              )}
+              aria-label="Close menu"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="36"
+                height="36"
+                aria-hidden="true"
+                focusable="false"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="0.8"
+                strokeLinecap="round"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="36"
-                  height="36"
-                  aria-hidden="true"
-                  focusable="false"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.8"
-                  strokeLinecap="round"
-                >
-                  <line x1="5" y1="5" x2="19" y2="19" />
-                  <line x1="19" y1="5" x2="5" y2="19" />
-                </svg>
-              </Dialog.Close>
-            </div>
+                <line x1="5" y1="5" x2="19" y2="19" />
+                <line x1="19" y1="5" x2="5" y2="19" />
+              </svg>
+            </Dialog.Close>
 
+            <div className="menu-stagger menu-stagger--lang">
+              <LanguageSwitcher current={currentLocale} tone="dark" />
+            </div>
+          </div>
+
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
             <Link
               href="/"
               onClick={() => handleOpenChange(false)}
               aria-label="Mgaloblishvili — Home"
               className={cn(
                 "menu-stagger menu-stagger--logo",
-                "inline-flex justify-self-center",
+                "mt-2 inline-flex shrink-0 self-center lg:mt-6",
                 focusRing("dark"),
               )}
             >
               <Wordmark size="header" />
             </Link>
 
-            <div className="menu-stagger menu-stagger--lang justify-self-end">
-              <LanguageSwitcher current={currentLocale} tone="dark" />
-            </div>
-          </div>
-
-          <nav
-            aria-label="Primary"
-            className="min-h-0 flex-1 overflow-y-auto px-6 md:px-10"
-          >
-            <div className="flex min-h-full items-center justify-center py-8 lg:hidden">
-              <ul className="mx-auto flex w-full max-w-[320px] flex-col items-center gap-12">
+            <nav aria-label="Primary" className="my-auto w-full">
+              <ul className="mx-auto flex w-full max-w-[320px] flex-col items-center gap-12 lg:hidden">
                 {menuColumns.map((column, idx) => (
                   <li
                     key={column.id}
@@ -141,15 +136,13 @@ export function MenuOverlay({
                   </li>
                 ))}
               </ul>
-            </div>
 
-            <div className="hidden min-h-full items-start justify-center py-[clamp(2rem,5vh,4rem)] lg:flex lg:items-center">
               <ul
                 className={cn(
-                  "mx-auto grid w-full",
+                  "mx-auto hidden w-full",
                   "max-w-[1180px]",
-                  "gap-x-0",
-                  "grid-cols-4",
+                  "grid-cols-4 gap-x-0",
+                  "lg:grid",
                 )}
               >
                 {menuColumns.map((column, idx) => {
@@ -209,8 +202,8 @@ export function MenuOverlay({
                   );
                 })}
               </ul>
-            </div>
-          </nav>
+            </nav>
+          </div>
 
           <div className="shrink-0 px-6 md:px-10">
             <div

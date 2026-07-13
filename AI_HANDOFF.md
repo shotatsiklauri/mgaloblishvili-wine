@@ -34,7 +34,16 @@ do **not** cite them:
 | **Languages** | Bilingual **English + Georgian**. Georgian body text is **Mkhedruli**; decorative nav words render as **Mtavruli** (uppercase Georgian), done in JS. |
 | **Commerce/Auth** | None. No cart, no login, no user DB. Content is static TypeScript **or** Sanity CMS. |
 | **State: built** | All routes live; bilingual switching works; **Sanity CMS is live end-to-end** with static fallback; SEO done (robots, sitemap, OG image, dynamic `<html lang>`). |
-| **State: pending** | Browser tab favicon is **still the default Next.js icon** (`src/app/favicon.ico`). `src/data/site.ts` has a **lint error** (a stray dead string). **No tests, no CI.** `NEXT_PUBLIC_SITE_URL` must be set for production SEO URLs. |
+| **State: pending** | Browser tab favicon is **still the default Next.js icon** (`src/app/favicon.ico`). `src/data/site.ts` has one existing **lint warning** (a stray dead string). **No tests, no CI.** `NEXT_PUBLIC_SITE_URL` must be set for production SEO URLs. |
+
+**Active vineyard-detail worktree changes (2026-07-13):**
+- Modified: `src/app/(content)/vineyards/[region]/page.tsx`
+- Modified: `src/app/globals.css`
+- New/untracked: `src/components/ui/IntroAwareHorizontalReveal.tsx`
+
+These files are one feature and must be kept together. The latest verification was
+`pnpm lint` (0 errors, the existing `src/data/site.ts` warning only), `pnpm typecheck`, and a
+focused Prettier check; all completed successfully.
 
 ---
 
@@ -68,7 +77,8 @@ do **not** cite them:
 **Client Components (the complete list — everything else is a Server Component):**
 `BrandIntro`, `HeaderScrollFrame`, `MenuOverlay`, `LanguageSwitcher`, `HamburgerButton`
 (forwardRef button), `HistoryTabs`, `WineScrollList`, `AnimatedCategoryList`,
-`VineyardRegionsOverlay`, `HeroVideo`, `SubtleVideoBackground`, `Reveal`, and `error.tsx`.
+`IntroAwareHorizontalReveal`, `VineyardRegionsOverlay`, `HeroVideo`,
+`SubtleVideoBackground`, `Reveal`, and `error.tsx`.
 
 ---
 
@@ -175,7 +185,8 @@ through the `type-*` utilities below (not raw `font-serif`).
 - **Everything else is CSS keyframes** in `globals.css`: `hero-fade-in`/`hero-fade-up`
   (`.hero-ui-enter--{logo,header,nav,contact}`), `menu-fade-*` + `.menu-stagger--*`,
   `menu-divider-grow-*`, `category-fade-down` (`.category-enter-list`),
-  `wine-list-fade-right` (`.wine-list-enter`), `brand-intro-layer`/`brand-intro-fill`.
+  `wine-list-fade-right` (`.wine-list-enter`), `reveal-left-to-right`
+  (`.horizontal-reveal-enter`), and `brand-intro-layer`/`brand-intro-fill`.
 - **BrandIntro timing:** `src/components/ui/brandIntroTiming.ts` → `BRAND_INTRO_TOTAL_MS = 1600`
   (JS unmount). The `.brand-intro` CSS layer fades over `1500ms`.
 - **Standard easing** across the system: `cubic-bezier(0.22, 1, 0.36, 1)`. **Nav underline** grows
@@ -209,7 +220,7 @@ RSC = React Server Component (default). All `(content)` pages are **dynamic** (l
 | `/` | `src/app/page.tsx` (RSC) | `<HeroVideo>` (client: muted video + scrim + explicit sound toggle), `HeaderHero`, centered `Product_of_Georgia.svg`, bottom `NavLink` row, inline `SiteFooterMinimal` | **static** (home does **not** read CMS) |
 | `/history` | `(content)/history/page.tsx` | `HeaderContent` + `HistoryTabs` + `ContentFooter` | CMS-first |
 | `/vineyards` | `(content)/vineyards/page.tsx` | `HeaderContent(mobileTransparentControls="light")` + `VineyardsMap` | CMS-first |
-| `/vineyards/[region]` | `(content)/vineyards/[region]/page.tsx` | hero band + 2×2 `EditorialTextCell` grid + `ContentFooter tone="dark"` | CMS-first; `generateStaticParams` from static; `findVineyardRegion` → `notFound()` |
+| `/vineyards/[region]` | `(content)/vineyards/[region]/page.tsx` | viewport-locked 42/58 text-and-photo composition + `ContentFooter tone="dark"` | CMS-first; `generateStaticParams` from static; `findVineyardRegion` → `notFound()` |
 | `/wines` | `(content)/wines/page.tsx` | `HeaderContent` + `WinesView` (index) + `ContentFooter` | CMS-first |
 | `/wines/[category]` | `(content)/wines/[category]/page.tsx` | `WinesView` (category + `WineScrollList`) | CMS-first; `isWineCategoryId` guard → `notFound()` |
 | `/wines/[category]/[itemId]` | `(content)/wines/[category]/[itemId]/page.tsx` | hero + text + bottle + `ContentFooter tone="dark"` | CMS-first; `findWine` → `notFound()` |
@@ -248,6 +259,7 @@ Paths are under `src/components/`. "C" = Client Component, "S" = Server Componen
 | `Reveal.tsx` | C | `motion/react` scroll-reveal (fade-up). | `delay`, `amount`, `distance`, `className` | `HistoryTabs` |
 | `BrandIntro.tsx` | C | Full-screen loading overlay on mount + soft-nav + bfcache restore; unmounts after `1600ms`. Two stacked `/images/Mgaloblishvili-Logo.svg` (base 20% + clip-path reveal). | — | root `layout.tsx` |
 | `brandIntroTiming.ts` | — | `export const BRAND_INTRO_TOTAL_MS = 1600` | — | `BrandIntro`, `AnimatedCategoryList` |
+| `IntroAwareHorizontalReveal.tsx` | C | Holds content clipped at 0% while `.brand-intro` exists, then runs the shared 1420ms left-to-right reveal; supports a per-layer `delayMs` and route replay. | `children`, `className?`, `delayMs?` | vineyard region photo + frosted strip |
 
 ### `layout/` — page chrome
 
@@ -262,7 +274,7 @@ Paths are under `src/components/`. "C" = Client Component, "S" = Server Componen
 | `LanguageSwitcher.tsx` | C | ENG/GEO buttons calling `setLocale` server action inside `useTransition`. `aria-pressed`. | `current: Locale`, `tone: "dark"\|"light"`, `className` | `type-language`. |
 | `ContentFooter.tsx` | S | Server wrapper: fetches CMS contact (`getResolvedContact`) → renders `SiteFooterMinimal`. Adds `footer-overscroll-fill-dark bg-surface-dark` when dark. | `tone?: "light"\|"dark"` (default `dark`) | Used by history/wines/vineyards + region & wine detail. |
 | `SiteFooterMinimal.tsx` | S | The actual footer markup: company + address. `type-meta`. | `tone`, `layout: "stacked"\|"inline"`, `contact?`, `className` | Falls back to `SITE_CONTACT` if no `contact`. |
-| `EditorialTextCell.tsx` | S | Text cell in editorial 2×2 grids (padding + `max-w-[520px]`). | `children`, `className`, `contentClassName` | region & experience detail |
+| `EditorialTextCell.tsx` | S | Text cell in editorial 2×2 grids (padding + `max-w-[520px]`). | `children`, `className`, `contentClassName` | experience detail |
 | `SubtleVideoBackground.tsx` | C | Fixed decorative grayscale video layer (`opacity-[0.13]`), disabled under reduced motion. `Video_Mgaloblishvili.mp4`. | — | `(content)/layout.tsx` only |
 
 ### `features/` — domain-aware
@@ -361,11 +373,25 @@ Point at anything in a screenshot → here is the file(s), the classes/tokens, a
 - The page is viewport-locked on desktop (`md:h-svh md:overflow-hidden`).
 
 ### `/vineyards/[region]` — region detail
-- **File:** `(content)/vineyards/[region]/page.tsx`. `<main className="bg-white">`. Editorial
-  **title band** (`type-display-hero`, `h-[272px] md:h-[374px] lg:h-[442px]`), then a 2×2 grid:
-  image (`/images/vazi.webp` default) + `EditorialTextCell`, then `EditorialTextCell` + image
-  (`/images/bucket.webp` default). Body is split in half across the two text cells.
-  `ContentFooter tone="dark"`.
+- **File:** `(content)/vineyards/[region]/page.tsx`. The old hero + 2×2 editorial grid was
+  removed. Desktop is now one viewport (`lg:h-svh lg:overflow-hidden`) with a single centered
+  composition between `HeaderContent` and `ContentFooter tone="dark"`.
+- **Desktop grid:** `lg:grid-cols-[42%_58%]`. The left cell contains `/images/TheSymbol.jpg`,
+  the localized region title/subtitle, and the complete `region.body`. The right cell contains
+  the shared `/images/vineyard-kakheti.png` for every region for now.
+- **Photo sizing/alignment:** the photo wrapper fills the complete 58% right column; do **not**
+  re-add `lg:max-w-[851px]` or `lg:justify-self-end`, because those classes create a large empty
+  gap between text and image on wide screens. Desktop height remains
+  `lg:h-full lg:max-h-[666px]`. The section uses `items-center` and `lg:py-12`, so the photo's
+  top and bottom whitespace stays visually balanced between the header and footer. Mobile keeps
+  its natural stacked `aspect-[851/666]` layout.
+- **Entrance motion:** the photo is wrapped in `IntroAwareHorizontalReveal` and reveals from
+  left to right over `1420ms` immediately after `BrandIntro` disappears. A single frosted strip
+  (`absolute left-0 w-[15%]`, `bg-white/70 backdrop-blur-md`) uses the same reveal with
+  `delayMs={500}`. The previous extra gradient tail was intentionally removed because it looked
+  like an unwanted third overlay layer. Reduced motion removes the animation and clip-path.
+- The content remains CMS-first through `getResolvedContent(locale)`; slugs still validate with
+  `findVineyardRegion(...)` and call `notFound()` on invalid routes.
 
 ### `/wines` and `/wines/[category]`
 - **File:** `WinesView.tsx`. Index = three `type-category-large` words (Wines/Brandy/Chacha) via
@@ -422,7 +448,8 @@ target that variant in your prompt. Each tell is a real responsive class copied 
 | Content header **background**: transparent over the hero/map vs. solid `surface-dark` | transparent = **mobile, unscrolled** · solid = **scrolled (any width) OR ≥ lg** | `bg-transparent` / `data-[scrolled=true]:bg-surface-dark` / `lg:bg-surface-dark`, `fixed … lg:sticky` · `HeaderScrollFrame.tsx` |
 | Home page: horizontal **row of nav words** across the bottom | present = **≥ md** · absent = **< md** | `hidden w-full md:flex` · `page.tsx` |
 | Menu overlay: 4 centered **stacked** links vs. 4 **columns** with vertical dividers + submenu lists | stacked = **< lg** · columns = **≥ lg** | `lg:hidden` vs `hidden … lg:flex` + `grid-cols-4` + divider `… lg:block` · `MenuOverlay.tsx` |
-| Region / Experience detail: **one stacked column** (image→text→text→image) vs. **2×2** image/text grid | stacked = **< lg** · grid = **≥ lg** *(the split is `lg`, not `md`)* | `grid-cols-1 lg:grid-cols-2` · region/experience `page.tsx` |
+| Region detail: **text then photo** vs. **42/58 text-left / photo-right** | stacked = **< lg** · side-by-side = **≥ lg** | `lg:grid-cols-[42%_58%]` · vineyard region `page.tsx` |
+| Experience detail: **one stacked column** vs. **2×2** image/text grid | stacked = **< lg** · grid = **≥ lg** | `grid-cols-1 lg:grid-cols-2` · experience `page.tsx` |
 | Wine detail: description **above** the bottle vs. **text-left / bottle-right** two columns | stacked = **< lg** · two-col = **≥ lg** | `grid-cols-1 lg:grid-cols-[minmax(0,440px)_1fr]` · wine detail `page.tsx` |
 | Wines category: category words **above** the wine list vs. **words-left / list-right** (+ vertical scroll indicator appears) | stacked = **< md** · side-by-side = **≥ md** | `flex-col md:flex-row` · `WinesView.tsx`; track `hidden … md:block` · `WineScrollList.tsx` |
 | Vineyards: **portrait mobile map** (`map-mobile.jpg`) + centered plain region list, page scrolls vs. **interactive hover map** (`map.jpg`) + right-side region list, viewport-locked | mobile map = **< md** · hover map = **≥ md** | `md:hidden` / `md:block` · `VineyardsMap.tsx` + `VineyardRegionsOverlay.tsx`; `md:h-svh md:overflow-hidden` · `vineyards/page.tsx` |
@@ -438,9 +465,10 @@ resized-window width. The "when tells conflict" rule below applies only to *genu
 the same feature reading as both present and absent, or a screenshot too unclear to read — not to
 tells that simply fire at different breakpoints.
 
-**Secondary `md` tell on detail pages.** Even while *stacked* (`< lg`), the region/experience image
-panels grow at `md`: `h-[272px] md:h-[357px] lg:h-[476px]` (hero bands `h-[272px] md:h-[374px]
-lg:h-[442px]`). So a *taller* stacked image ≈ tablet (md), a *shorter* one ≈ phone (base).
+**Secondary `md` tell on experience detail pages.** Even while *stacked* (`< lg`), experience
+image panels grow at `md`: `h-[272px] md:h-[357px] lg:h-[476px]` (hero bands
+`h-[272px] md:h-[374px] lg:h-[442px]`). Vineyard region detail no longer uses this hero/grid
+pattern; its mobile photo keeps `aspect-[851/666]`.
 
 **Width sanity-check** — cross-check the inferred breakpoint against a logo's apparent width
 (base / sm / md / lg):
@@ -647,6 +675,16 @@ overwrites live client edits + the 3 singletons** with the static baseline.
 15. **Home-video audio cannot be forced on load.** Browsers block audible autoplay for many
     first-time visitors, and synthetic clicks do not count as user activation. Keep the video
     muted until the visitor explicitly uses the speaker button in `HeroVideo.tsx`.
+16. **Vineyard region reveal and Safari cache:** both reveal states include `clip-path` and
+    `-webkit-clip-path`, plus `will-change: clip-path`. Chrome, Brave, and Safari private mode
+    displayed the photo and 70%-white frosted strip correctly. If normal Safari alone omits the
+    strip, first hard-refresh or clear that site's Safari cache before changing source; this has
+    already presented as profile-specific stale CSS.
+17. **Reveal readiness is currently instance-local.** Each `IntroAwareHorizontalReveal` watches
+    `.brand-intro` with its own `MutationObserver` and a `BRAND_INTRO_TOTAL_MS` fallback. The
+    photo and frosted strip currently work as two instances (strip delayed 500ms). If an
+    intermittent reload race returns, the preferred structural fix is one shared intro-ready
+    signal/provider for both layers, not extra timers or duplicate overlay markup.
 
 ---
 

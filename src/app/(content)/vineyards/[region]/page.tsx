@@ -56,14 +56,14 @@ export default async function VineyardRegionPage({
               />
             </div>
 
-            <div className="mt-9 max-w-[540px] lg:mt-10">
-              <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px]">
+            <div className="mt-9 max-w-[540px] lg:mt-10 lg:max-w-[640px]">
+              <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[56px]">
                 {region.title}
               </h1>
               {region.subtitle ? (
                 <p
                   className={cn(
-                    "mt-3 font-sans text-[13px] leading-[1.35] font-normal",
+                    "mt-3 font-sans text-[13px] leading-[1.35] font-normal lg:text-[15px]",
                     locale === "en" && "uppercase",
                   )}
                 >
@@ -71,7 +71,7 @@ export default async function VineyardRegionPage({
                 </p>
               ) : null}
 
-              <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9">
+              <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[16px]">
                 {region.body.map((paragraph, idx) => (
                   <p key={idx}>{paragraph}</p>
                 ))}

@@ -28,7 +28,7 @@ export default async function WineCategoryPage({
   const categories = buildWineCategories(content);
 
   return (
-    <div className="flex min-h-svh flex-col md:h-svh">
+    <div className="flex min-h-svh flex-col md:h-svh md:overflow-hidden">
       <HeaderContent activeId="wines" />
       <main className="flex min-h-0 flex-1 flex-col pt-16 md:pt-24 lg:pt-0">
         <WinesView

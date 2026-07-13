@@ -118,11 +118,12 @@
 }
 
 @utility type-language {
+  /* Figma ENG/GEO: Inter 400, 12px @ 1440 (0.83vw), line-height 100%, no tracking. */
   font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 11px;
-  line-height: 1.15;
-  letter-spacing: 0.12em;
+  font-weight: 400;
+  font-size: clamp(11px, 0.833vw, 13px);
+  line-height: 1;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 

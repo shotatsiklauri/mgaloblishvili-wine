@@ -14,7 +14,7 @@ export default async function ExperiencesPage() {
   const content = await getResolvedContent(locale);
 
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="flex min-h-svh flex-col md:h-svh md:overflow-hidden">
       <HeaderContent activeId="experiences" />
       <main className="flex min-h-0 flex-1 flex-col">
         <ExperiencesView experiences={content.experiences.items} />

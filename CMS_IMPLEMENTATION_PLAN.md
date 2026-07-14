@@ -175,7 +175,7 @@ sortOrder    number  // READ ONLY — 2 items, order must not change
 title        { en, ka }
 bodyBlocks[] { text { en, ka } }   // two text blocks
 image1       { asset, altEn, altKa }  // wine_glass.png equivalent
-image2       { asset, altEn, altKa }  // people.png equivalent
+image2       { asset, altEn, altKa }  // people.jpg equivalent
 heroImage    { asset, altEn, altKa }  // gastronomy.png equivalent
 mapImage     { asset, altEn, altKa }  // Map-mgaloblishvili.jpg
 mapUrl       string  // Google Maps link, editable
@@ -225,7 +225,7 @@ These are editorial photos that the client should be able to swap:
 | `wine_bottle.png` | `wineItem.bottleImage` |
 | `gastronomy.png` | `experienceItem.heroImage` |
 | `wine_glass.png` | `experienceItem.image1` |
-| `people.png` | `experienceItem.image2` |
+| `people.jpg` | `experienceItem.image2` |
 | `Map-mgaloblishvili.jpg` | `experienceItem.mapImage` |
 | `map.jpg` | `vineyards.desktopMapImage` |
 | `map-mobile.jpg` | `vineyards.mobileMapImage` |

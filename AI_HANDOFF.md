@@ -412,7 +412,7 @@ Point at anything in a screenshot → here is the file(s), the classes/tokens, a
 ### `/experiences` and `/experiences/[experience]`
 - **Index:** `ExperiencesView.tsx` — Gastronomy/Winery via `AnimatedCategoryList`.
 - **Detail:** `(content)/experiences/[experience]/page.tsx`. Hero (`/images/gastronomy.png`
-  default) + 2×2 grid (`/images/wine_glass.png`, `/images/people.png`) with two
+  default) + 2×2 grid (`/images/wine_glass.png`, `/images/people.jpg`) with two
   `ExperienceTextBlock`s + a **clickable static map** (`/images/Map-mgaloblishvili.jpg`) opening
   Google Maps in a new tab. Its footer is an **inline `SiteFooterMinimal`** (this page does **not**
   use `ContentFooter`).

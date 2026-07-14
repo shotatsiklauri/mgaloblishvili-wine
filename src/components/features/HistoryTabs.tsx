@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import Image from "next/image";
 import type { HistoryItem, HistoryItemId } from "@/data/content";
-import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
+import { useIntroReady } from "@/components/ui/useIntroReady";
 import { cn, toMtavruliIfGeorgian } from "@/lib/utils";
 import { focusRing } from "@/lib/focus-ring";
 
@@ -18,16 +19,22 @@ const PANEL_PHOTOS: Record<HistoryItemId, string> = {
 };
 
 export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
+  // Controlled so each panel knows when it becomes active and can (re)play its
+  // entrance. Toggling the entrance class on activation is what reliably
+  // restarts the CSS animation for the newly-shown section.
+  const [active, setActive] = useState<HistoryItemId>("encounter");
+
   return (
     <Tabs.Root
-      defaultValue="encounter"
+      value={active}
+      onValueChange={(value) => setActive(value as HistoryItemId)}
       orientation="horizontal"
       activationMode="manual"
       className="flex flex-1 flex-col lg:min-h-0"
     >
       <div className="flex flex-1 flex-col lg:min-h-0">
         {historyItems.map((tab) => (
-          <HistoryTabPanel key={tab.id} tab={tab} />
+          <HistoryTabPanel key={tab.id} tab={tab} isActive={active === tab.id} />
         ))}
       </div>
 
@@ -77,10 +84,22 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
 
 type HistoryTabPanelProps = {
   tab: HistoryItem;
+  isActive: boolean;
 };
 
-function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
+function HistoryTabPanel({ tab, isActive }: HistoryTabPanelProps) {
   const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
+  const ready = useIntroReady();
+
+  // Play the entrance only when this section is the active one AND the page-load
+  // brand-intro has cleared. Toggling pending → enter (which adds the
+  // animation-name) is what starts/restarts the fly-in-from-left slide, so it
+  // replays cleanly every time a section becomes active — on first load and on
+  // every switch — without stale state. Before then we hold the offset/hidden
+  // state to prevent a flash of unanimated content.
+  const on = ready && isActive;
+  const enter = (order: 1 | 2 | 3) =>
+    on ? `history-enter history-enter--${order}` : "history-enter--pending";
 
   return (
     <Tabs.Content
@@ -97,7 +116,12 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
           centers vertically with equal gaps. */}
       <section className="grid w-full items-center bg-white lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0">
         <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
-          <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">
+          <div
+            className={cn(
+              "relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]",
+              enter(1),
+            )}
+          >
             <Image
               src="/svgs/TheSymbol.svg"
               alt=""
@@ -108,10 +132,20 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
           </div>
 
           <div className="mt-9 max-w-[540px] lg:mt-[clamp(30px,2.639vw,44px)] lg:max-w-none">
-            <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]">
+            <h1
+              className={cn(
+                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]",
+                enter(2),
+              )}
+            >
               {tab.title}
             </h1>
-            <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:leading-[1.45] lg:font-light lg:tracking-normal">
+            <div
+              className={cn(
+                "type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:leading-[1.45] lg:font-light lg:tracking-normal",
+                enter(3),
+              )}
+            >
               {tab.body.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -120,7 +154,18 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
         </div>
 
         <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[2.222vw] lg:aspect-auto lg:h-[clamp(420px,34.375vw,560px)] lg:w-auto lg:self-center">
-          <IntroAwareHorizontalReveal className="absolute inset-0">
+          {/* Left→right clip reveal, coordinated to start with the symbol and
+              finish within the text window (~1s). Same gate as the text so it
+              replays on each activation; stays fixed (no slide / no scale). */}
+          <div
+            className={cn(
+              "absolute inset-0",
+              on
+                ? "horizontal-reveal-enter"
+                : "horizontal-reveal-enter--pending",
+            )}
+            style={on ? { animationDuration: "667ms" } : undefined}
+          >
             <Image
               src={photoSrc}
               alt=""
@@ -129,7 +174,7 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
               sizes="(min-width: 1024px) 52vw, 100vw"
               className="object-cover"
             />
-          </IntroAwareHorizontalReveal>
+          </div>
         </div>
       </section>
     </Tabs.Content>

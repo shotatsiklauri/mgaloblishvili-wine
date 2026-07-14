@@ -252,6 +252,17 @@ html::-webkit-scrollbar {
   }
 }
 
+@keyframes history-content-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes menu-divider-grow-v {
   from {
     opacity: 0;
@@ -358,6 +369,31 @@ html::-webkit-scrollbar {
 .horizontal-reveal-enter {
   will-change: clip-path;
   animation: reveal-left-to-right 1420ms ease-out both;
+}
+
+/* History section entrance: symbol → title → paragraph fly in from the left
+   (translateX -48px → 0, opacity 0 → 1) on a very tight stagger so it reads as
+   one coordinated motion, alongside the photo's left-to-right clip wipe; all
+   settle within ~0.7s. `both` holds the offset/transparent 0% state through the
+   stagger delay (no flash) and the final resting state after. --pending holds
+   that start state until the section is active and the brand-intro has cleared;
+   toggling pending → enter is what (re)starts the slide each activation. */
+.history-enter {
+  animation: history-content-enter 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+.history-enter--pending {
+  opacity: 0;
+  transform: translateX(-48px);
+}
+.history-enter--1 {
+  animation-delay: 0ms;
+}
+.history-enter--2 {
+  animation-delay: 33ms;
+}
+.history-enter--3 {
+  animation-delay: 67ms;
 }
 
 @media (min-width: 768px) {
@@ -504,6 +540,7 @@ html::-webkit-scrollbar {
   .menu-stagger,
   .category-enter-list > li,
   .wine-list-enter,
+  .history-enter,
   .horizontal-reveal-enter,
   .menu-divider-v {
     animation-duration: 1ms !important;
@@ -513,8 +550,13 @@ html::-webkit-scrollbar {
   .menu-stagger,
   .category-enter-list > li,
   .wine-list-enter,
+  .history-enter,
   .menu-divider-v {
     animation-name: menu-fade-in !important;
+  }
+  /* Reduced motion: no slide — opacity fade only, no positional movement. */
+  .history-enter--pending {
+    transform: none !important;
   }
   .horizontal-reveal-enter {
     animation-name: none !important;

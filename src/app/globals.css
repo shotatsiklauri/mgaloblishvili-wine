@@ -423,6 +423,60 @@ html::-webkit-scrollbar {
   will-change: transform;
 }
 
+/* /history section-switch: the outgoing panel slides a small distance and fades
+   while the incoming panel slides in from the opposite side — forward (to a
+   later section) = out-left / in-right, backward = out-right / in-left. Fast
+   (420ms) so it reads as a quick premium swap, not a carousel. The incoming
+   panel's own symbol/title/text/reveal/zoom entrances still play on top. */
+@keyframes history-panel-in-right {
+  from {
+    transform: translateX(8%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes history-panel-in-left {
+  from {
+    transform: translateX(-8%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes history-panel-out-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-8%);
+    opacity: 0;
+  }
+}
+@keyframes history-panel-out-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(8%);
+    opacity: 0;
+  }
+}
+.history-panel-enter-fwd {
+  animation: history-panel-in-right 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.history-panel-enter-back {
+  animation: history-panel-in-left 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.history-panel-exit-fwd {
+  animation: history-panel-out-left 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.history-panel-exit-back {
+  animation: history-panel-out-right 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 @media (min-width: 768px) {
   .wine-scroll-area {
     max-height: min(54vh, 380px);
@@ -589,6 +643,13 @@ html::-webkit-scrollbar {
   .intro-zoom {
     animation: none !important;
     transform: none !important;
+  }
+  /* Reduced motion: instant section swap, no slide (still fires animationend). */
+  .history-panel-enter-fwd,
+  .history-panel-enter-back,
+  .history-panel-exit-fwd,
+  .history-panel-exit-back {
+    animation-duration: 1ms !important;
   }
   .horizontal-reveal-enter {
     animation-name: none !important;

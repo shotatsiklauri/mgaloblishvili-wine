@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type AnimationEvent } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import Image from "next/image";
 import type { HistoryItem, HistoryItemId } from "@/data/content";
@@ -18,24 +18,69 @@ const PANEL_PHOTOS: Record<HistoryItemId, string> = {
   symbol: "/images/TheSymbol.jpg",
 };
 
+type Direction = "fwd" | "back";
+
 export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
-  // Controlled so each panel knows when it becomes active and can (re)play its
-  // entrance. Toggling the entrance class on activation is what reliably
-  // restarts the CSS animation for the newly-shown section.
+  // Controlled so each panel knows when it becomes active (and replays its
+  // entrance). `exiting` is the section currently animating out, plus the swap
+  // direction — forward (to a later tab) slides out-left/in-right, backward
+  // slides out-right/in-left. It's cleared when the exit animation finishes.
   const [active, setActive] = useState<HistoryItemId>("encounter");
+  const [exiting, setExiting] = useState<{
+    id: HistoryItemId;
+    dir: Direction;
+  } | null>(null);
+
+  const indexOf = (id: HistoryItemId) =>
+    historyItems.findIndex((i) => i.id === id);
+
+  const handleChange = (value: string) => {
+    const next = value as HistoryItemId;
+    if (next === active) return;
+    const dir: Direction = indexOf(next) > indexOf(active) ? "fwd" : "back";
+    setExiting({ id: active, dir });
+    setActive(next);
+  };
 
   return (
     <Tabs.Root
       value={active}
-      onValueChange={(value) => setActive(value as HistoryItemId)}
+      onValueChange={handleChange}
       orientation="horizontal"
       activationMode="manual"
       className="flex flex-1 flex-col lg:min-h-0"
     >
-      <div className="flex flex-1 flex-col lg:min-h-0">
-        {historyItems.map((tab) => (
-          <HistoryTabPanel key={tab.id} tab={tab} isActive={active === tab.id} />
-        ))}
+      {/* Panels overlap during a swap: the incoming one is in flow (defines the
+          height, no layout shift) and the outgoing one is absolutely overlaid.
+          overflow-x-clip contains the horizontal slide without clipping the
+          vertical/scroll on mobile. */}
+      <div className="relative flex flex-1 flex-col overflow-x-clip lg:min-h-0">
+        {historyItems.map((tab) => {
+          const isActive = active === tab.id;
+          const isExiting = exiting?.id === tab.id;
+          const slideClass =
+            isActive && exiting
+              ? exiting.dir === "fwd"
+                ? "history-panel-enter-fwd"
+                : "history-panel-enter-back"
+              : isExiting
+                ? exiting.dir === "fwd"
+                  ? "history-panel-exit-fwd"
+                  : "history-panel-exit-back"
+                : null;
+          return (
+            <HistoryTabPanel
+              key={tab.id}
+              tab={tab}
+              isActive={isActive}
+              isExiting={!!isExiting}
+              slideClass={slideClass}
+              onExitEnd={() =>
+                setExiting((e) => (e?.id === tab.id ? null : e))
+              }
+            />
+          );
+        })}
       </div>
 
       <div className="shrink-0">
@@ -85,28 +130,49 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
 type HistoryTabPanelProps = {
   tab: HistoryItem;
   isActive: boolean;
+  isExiting: boolean;
+  slideClass: string | null;
+  onExitEnd: () => void;
 };
 
-function HistoryTabPanel({ tab, isActive }: HistoryTabPanelProps) {
+function HistoryTabPanel({
+  tab,
+  isActive,
+  isExiting,
+  slideClass,
+  onExitEnd,
+}: HistoryTabPanelProps) {
   const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
   const ready = useIntroReady();
 
-  // Play the entrance only when this section is the active one AND the page-load
-  // brand-intro has cleared. Toggling pending → enter (which adds the
-  // animation-name) is what starts/restarts the fly-in-from-left slide, so it
-  // replays cleanly every time a section becomes active — on first load and on
-  // every switch — without stale state. Before then we hold the offset/hidden
-  // state to prevent a flash of unanimated content.
-  const on = ready && isActive;
+  // The inner entrances play when this section is active; while it's exiting we
+  // keep them in their settled state (isExiting) so the outgoing content stays
+  // fully visible as it slides away rather than reverting to the hidden state.
+  const on = ready && (isActive || isExiting);
   const enter = (order: 1 | 2 | 3) =>
     on ? `intro-flyin intro-flyin--${order}` : "intro-flyin--pending";
+
+  // Active = in flow (defines height). Exiting = overlaid (block overrides
+  // Radix's `hidden` on the now-inactive panel). Otherwise hidden.
+  const layout = isExiting
+    ? "absolute inset-0 block"
+    : isActive
+      ? "lg:min-h-0 lg:flex-1"
+      : "hidden";
+
+  const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
+    if (isExiting && event.animationName.startsWith("history-panel-out")) {
+      onExitEnd();
+    }
+  };
 
   return (
     <Tabs.Content
       value={tab.id}
       forceMount
       tabIndex={-1}
-      className="outline-none data-[state=inactive]:hidden lg:min-h-0 lg:flex-1"
+      onAnimationEnd={handleAnimationEnd}
+      className={cn("outline-none", layout, slideClass)}
     >
       {/* Same symbol/title/text typography as /vineyards/[region]; photo differs.
           Figma @1440×900: symbol 87×96 @ (53,225), title 48px @ (50,359), body

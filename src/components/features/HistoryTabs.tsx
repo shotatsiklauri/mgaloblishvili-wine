@@ -172,7 +172,7 @@ function HistoryTabPanel({ tab, isActive }: HistoryTabPanelProps) {
               fill
               priority={tab.id === "encounter"}
               sizes="(min-width: 1024px) 52vw, 100vw"
-              className="object-cover"
+              className={cn("object-cover", on && "intro-zoom")}
             />
           </div>
         </div>

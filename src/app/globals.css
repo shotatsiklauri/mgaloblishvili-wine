@@ -263,6 +263,15 @@ html::-webkit-scrollbar {
   }
 }
 
+@keyframes intro-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
 @keyframes menu-divider-grow-v {
   from {
     opacity: 0;
@@ -398,6 +407,17 @@ html::-webkit-scrollbar {
 }
 .intro-flyin--4 {
   animation-delay: 100ms;
+}
+
+/* Slow, subtle image zoom that begins the moment the 667ms left-to-right reveal
+   finishes (delay = reveal duration, so there's no pause) and holds at the end.
+   Applied to the <img> only; the container stays fixed with overflow-hidden so
+   just the image scales. It restarts with the reveal when the section changes
+   (History toggles this class; vineyard/wine remount the reveal wrapper, which
+   remounts the image and this animation with it). */
+.intro-zoom {
+  animation: intro-zoom 1750ms ease-out 667ms both;
+  will-change: transform;
 }
 
 @media (min-width: 768px) {
@@ -560,6 +580,11 @@ html::-webkit-scrollbar {
   }
   /* Reduced motion: no slide — opacity fade only, no positional movement. */
   .intro-flyin--pending {
+    transform: none !important;
+  }
+  /* Reduced motion: no zoom — image stays at rest. */
+  .intro-zoom {
+    animation: none !important;
     transform: none !important;
   }
   .horizontal-reveal-enter {

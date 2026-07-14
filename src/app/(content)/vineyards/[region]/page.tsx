@@ -108,7 +108,7 @@ export default async function VineyardRegionPage({
                 fill
                 priority
                 sizes="(min-width: 1024px) 58vw, 100vw"
-                className="object-cover"
+                className="intro-zoom object-cover"
               />
             </IntroAwareHorizontalReveal>
 

@@ -124,15 +124,20 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
           <div className="flex justify-center pb-16 lg:absolute lg:left-[61.11%] lg:top-[9.31vw] lg:block lg:pb-0">
             {/* Left→right clip reveal on the bottle, same 667ms as the other
-                detail pages. w-fit so the clip is relative to the bottle itself. */}
-            <IntroAwareHorizontalReveal durationMs={667} className="w-fit">
+                detail pages. w-fit so the clip is relative to the bottle itself;
+                overflow-hidden so the post-reveal zoom is clipped to the fixed
+                frame (this wrapper's container isn't overflow-clipped). */}
+            <IntroAwareHorizontalReveal
+              durationMs={667}
+              className="w-fit overflow-hidden"
+            >
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
                 alt=""
                 width={308}
                 height={1114}
                 sizes="(min-width: 1024px) 21vw, (min-width: 768px) 214px, 70vw"
-                className="h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
+                className="intro-zoom h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
               />
             </IntroAwareHorizontalReveal>
           </div>

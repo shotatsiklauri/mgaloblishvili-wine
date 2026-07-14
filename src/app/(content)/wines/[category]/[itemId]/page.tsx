@@ -49,7 +49,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               in left→right (revealFrom="25%"). */}
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
-            durationMs={667}
+            durationMs={800}
             revealFrom="25%"
           >
             <Image
@@ -131,9 +131,9 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </div>
 
           <div className="flex justify-center pb-16 lg:absolute lg:left-[61.11%] lg:top-[9.31vw] lg:block lg:pb-0">
-            {/* Left→right clip reveal on the bottle, same 667ms as the other
+            {/* Left→right clip reveal on the bottle, same 800ms as the other
                 detail pages. w-fit so the clip is relative to the bottle itself. */}
-            <IntroAwareHorizontalReveal durationMs={667} className="w-fit">
+            <IntroAwareHorizontalReveal durationMs={800} className="w-fit">
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
                 alt=""

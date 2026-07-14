@@ -370,7 +370,7 @@ html::-webkit-scrollbar {
 
 .wine-list-enter {
   opacity: 0;
-  animation: wine-list-fade-right 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: wine-list-fade-right 1176ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .horizontal-reveal-enter--pending {
@@ -380,7 +380,7 @@ html::-webkit-scrollbar {
 
 .horizontal-reveal-enter {
   will-change: clip-path;
-  animation: reveal-left-to-right 1420ms ease-out both;
+  animation: reveal-left-to-right 1704ms ease-out both;
 }
 
 /* Section entrance shared by the history, vineyard-region and wine-detail pages:
@@ -392,7 +392,7 @@ html::-webkit-scrollbar {
    that start state until the content is active and the brand-intro has cleared;
    toggling pending → enter is what (re)starts the slide each activation. */
 .intro-flyin {
-  animation: intro-flyin 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: intro-flyin 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
 }
 .intro-flyin--pending {
@@ -403,45 +403,51 @@ html::-webkit-scrollbar {
   animation-delay: 0ms;
 }
 .intro-flyin--2 {
-  animation-delay: 33ms;
+  animation-delay: 40ms;
 }
 .intro-flyin--3 {
-  animation-delay: 67ms;
+  animation-delay: 80ms;
 }
 .intro-flyin--4 {
-  animation-delay: 100ms;
+  animation-delay: 120ms;
 }
 
-/* Slow, subtle image zoom that begins the moment the 667ms left-to-right reveal
+/* Slow, subtle image zoom that begins the moment the 800ms left-to-right reveal
    finishes (delay = reveal duration, so there's no pause) and holds at the end.
    Applied to the <img> only; the container stays fixed with overflow-hidden so
    just the image scales. It restarts with the reveal when the section changes
    (History toggles this class; vineyard/wine remount the reveal wrapper, which
    remounts the image and this animation with it). */
 .intro-zoom {
-  animation: intro-zoom 1750ms ease-out 667ms both;
+  animation: intro-zoom 1750ms ease-out 800ms both;
   will-change: transform;
 }
 
-/* /history section-switch: the outgoing panel slides a small distance and fades
-   while the incoming panel slides in from the opposite side — forward (to a
-   later section) = out-left / in-right, backward = out-right / in-left. Fast
-   (420ms) so it reads as a quick premium swap, not a carousel. The incoming
-   panel's own symbol/title/text/reveal/zoom entrances still play on top. */
+/* /history section-switch: the whole outgoing panel flies out to one side while
+   fading, and the whole incoming panel flies in from the opposite side while
+   fading up — forward (to a later section) = out-left / in-right, backward =
+   out-right / in-left. Bold travel (40%) + crossfade so each swap clearly reads
+   as "flew out / flew in". On a switch the panel's inner symbol/title/text/image
+   entrances are held settled (they only play on first load), so this fly is the
+   single, clean motion instead of competing with the inner replays. */
 @keyframes history-panel-in-right {
   from {
-    transform: translateX(8%);
+    transform: translateX(40%);
+    opacity: 0;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 @keyframes history-panel-in-left {
   from {
-    transform: translateX(-8%);
+    transform: translateX(-40%);
+    opacity: 0;
   }
   to {
     transform: translateX(0);
+    opacity: 1;
   }
 }
 @keyframes history-panel-out-left {
@@ -450,7 +456,7 @@ html::-webkit-scrollbar {
     opacity: 1;
   }
   to {
-    transform: translateX(-8%);
+    transform: translateX(-40%);
     opacity: 0;
   }
 }
@@ -460,21 +466,21 @@ html::-webkit-scrollbar {
     opacity: 1;
   }
   to {
-    transform: translateX(8%);
+    transform: translateX(40%);
     opacity: 0;
   }
 }
 .history-panel-enter-fwd {
-  animation: history-panel-in-right 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: history-panel-in-right 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .history-panel-enter-back {
-  animation: history-panel-in-left 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: history-panel-in-left 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .history-panel-exit-fwd {
-  animation: history-panel-out-left 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: history-panel-out-left 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .history-panel-exit-back {
-  animation: history-panel-out-right 420ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: history-panel-out-right 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @media (min-width: 768px) {

@@ -83,8 +83,9 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
         })}
       </div>
 
-      <div className="shrink-0">
-        {/* Figma tab bar: 120px tall, group centered (~982px @ 1440); words
+      <div className="shrink-0 bg-white">
+        {/* Figma tab bar: full-width white band, 120px tall (@1440), group
+            centered (~982px @ 1440); words
             Inter 600 / 12px / 0.3em near the top, 3px black underline at the
             bottom that reveals on hover/active, accent text when active. */}
         <Tabs.List
@@ -145,12 +146,19 @@ function HistoryTabPanel({
   const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
   const ready = useIntroReady();
 
-  // The inner entrances play when this section is active; while it's exiting we
-  // keep them in their settled state (isExiting) so the outgoing content stays
-  // fully visible as it slides away rather than reverting to the hidden state.
-  const on = ready && (isActive || isExiting);
+  // The inner symbol/title/text/image entrances replay every time this section
+  // becomes active — so each switched-to tab gets the same fly-in + left→right
+  // reveal + zoom as Encounter on first load. While a section is exiting we keep
+  // its inner content settled (isExiting) so it stays fully visible as it flies
+  // away rather than snapping back to the hidden start.
+  const introActive = ready && (isActive || isExiting);
+  const introPending = !ready && isActive;
   const enter = (order: 1 | 2 | 3) =>
-    on ? `intro-flyin intro-flyin--${order}` : "intro-flyin--pending";
+    introActive
+      ? `intro-flyin intro-flyin--${order}`
+      : introPending
+        ? "intro-flyin--pending"
+        : "";
 
   // Active = in flow (defines height). Exiting = overlaid (block overrides
   // Radix's `hidden` on the now-inactive panel). Otherwise hidden.
@@ -221,16 +229,18 @@ function HistoryTabPanel({
 
         <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[2.222vw] lg:aspect-auto lg:h-[clamp(420px,34.375vw,560px)] lg:w-auto lg:self-center">
           {/* Left→right clip reveal, coordinated to start with the symbol and
-              finish within the text window (~1s). Same gate as the text so it
-              replays on each activation; stays fixed (no slide / no scale). */}
+              finish within the text window (~1s), on first load only. On a
+              switch the image arrives settled and rides the whole-panel fly. */}
           <div
             className={cn(
               "absolute inset-0",
-              on
+              introActive
                 ? "horizontal-reveal-enter"
-                : "horizontal-reveal-enter--pending",
+                : introPending
+                  ? "horizontal-reveal-enter--pending"
+                  : "",
             )}
-            style={on ? { animationDuration: "667ms" } : undefined}
+            style={introActive ? { animationDuration: "800ms" } : undefined}
           >
             <Image
               src={photoSrc}
@@ -238,7 +248,7 @@ function HistoryTabPanel({
               fill
               priority={tab.id === "encounter"}
               sizes="(min-width: 1024px) 52vw, 100vw"
-              className={cn("object-cover", on && "intro-zoom")}
+              className={cn("object-cover", introActive && "intro-zoom")}
             />
           </div>
         </div>

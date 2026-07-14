@@ -101,7 +101,7 @@ export default async function VineyardRegionPage({
           {/* Photo is vertically centered in the header↔footer band (equal gap
               above and below), while the text column stays top-pinned. */}
           <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-[clamp(560px,45.35vw,720px)] lg:self-center">
-            <IntroAwareHorizontalReveal className="absolute inset-0" durationMs={667}>
+            <IntroAwareHorizontalReveal className="absolute inset-0" durationMs={800}>
               <Image
                 src={region.image1Url ?? "/images/vineyard-kakheti.png"}
                 alt=""
@@ -114,7 +114,7 @@ export default async function VineyardRegionPage({
 
             <IntroAwareHorizontalReveal
               delayMs={500}
-              durationMs={667}
+              durationMs={800}
               className="absolute inset-y-0 left-0 z-10 w-[15%]"
             >
               <div

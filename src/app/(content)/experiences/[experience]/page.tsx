@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import { getServerLocale } from "@/lib/locale";
 import type { Experience, ExperienceSection } from "@/data/content";
 import { findExperience, getContent, getResolvedContent } from "@/data/content";
+import { cn } from "@/lib/utils";
 import { HeaderContent } from "@/components/layout/HeaderContent";
-import { EditorialTextCell } from "@/components/layout/EditorialTextCell";
 import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
+import { InViewReveal } from "@/components/ui/InViewReveal";
 import { getResolvedContact, type ResolvedContact } from "@/lib/sanity/contact";
 
 const GOOGLE_MAPS_LOCATION_URL =
@@ -68,84 +69,162 @@ function EditorialExperiencePage({
   readonly contact: ResolvedContact;
 }) {
   const [firstSection, secondSection] = sections;
+  const wineSrc = experience.image1Url ?? "/images/wine_glass.png";
+  // The left column is ONE photo (people.jpg by default) with the 70% frost
+  // wrapping its top + right — not a separate hero image over it.
+  const peopleSrc = experience.image2Url ?? "/images/people.jpg";
+  const mapSrc = experience.mapImageUrl ?? "/images/Map-mgaloblishvili.jpg";
+  const mapHref = experience.mapUrl ?? GOOGLE_MAPS_LOCATION_URL;
 
   return (
     <div className="flex min-h-svh flex-col">
       <HeaderContent activeId="experiences" />
       <main className="text-ink flex-1 pt-16 md:pt-24 lg:pt-0">
-        {/* Row 1 — first text block over a frosted image, wine glass alongside */}
-        <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
-          <div className="relative flex min-h-[380px] overflow-hidden md:min-h-[440px] lg:min-h-[476px]">
+        {/* ===================== FIRST PART — desktop (lg+) =====================
+            Pixel-mapped to Figma @1440 and scaled by vw so the whole frame grows
+            with the viewport. Left column 828 (57.5%), right 612 (42.5%); the band
+            is 880 tall (61.11vw) and starts 109px (7.569vw) below the header. */}
+        <section className="hidden lg:flex lg:pt-[7.569vw]">
+          {/* LEFT COLUMN — one tasting photo (people.jpg) exactly 828×880 (Figma),
+              with a 30% white frost wrapping its top + right into an L: the intro
+              copy sits over the frosted top band, and the people stay visible in
+              the bottom-left window. */}
+          <div className="relative h-[61.111vw] w-[57.5%] overflow-hidden">
             <Image
-              src={experience.heroImageUrl ?? "/images/gastronomy.png"}
+              src={peopleSrc}
               alt=""
               fill
               priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="58vw"
+              className="object-cover object-center"
+            />
+            {/* 30% frost as ONE clipped L (no seam between top + right): full rect
+                minus the bottom-left window. Window = below the 47.84% top band
+                (29.236/61.111) and left of the 77.39% edge (strip = 13/57.5). */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-white/30 backdrop-blur-sm"
+              style={{
+                clipPath:
+                  "polygon(0 0, 100% 0, 100% 100%, 77.39% 100%, 77.39% 47.84%, 0 47.84%)",
+              }}
+            />
+            {/* Intro copy — Figma box 680×323 @ (50, 264): left 3.472vw, top
+                2.431vw, width 47.222vw, height 22.431vw, text vertically centered
+                (vertical-align: middle). */}
+            <div className="absolute top-[2.431vw] left-[3.472vw] flex h-[22.431vw] w-[47.222vw] flex-col justify-center">
+              {firstSection ? <ExperienceProse section={firstSection} /> : null}
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN — wine photo, then the symbol + welcome copy. */}
+          <div className="w-[42.5%]">
+            {/* Starts 22px (1.528vw) lower than the left column; 418 tall. */}
+            <div className="relative mt-[1.528vw] h-[29.028vw] overflow-hidden">
+              <Image
+                src={wineSrc}
+                alt=""
+                fill
+                sizes="43vw"
+                className="object-cover object-center"
+              />
+            </div>
+            {/* Inset 50px (3.472vw); gap wine→symbol 52px (3.611vw). */}
+            <div className="mt-[3.611vw] pl-[3.472vw]">
+              <div className="relative h-[5vw] w-[4.514vw]">
+                <Image
+                  src="/svgs/TheSymbol.svg"
+                  alt=""
+                  fill
+                  unoptimized
+                  className="object-contain object-left"
+                />
+              </div>
+              <div className="mt-[1.25vw] w-[35.556vw] max-w-full">
+                {secondSection ? (
+                  <ExperienceProse section={secondSection} />
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== FIRST PART — mobile / tablet ===================== */}
+        <section className="lg:hidden">
+          {/* One tasting photo with the frost capping its top (holding the intro
+              copy); the people stay visible below it. */}
+          <div className="relative min-h-[520px] overflow-hidden md:min-h-[600px]">
+            <Image
+              src={peopleSrc}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
               className="object-cover object-center"
             />
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-white/70 backdrop-blur-md"
+              className="absolute inset-x-0 top-0 h-[58%] bg-white/70 backdrop-blur-sm"
             />
-            {firstSection ? (
-              <ExperienceTextBlock
-                section={firstSection}
-                className="relative z-10"
+            <div className="absolute inset-x-0 top-0 px-6 py-10 md:px-12 md:py-12">
+              {firstSection ? <ExperienceProse section={firstSection} /> : null}
+            </div>
+          </div>
+          <div className="relative h-[272px] overflow-hidden md:h-[380px]">
+            <Image
+              src={wineSrc}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
+          <div className="px-6 py-10 md:px-12 md:py-12">
+            <div className="relative mb-6 h-[72px] w-[65px]">
+              <Image
+                src="/svgs/TheSymbol.svg"
+                alt=""
+                fill
+                unoptimized
+                className="object-contain object-left"
               />
-            ) : null}
-          </div>
-
-          <div className="relative h-[272px] overflow-hidden md:h-[357px] lg:h-[476px]">
-            <Image
-              src={experience.image1Url ?? "/images/wine_glass.png"}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover object-center"
-            />
+            </div>
+            {secondSection ? <ExperienceProse section={secondSection} /> : null}
           </div>
         </section>
 
-        {/* Row 2 — people, then the crossroads symbol + second text block */}
-        <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
-          <div className="relative h-[272px] overflow-hidden md:h-[357px] lg:h-[476px]">
-            <Image
-              src={experience.image2Url ?? "/images/people.jpg"}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover object-center"
-            />
-          </div>
-
-          {secondSection ? (
-            <ExperienceTextBlock section={secondSection} symbol />
-          ) : (
-            <div />
-          )}
-        </section>
-
-        <section>
+        {/* ===================== MAP =====================
+            Gap before the map: 152px (10.556vw) at lg. Full-bleed, 2px radius,
+            with a 30% white haze over the top ~90% (Figma overlay 537 of 598).
+            Reveals top→bottom (+ slow zoom) the first time it scrolls into view,
+            mirroring the vineyards photo but on the vertical axis. */}
+        <section className="mt-10 lg:mt-[10.556vw]">
           <Link
-            href={experience.mapUrl ?? GOOGLE_MAPS_LOCATION_URL}
+            href={mapHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open location in Google Maps"
-            className="block cursor-pointer"
+            className="relative block cursor-pointer overflow-hidden rounded-[2px]"
           >
-            <Image
-              src={experience.mapImageUrl ?? "/images/Map-mgaloblishvili.jpg"}
-              alt=""
-              width={1400}
-              height={583}
-              sizes="100vw"
-              className="h-auto w-full"
-            />
+            <InViewReveal durationMs={800} zoom>
+              <Image
+                src={mapSrc}
+                alt=""
+                width={1440}
+                height={598}
+                sizes="100vw"
+                className="h-auto w-full"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-[89.8%] bg-white/30"
+              />
+            </InViewReveal>
           </Link>
         </section>
 
-        <section className="flex shrink-0 items-center justify-center px-6 min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(104px,8.333vw,132px)]">
+        {/* ===================== FOOTER ADDRESS ===================== */}
+        <section className="flex items-center justify-center px-6 py-8 lg:min-h-[7.639vw]">
           <SiteFooterMinimal tone="light" contact={contact} />
         </section>
       </main>
@@ -153,36 +232,27 @@ function EditorialExperiencePage({
   );
 }
 
-function ExperienceTextBlock({
+function ExperienceProse({
   section,
   className,
-  symbol = false,
 }: {
   readonly section: ExperienceSection;
   readonly className?: string;
-  readonly symbol?: boolean;
 }) {
   return (
-    <EditorialTextCell className={className}>
-      {symbol ? (
-        <div className="relative mb-8 aspect-square w-16 overflow-hidden lg:w-20">
-          <Image
-            src="/svgs/TheSymbol.svg"
-            alt=""
-            fill
-            unoptimized
-            className="object-contain"
-          />
-        </div>
-      ) : null}
-      <h2 className="type-headline lg:text-[22px] xl:text-[24px]">
-        {section.heading}
-      </h2>
-      <div className="type-body-editorial text-ink/80 mt-5 space-y-4 lg:text-[16px]">
+    <div
+      className={cn(
+        "font-serif leading-[1.5] text-[15px] md:text-[16px] lg:text-[clamp(14px,1.111vw,18px)]",
+        className,
+      )}
+    >
+      {/* Figma: the first line is bold (700); the rest is Medium (500), same size. */}
+      <h2 className="font-bold">{section.heading}</h2>
+      <div className="text-ink/85 mt-5 space-y-4 font-medium lg:mt-[1.4vw] lg:space-y-[1.1vw]">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
       </div>
-    </EditorialTextCell>
+    </div>
   );
 }

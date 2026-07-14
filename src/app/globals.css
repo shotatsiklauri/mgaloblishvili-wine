@@ -255,6 +255,19 @@ html::-webkit-scrollbar {
   }
 }
 
+/* Same clip wipe as reveal-left-to-right, but running top→bottom (the wipe
+   clears the bottom inset). Used by the /experiences map when it scrolls in. */
+@keyframes reveal-top-to-bottom {
+  from {
+    -webkit-clip-path: inset(0 0 100% 0);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 @keyframes intro-flyin {
   from {
     opacity: 0;
@@ -381,6 +394,18 @@ html::-webkit-scrollbar {
 .horizontal-reveal-enter {
   will-change: clip-path;
   animation: reveal-left-to-right 1704ms ease-out both;
+}
+
+/* Top→bottom variant (scroll-triggered by InViewReveal). Pending holds the
+   fully-clipped start so there is no flash before it enters the viewport. */
+.vertical-reveal-enter--pending {
+  -webkit-clip-path: inset(0 0 100% 0);
+  clip-path: inset(0 0 100% 0);
+}
+
+.vertical-reveal-enter {
+  will-change: clip-path;
+  animation: reveal-top-to-bottom 800ms ease-out both;
 }
 
 /* Section entrance shared by the history, vineyard-region and wine-detail pages:
@@ -658,6 +683,13 @@ html::-webkit-scrollbar {
     animation-duration: 1ms !important;
   }
   .horizontal-reveal-enter {
+    animation-name: none !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
+  }
+  /* Reduced motion: no wipe, and never leave the map clipped/hidden. */
+  .vertical-reveal-enter,
+  .vertical-reveal-enter--pending {
     animation-name: none !important;
     -webkit-clip-path: none !important;
     clip-path: none !important;

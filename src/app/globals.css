@@ -451,20 +451,22 @@ html::-webkit-scrollbar {
   -webkit-clip-path: inset(0 100% 0 0);
   clip-path: inset(0 100% 0 0);
 }
+/* 800ms ease-out — same speed as the /history photo reveal (and vineyards /
+   wines / map), so every left→right / bottom→top / top→bottom wipe matches. */
 .exp-frost-band {
   will-change: clip-path;
-  animation: exp-frost-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: exp-frost-up 800ms ease-out both;
 }
 .exp-frost-strip {
   will-change: clip-path;
-  animation: exp-frost-right 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: exp-frost-right 800ms ease-out both;
 }
 .exp-intro-text--pending {
   opacity: 0;
 }
 /* Delay ≈ frost duration so the copy only appears once the frost has settled. */
 .exp-intro-text {
-  animation: exp-intro-text 600ms ease-out 950ms both;
+  animation: exp-intro-text 600ms ease-out 850ms both;
 }
 
 /* Section entrance shared by the history, vineyard-region and wine-detail pages:

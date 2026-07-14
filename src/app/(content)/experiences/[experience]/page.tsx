@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
 import { InViewReveal } from "@/components/ui/InViewReveal";
+import { ExperienceFrostIntro } from "@/components/ui/ExperienceFrostIntro";
 import { getResolvedContact, type ResolvedContact } from "@/lib/sanity/contact";
 
 const GOOGLE_MAPS_LOCATION_URL =
@@ -85,10 +86,10 @@ function EditorialExperiencePage({
             with the viewport. Left column 828 (57.5%), right 612 (42.5%); the band
             is 880 tall (61.11vw) and starts 109px (7.569vw) below the header. */}
         <section className="hidden lg:flex lg:pt-[7.569vw]">
-          {/* LEFT COLUMN — one tasting photo (people.jpg) exactly 828×880 (Figma),
-              with a 30% white frost wrapping its top + right into an L: the intro
-              copy sits over the frosted top band, and the people stay visible in
-              the bottom-left window. */}
+          {/* LEFT COLUMN — one tasting photo (people.jpg) exactly 828×880 (Figma).
+              The 30% white frost wraps its top + right into an L and the intro copy
+              sits over the frosted top band; both animate in on load (top band
+              bottom→top, right strip left→right, copy fades up after). */}
           <div className="relative h-[61.111vw] w-[57.5%] overflow-hidden">
             <Image
               src={peopleSrc}
@@ -98,23 +99,9 @@ function EditorialExperiencePage({
               sizes="58vw"
               className="object-cover object-center"
             />
-            {/* 30% frost as ONE clipped L (no seam between top + right): full rect
-                minus the bottom-left window. Window = below the 47.84% top band
-                (29.236/61.111) and left of the 77.39% edge (strip = 13/57.5). */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-white/30 backdrop-blur-sm"
-              style={{
-                clipPath:
-                  "polygon(0 0, 100% 0, 100% 100%, 77.39% 100%, 77.39% 47.84%, 0 47.84%)",
-              }}
-            />
-            {/* Intro copy — Figma box 680×323 @ (50, 264): left 3.472vw, top
-                2.431vw, width 47.222vw, height 22.431vw, text vertically centered
-                (vertical-align: middle). */}
-            <div className="absolute top-[2.431vw] left-[3.472vw] flex h-[22.431vw] w-[47.222vw] flex-col justify-center">
+            <ExperienceFrostIntro>
               {firstSection ? <ExperienceProse section={firstSection} /> : null}
-            </div>
+            </ExperienceFrostIntro>
           </div>
 
           {/* RIGHT COLUMN — wine photo, then the symbol + welcome copy. */}

@@ -268,6 +268,39 @@ html::-webkit-scrollbar {
   }
 }
 
+/* /experiences frosted intro: the top band wipes bottom→top and the right strip
+   wipes left→right; once both settle the intro copy fades up on top. */
+@keyframes exp-frost-up {
+  from {
+    -webkit-clip-path: inset(100% 0 0 0);
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes exp-frost-right {
+  from {
+    -webkit-clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes exp-intro-text {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes intro-flyin {
   from {
     opacity: 0;
@@ -406,6 +439,32 @@ html::-webkit-scrollbar {
 .vertical-reveal-enter {
   will-change: clip-path;
   animation: reveal-top-to-bottom 800ms ease-out both;
+}
+
+/* /experiences frost + intro copy (played once the brand intro clears). The two
+   frost rects are plain (no blur) so they sit flush with no seam. */
+.exp-frost-band--pending {
+  -webkit-clip-path: inset(100% 0 0 0);
+  clip-path: inset(100% 0 0 0);
+}
+.exp-frost-strip--pending {
+  -webkit-clip-path: inset(0 100% 0 0);
+  clip-path: inset(0 100% 0 0);
+}
+.exp-frost-band {
+  will-change: clip-path;
+  animation: exp-frost-up 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.exp-frost-strip {
+  will-change: clip-path;
+  animation: exp-frost-right 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.exp-intro-text--pending {
+  opacity: 0;
+}
+/* Delay ≈ frost duration so the copy only appears once the frost has settled. */
+.exp-intro-text {
+  animation: exp-intro-text 600ms ease-out 950ms both;
 }
 
 /* Section entrance shared by the history, vineyard-region and wine-detail pages:
@@ -693,6 +752,22 @@ html::-webkit-scrollbar {
     animation-name: none !important;
     -webkit-clip-path: none !important;
     clip-path: none !important;
+  }
+  /* Reduced motion: /experiences frost + copy appear at rest, never hidden. */
+  .exp-frost-band,
+  .exp-frost-strip,
+  .exp-frost-band--pending,
+  .exp-frost-strip--pending {
+    animation-name: none !important;
+    -webkit-clip-path: none !important;
+    clip-path: none !important;
+  }
+  .exp-intro-text {
+    animation-name: menu-fade-in !important;
+    animation-delay: 0ms !important;
+  }
+  .exp-intro-text--pending {
+    opacity: 1 !important;
   }
   .brand-intro {
     animation-duration: 400ms !important;

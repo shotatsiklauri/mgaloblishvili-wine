@@ -208,11 +208,13 @@ export function VineyardRegionsOverlay({
         aria-label="Vineyard regions"
         className={cn(
           "absolute z-10 hidden text-left md:block",
-          "md:top-[15%] md:right-8 md:w-[min(64vw,240px)]",
-          "lg:top-[17%] lg:right-[7vw] lg:w-[260px] xl:right-[8vw]",
+          // Figma @1440×900: left 1085 (75.35%), top 310 from page-top, 225×225 box.
+          // Map section sits below the ~120px header, so 310 => ~24.26% of section height.
+          "md:top-[24.26%] md:left-[72%] md:w-[min(30vw,240px)]",
+          "lg:top-[24.26%] lg:left-[75.35%] lg:w-[clamp(180px,15.625vw,260px)]",
         )}
       >
-        <ul className="space-y-2 md:space-y-3">
+        <ul className="flex h-[clamp(180px,15.625vw,260px)] flex-col justify-between">
           {regions.map((region) => (
             <li key={region.id}>
               <Link
@@ -223,7 +225,8 @@ export function VineyardRegionsOverlay({
                 onFocus={enter(region.id)}
                 onBlur={leave}
                 className={cn(
-                  "type-submenu inline-block rounded-sm text-[27px] leading-[1.5]",
+                  // Figma: Noto Serif Georgian 300, 27px @1440 (1.875vw), lh 100%.
+                  "type-submenu inline-block rounded-sm text-[clamp(22px,1.875vw,32px)] leading-none",
                   "transition-colors duration-300 ease-out motion-reduce:transition-none",
                   isHighlighted(region.id)
                     ? "text-ink-inverse"

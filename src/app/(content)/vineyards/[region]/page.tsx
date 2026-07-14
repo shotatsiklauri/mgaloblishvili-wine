@@ -41,29 +41,39 @@ export default async function VineyardRegionPage({
   if (!region) notFound();
 
   return (
-    <div className="bg-surface-dark flex min-h-svh flex-col lg:h-svh lg:overflow-hidden">
+    <div className="bg-surface-dark flex min-h-svh flex-col">
       <HeaderContent activeId="vineyards" />
-      <main className="text-ink flex-1 bg-white lg:min-h-0 lg:overflow-hidden">
-        <section className="grid w-full items-center bg-white lg:h-full lg:min-h-0 lg:grid-cols-[42%_58%] lg:py-12">
-          <div className="px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:px-[3.5vw] lg:py-0">
-            <div className="relative aspect-square w-24 overflow-hidden lg:w-28">
+      <main className="text-ink flex-1 bg-white">
+        {/* Figma @1440×900: symbol 87×96 @ (53,225), title 48px @ (50,359),
+            subtitle Inter-300 16px @ (53,426), body serif-300 16px @ (52,477),
+            photo 847×653 @ (593,200). Cols split at 593px = 41.18%. lg pins content
+            from the top; mobile/tablet keep the responsive flow. Not hard-locked to
+            900: the photo bottom sits at 853 and the longest region (Imereti) runs
+            past it, so the page scrolls when content exceeds the viewport rather
+            than clipping — short regions still render at exactly 900. */}
+        {/* Section is at least the header↔footer band tall (100svh minus the
+            fluid header + footer heights) so the photo can center within it with
+            equal top/bottom gaps. Grows past the band for long regions. */}
+        <section className="grid w-full items-center bg-white lg:grid-cols-[41.18%_58.82%] lg:items-start lg:py-0 lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))]">
+          <div className="px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
+            <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">
               <Image
                 src="/images/TheSymbol.jpg"
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 112px, 96px"
+                sizes="(min-width: 1024px) 96px, 96px"
                 className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
               />
             </div>
 
-            <div className="mt-9 max-w-[540px] lg:mt-10 lg:max-w-[640px]">
-              <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[56px]">
+            <div className="mt-9 max-w-[540px] lg:mt-[clamp(30px,2.639vw,44px)] lg:max-w-none">
+              <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]">
                 {region.title}
               </h1>
               {region.subtitle ? (
                 <p
                   className={cn(
-                    "mt-3 font-sans text-[13px] leading-[1.35] font-normal lg:text-[15px]",
+                    "mt-3 font-sans text-[13px] leading-[1.35] font-normal lg:mt-[clamp(14px,1.319vw,24px)] lg:text-[clamp(14px,1.111vw,18px)] lg:font-light lg:leading-none",
                     locale === "en" && "uppercase",
                   )}
                 >
@@ -71,7 +81,7 @@ export default async function VineyardRegionPage({
                 </p>
               ) : null}
 
-              <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[16px]">
+              <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:font-light lg:leading-[1.45] lg:tracking-normal">
                 {region.body.map((paragraph, idx) => (
                   <p key={idx}>{paragraph}</p>
                 ))}
@@ -79,7 +89,9 @@ export default async function VineyardRegionPage({
             </div>
           </div>
 
-          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-full lg:max-h-[666px]">
+          {/* Photo is vertically centered in the header↔footer band (equal gap
+              above and below), while the text column stays top-pinned. */}
+          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-[clamp(560px,45.35vw,720px)] lg:self-center">
             <IntroAwareHorizontalReveal className="absolute inset-0">
               <Image
                 src="/images/vineyard-kakheti.png"

@@ -89,23 +89,29 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
       tabIndex={-1}
       className="outline-none data-[state=inactive]:hidden lg:min-h-0 lg:flex-1"
     >
-      <section className="grid w-full items-center bg-white lg:h-full lg:min-h-0 lg:grid-cols-[42%_58%] lg:py-12 lg:pr-[3.5vw]">
-        <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:px-[3.5vw] lg:py-0">
-          <div className="relative aspect-square w-24 overflow-hidden lg:w-28">
+      {/* Same symbol/title/text typography as /vineyards/[region]; photo differs.
+          Figma @1440×900: symbol 87×96 @ (53,225), title 48px @ (50,359), body
+          serif-300 16px filling its column. Photo 742×495 @ (666,190) => cols
+          split at 666px (46.25%) and the photo has a 32px right margin (it does
+          not reach the edge). Section fills the header↔tab-bar band so the photo
+          centers vertically with equal gaps. */}
+      <section className="grid w-full items-center bg-white lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0 lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))]">
+        <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
+          <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">
             <Image
               src="/images/TheSymbol.jpg"
               alt=""
               fill
-              sizes="(min-width: 1024px) 112px, 96px"
+              sizes="(min-width: 1024px) 96px, 96px"
               className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
             />
           </div>
 
-          <div className="mt-9 max-w-[540px] lg:mt-10 lg:max-w-[640px]">
-            <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[56px]">
+          <div className="mt-9 max-w-[540px] lg:mt-[clamp(30px,2.639vw,44px)] lg:max-w-none">
+            <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]">
               {tab.title}
             </h1>
-            <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[16px]">
+            <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:font-light lg:leading-[1.45] lg:tracking-normal">
               {tab.body.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -113,14 +119,14 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
           </div>
         </div>
 
-        <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-full lg:max-h-[666px]">
+        <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[2.222vw] lg:aspect-auto lg:h-[clamp(420px,34.375vw,560px)] lg:w-auto lg:self-center">
           <IntroAwareHorizontalReveal className="absolute inset-0">
             <Image
               src={photoSrc}
               alt=""
               fill
               priority={tab.id === "encounter"}
-              sizes="(min-width: 1024px) 58vw, 100vw"
+              sizes="(min-width: 1024px) 52vw, 100vw"
               className="object-cover"
             />
           </IntroAwareHorizontalReveal>

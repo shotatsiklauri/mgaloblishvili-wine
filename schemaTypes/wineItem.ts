@@ -1,5 +1,5 @@
 import { defineType, defineField } from 'sanity'
-import { bilingualString, bilingualText, bilingualParagraphs, bilingualImage } from './helpers'
+import { bilingualString, bilingualParagraphs, bilingualImage } from './helpers'
 
 export const wineItem = defineType({
   name: 'wineItem',
@@ -42,9 +42,6 @@ export const wineItem = defineType({
       'Description Paragraphs',
       'Tasting notes and character description. Add one object per paragraph.',
     ),
-    bilingualText('details', 'Additional Details', {
-      description: 'Optional extra information (serving suggestions, winemaking notes, etc.).',
-    }),
     bilingualImage(
       'heroImage',
       'Hero Image',

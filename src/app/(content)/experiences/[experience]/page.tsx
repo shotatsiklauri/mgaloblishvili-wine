@@ -167,11 +167,11 @@ function ExperienceTextBlock({
       {symbol ? (
         <div className="relative mb-8 aspect-square w-16 overflow-hidden lg:w-20">
           <Image
-            src="/images/TheSymbol.jpg"
+            src="/svgs/TheSymbol.svg"
             alt=""
             fill
-            sizes="80px"
-            className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
+            unoptimized
+            className="object-contain"
           />
         </div>
       ) : null}

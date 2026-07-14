@@ -80,7 +80,6 @@ export type SanityWineItem = {
   name?: SanityBilingual
   grapeOrigin?: SanityBilingual
   descriptionLines?: SanityParagraph[] | null
-  details?: SanityBilingual
   heroImage?: SanityImageRef
   bottleImage?: SanityImageRef
 }

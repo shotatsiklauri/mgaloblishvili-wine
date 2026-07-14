@@ -50,7 +50,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               className={cn(
                 "group relative flex cursor-pointer items-center justify-center py-5",
                 "lg:items-start lg:py-0 lg:pt-[clamp(40px,3.611vw,60px)]",
-                "text-center font-sans font-semibold uppercase leading-none",
+                "text-center font-sans leading-none font-semibold uppercase",
                 "text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 focusRing("light"),
@@ -95,15 +95,15 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
           split at 666px (46.25%) and the photo has a 32px right margin (it does
           not reach the edge). Section fills the header↔tab-bar band so the photo
           centers vertically with equal gaps. */}
-      <section className="grid w-full items-center bg-white lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0 lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))]">
+      <section className="grid w-full items-center bg-white lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0">
         <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
           <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">
             <Image
-              src="/images/TheSymbol.jpg"
+              src="/svgs/TheSymbol.svg"
               alt=""
               fill
-              sizes="(min-width: 1024px) 96px, 96px"
-              className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
+              unoptimized
+              className="object-contain"
             />
           </div>
 
@@ -111,7 +111,7 @@ function HistoryTabPanel({ tab }: HistoryTabPanelProps) {
             <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]">
               {tab.title}
             </h1>
-            <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:font-light lg:leading-[1.45] lg:tracking-normal">
+            <div className="type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:leading-[1.45] lg:font-light lg:tracking-normal">
               {tab.body.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}

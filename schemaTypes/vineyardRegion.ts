@@ -39,7 +39,7 @@ export const vineyardRegion = defineType({
       title: 'Images',
       type: 'array',
       description:
-        'Photos for the editorial grid on this region page. First image appears top-left (desktop) or first (mobile).',
+        'Region photo shown on the region page. The first image is used as the main photo.',
       of: [
         defineArrayMember({
           type: 'image',

@@ -58,11 +58,11 @@ export default async function VineyardRegionPage({
           <div className="px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
             <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">
               <Image
-                src="/images/TheSymbol.jpg"
+                src="/svgs/TheSymbol.svg"
                 alt=""
                 fill
-                sizes="(min-width: 1024px) 96px, 96px"
-                className="scale-110 object-cover [filter:grayscale(1)_contrast(8)_brightness(1.5)]"
+                unoptimized
+                className="object-contain"
               />
             </div>
 
@@ -94,7 +94,7 @@ export default async function VineyardRegionPage({
           <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-[clamp(560px,45.35vw,720px)] lg:self-center">
             <IntroAwareHorizontalReveal className="absolute inset-0">
               <Image
-                src="/images/vineyard-kakheti.png"
+                src={region.image1Url ?? "/images/vineyard-kakheti.png"}
                 alt=""
                 fill
                 priority

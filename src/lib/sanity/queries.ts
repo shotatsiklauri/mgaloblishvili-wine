@@ -60,7 +60,6 @@ export const wineItemsQuery = groq`
     name         { en, ka },
     grapeOrigin  { en, ka },
     descriptionLines[] { en, ka },
-    details      { en, ka },
     heroImage    { asset, altEn, altKa },
     bottleImage  { asset, altEn, altKa }
   }
@@ -115,7 +114,6 @@ export const allContentQuery = groq`
       sortOrder,
       name { en, ka }, grapeOrigin { en, ka },
       descriptionLines[] { en, ka },
-      details { en, ka },
       heroImage { asset, altEn, altKa },
       bottleImage { asset, altEn, altKa }
     },

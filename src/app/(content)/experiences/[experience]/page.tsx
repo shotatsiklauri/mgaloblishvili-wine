@@ -72,7 +72,7 @@ function EditorialExperiencePage({
   return (
     <div className="flex min-h-svh flex-col">
       <HeaderContent activeId="experiences" />
-      <main className="text-ink flex-1 bg-white pt-16 md:pt-24 lg:pt-0">
+      <main className="text-ink flex-1 pt-16 md:pt-24 lg:pt-0">
         {/* Row 1 — first text block over a frosted image, wine glass alongside */}
         <section className="grid w-full grid-cols-1 items-start lg:grid-cols-2">
           <div className="relative flex min-h-[380px] overflow-hidden md:min-h-[440px] lg:min-h-[476px]">

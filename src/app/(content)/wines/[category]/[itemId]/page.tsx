@@ -45,14 +45,22 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
         {/* Hero photo below the header; wine name centered over it.
             Figma @1440: title Noto Serif 300, 81px (5.625vw), lh 100%, #FFF. */}
         <section className="relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px] lg:h-[clamp(360px,30vw,520px)]">
-          <Image
-            src={wine.heroImageUrl ?? "/images/wine_page_header.webp"}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+          {/* Hero photo: 3/4 is shown immediately; only the last quarter wipes
+              in left→right (revealFrom="25%"). */}
+          <IntroAwareHorizontalReveal
+            className="absolute inset-0"
+            durationMs={667}
+            revealFrom="25%"
+          >
+            <Image
+              src={wine.heroImageUrl ?? "/images/wine_page_header.webp"}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </IntroAwareHorizontalReveal>
           <div
             aria-hidden="true"
             className="from-surface-dark/35 via-surface-dark/10 to-surface-dark/35 absolute inset-0 bg-gradient-to-r"
@@ -124,20 +132,15 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
           <div className="flex justify-center pb-16 lg:absolute lg:left-[61.11%] lg:top-[9.31vw] lg:block lg:pb-0">
             {/* Left→right clip reveal on the bottle, same 667ms as the other
-                detail pages. w-fit so the clip is relative to the bottle itself;
-                overflow-hidden so the post-reveal zoom is clipped to the fixed
-                frame (this wrapper's container isn't overflow-clipped). */}
-            <IntroAwareHorizontalReveal
-              durationMs={667}
-              className="w-fit overflow-hidden"
-            >
+                detail pages. w-fit so the clip is relative to the bottle itself. */}
+            <IntroAwareHorizontalReveal durationMs={667} className="w-fit">
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
                 alt=""
                 width={308}
                 height={1114}
                 sizes="(min-width: 1024px) 21vw, (min-width: 768px) 214px, 70vw"
-                className="intro-zoom h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
+                className="h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
               />
             </IntroAwareHorizontalReveal>
           </div>

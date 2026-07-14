@@ -241,10 +241,13 @@ html::-webkit-scrollbar {
   }
 }
 
+/* --reveal-from is how much of the image is clipped from the right at the start
+   (default 100% = fully hidden). Set it lower (e.g. 25%) to leave that much
+   already visible and only wipe in the remaining slice. */
 @keyframes reveal-left-to-right {
   from {
-    -webkit-clip-path: inset(0 100% 0 0);
-    clip-path: inset(0 100% 0 0);
+    -webkit-clip-path: inset(0 var(--reveal-from, 100%) 0 0);
+    clip-path: inset(0 var(--reveal-from, 100%) 0 0);
   }
   to {
     -webkit-clip-path: inset(0 0 0 0);
@@ -371,8 +374,8 @@ html::-webkit-scrollbar {
 }
 
 .horizontal-reveal-enter--pending {
-  -webkit-clip-path: inset(0 100% 0 0);
-  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 var(--reveal-from, 100%) 0 0);
+  clip-path: inset(0 var(--reveal-from, 100%) 0 0);
 }
 
 .horizontal-reveal-enter {

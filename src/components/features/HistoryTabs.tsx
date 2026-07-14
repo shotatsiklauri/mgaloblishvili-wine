@@ -38,7 +38,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
         ))}
       </div>
 
-      <div className="shrink-0 bg-white">
+      <div className="shrink-0">
         {/* Figma tab bar: 120px tall, group centered (~982px @ 1440); words
             Inter 600 / 12px / 0.3em near the top, 3px black underline at the
             bottom that reveals on hover/active, accent text when active. */}
@@ -114,7 +114,7 @@ function HistoryTabPanel({ tab, isActive }: HistoryTabPanelProps) {
           split at 666px (46.25%) and the photo has a 32px right margin (it does
           not reach the edge). Section fills the header↔tab-bar band so the photo
           centers vertically with equal gaps. */}
-      <section className="grid w-full items-center bg-white lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0">
+      <section className="grid w-full items-center lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0">
         <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
           <div
             className={cn(

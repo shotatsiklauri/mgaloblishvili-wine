@@ -252,7 +252,7 @@ html::-webkit-scrollbar {
   }
 }
 
-@keyframes history-content-enter {
+@keyframes intro-flyin {
   from {
     opacity: 0;
     transform: translateX(-48px);
@@ -371,29 +371,33 @@ html::-webkit-scrollbar {
   animation: reveal-left-to-right 1420ms ease-out both;
 }
 
-/* History section entrance: symbol → title → paragraph fly in from the left
+/* Section entrance shared by the history, vineyard-region and wine-detail pages:
+   content elements (symbol / title / subtitle / paragraph) fly in from the left
    (translateX -48px → 0, opacity 0 → 1) on a very tight stagger so it reads as
    one coordinated motion, alongside the photo's left-to-right clip wipe; all
    settle within ~0.7s. `both` holds the offset/transparent 0% state through the
    stagger delay (no flash) and the final resting state after. --pending holds
-   that start state until the section is active and the brand-intro has cleared;
+   that start state until the content is active and the brand-intro has cleared;
    toggling pending → enter is what (re)starts the slide each activation. */
-.history-enter {
-  animation: history-content-enter 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.intro-flyin {
+  animation: intro-flyin 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
 }
-.history-enter--pending {
+.intro-flyin--pending {
   opacity: 0;
   transform: translateX(-48px);
 }
-.history-enter--1 {
+.intro-flyin--1 {
   animation-delay: 0ms;
 }
-.history-enter--2 {
+.intro-flyin--2 {
   animation-delay: 33ms;
 }
-.history-enter--3 {
+.intro-flyin--3 {
   animation-delay: 67ms;
+}
+.intro-flyin--4 {
+  animation-delay: 100ms;
 }
 
 @media (min-width: 768px) {
@@ -540,7 +544,7 @@ html::-webkit-scrollbar {
   .menu-stagger,
   .category-enter-list > li,
   .wine-list-enter,
-  .history-enter,
+  .intro-flyin,
   .horizontal-reveal-enter,
   .menu-divider-v {
     animation-duration: 1ms !important;
@@ -550,12 +554,12 @@ html::-webkit-scrollbar {
   .menu-stagger,
   .category-enter-list > li,
   .wine-list-enter,
-  .history-enter,
+  .intro-flyin,
   .menu-divider-v {
     animation-name: menu-fade-in !important;
   }
   /* Reduced motion: no slide — opacity fade only, no positional movement. */
-  .history-enter--pending {
+  .intro-flyin--pending {
     transform: none !important;
   }
   .horizontal-reveal-enter {

@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { focusRing } from "@/lib/focus-ring";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
+import { IntroFlyIn } from "@/components/ui/IntroFlyIn";
+import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
 
 type WineDetailParams = {
   params: Promise<{ category: string; itemId: string }>;
@@ -93,36 +95,46 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               </svg>
             </Link>
 
-            <h2 className="mt-10 font-serif font-normal leading-none text-[clamp(28px,2.5vw,44px)] lg:mt-[2.6vw]">
-              {wine.name}
-            </h2>
+            <IntroFlyIn order={1}>
+              <h2 className="mt-10 font-serif font-normal leading-none text-[clamp(28px,2.5vw,44px)] lg:mt-[2.6vw]">
+                {wine.name}
+              </h2>
+            </IntroFlyIn>
 
-            <div className="text-ink/80 mt-8 space-y-4 font-serif font-light leading-[1.45] tracking-normal text-[clamp(14px,1.111vw,18px)] lg:mt-[3.19vw]">
-              {wine.description.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
+            <IntroFlyIn order={2}>
+              <div className="text-ink/80 mt-8 space-y-4 font-serif font-light leading-[1.45] tracking-normal text-[clamp(14px,1.111vw,18px)] lg:mt-[3.19vw]">
+                {wine.description.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+            </IntroFlyIn>
 
             {wine.grapeOrigin ? (
-              <p className="mt-9 font-sans font-medium uppercase leading-none tracking-normal text-[clamp(11px,0.833vw,13px)] lg:mt-[4.51vw]">
-                <span className="text-accent">{content.wines.originLabel}</span>
-                <span aria-hidden="true" className="text-ink-muted mx-2">
-                  |
-                </span>
-                <span className="text-ink">{wine.grapeOrigin}</span>
-              </p>
+              <IntroFlyIn order={3}>
+                <p className="mt-9 font-sans font-medium uppercase leading-none tracking-normal text-[clamp(11px,0.833vw,13px)] lg:mt-[4.51vw]">
+                  <span className="text-accent">{content.wines.originLabel}</span>
+                  <span aria-hidden="true" className="text-ink-muted mx-2">
+                    |
+                  </span>
+                  <span className="text-ink">{wine.grapeOrigin}</span>
+                </p>
+              </IntroFlyIn>
             ) : null}
           </div>
 
           <div className="flex justify-center pb-16 lg:absolute lg:left-[61.11%] lg:top-[9.31vw] lg:block lg:pb-0">
-            <Image
-              src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
-              alt=""
-              width={308}
-              height={1114}
-              sizes="(min-width: 1024px) 21vw, (min-width: 768px) 214px, 70vw"
-              className="h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
-            />
+            {/* Left→right clip reveal on the bottle, same 667ms as the other
+                detail pages. w-fit so the clip is relative to the bottle itself. */}
+            <IntroAwareHorizontalReveal durationMs={667} className="w-fit">
+              <Image
+                src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
+                alt=""
+                width={308}
+                height={1114}
+                sizes="(min-width: 1024px) 21vw, (min-width: 768px) 214px, 70vw"
+                className="h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)] lg:max-h-none lg:w-[21.39vw] lg:max-w-none"
+              />
+            </IntroAwareHorizontalReveal>
           </div>
         </section>
       </main>

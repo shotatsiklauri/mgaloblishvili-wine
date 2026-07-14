@@ -99,7 +99,7 @@ function HistoryTabPanel({ tab, isActive }: HistoryTabPanelProps) {
   // state to prevent a flash of unanimated content.
   const on = ready && isActive;
   const enter = (order: 1 | 2 | 3) =>
-    on ? `history-enter history-enter--${order}` : "history-enter--pending";
+    on ? `intro-flyin intro-flyin--${order}` : "intro-flyin--pending";
 
   return (
     <Tabs.Content

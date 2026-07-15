@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type AnimationEvent } from "react";
+import { useState, type AnimationEvent, type CSSProperties } from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import Image from "next/image";
 import type { HistoryItem, HistoryItemId } from "@/data/content";
@@ -75,9 +75,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               isActive={isActive}
               isExiting={!!isExiting}
               slideClass={slideClass}
-              onExitEnd={() =>
-                setExiting((e) => (e?.id === tab.id ? null : e))
-              }
+              onExitEnd={() => setExiting((e) => (e?.id === tab.id ? null : e))}
             />
           );
         })}
@@ -92,8 +90,8 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
           aria-label="History sections"
           className={cn(
             "grid grid-cols-1 sm:grid-cols-3",
-            "lg:mx-auto lg:w-full lg:max-w-[68vw]",
-            "lg:h-[clamp(104px,8.333vw,132px)]",
+            "lg:mx-auto lg:w-full lg:max-w-[min(57.8vw,832.32px)]",
+            "lg:h-[clamp(88.4px,7.083vw,112.2px)]",
           )}
         >
           {historyItems.map((tab) => (
@@ -102,9 +100,9 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               value={tab.id}
               className={cn(
                 "group relative flex cursor-pointer items-center justify-center py-5",
-                "lg:items-start lg:py-0 lg:pt-[clamp(40px,3.611vw,60px)]",
+                "lg:items-start lg:py-0 lg:pt-[clamp(34px,3.069vw,51px)]",
                 "text-center font-sans leading-none font-semibold uppercase",
-                "text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
+                "text-[clamp(11px,0.833vw,13px)] tracking-[0.3em] lg:text-[clamp(9.35px,0.708vw,11.05px)]",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 focusRing("light"),
                 "text-ink-muted hover:text-accent focus-visible:text-accent",
@@ -115,7 +113,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               <span
                 aria-hidden="true"
                 className={cn(
-                  "pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black",
+                  "pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black lg:h-[2.55px]",
                   "scale-x-0 transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
                   "group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[state=active]:scale-x-100",
                 )}
@@ -188,11 +186,22 @@ function HistoryTabPanel({
           split at 666px (46.25%) and the photo has a 32px right margin (it does
           not reach the edge). Section fills the header↔tab-bar band so the photo
           centers vertically with equal gaps. */}
-      <section className="grid w-full items-center lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0">
-        <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
+      <section
+        style={
+          {
+            "--history-band":
+              "calc(100svh - clamp(176.8px, 14.167vw, 227.8px))",
+            "--history-photo": "clamp(357px, 29.219vw, 476px)",
+            "--history-gap":
+              "calc((var(--history-band) - var(--history-photo)) / 2)",
+          } as CSSProperties
+        }
+        className="grid w-full items-center lg:min-h-[var(--history-band)] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0"
+      >
+        <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(78.2px,6.198vw,98.6px)] lg:pr-[var(--history-gap)] lg:pb-0 lg:pl-[min(2.951vw,42.5px)]">
           <div
             className={cn(
-              "relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]",
+              "relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(61.2px,5.136vw,85px)]",
               enter(1),
             )}
           >
@@ -205,10 +214,10 @@ function HistoryTabPanel({
             />
           </div>
 
-          <div className="mt-9 max-w-[540px] lg:mt-[clamp(30px,2.639vw,44px)] lg:max-w-none">
+          <div className="mt-9 max-w-[540px] lg:mt-[clamp(25.5px,2.243vw,37.4px)] lg:max-w-none">
             <h1
               className={cn(
-                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,56px)]",
+                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(34px,2.833vw,47.6px)]",
                 enter(2),
               )}
             >
@@ -216,7 +225,7 @@ function HistoryTabPanel({
             </h1>
             <div
               className={cn(
-                "type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(14px,1.111vw,18px)] lg:leading-[1.45] lg:font-light lg:tracking-normal",
+                "type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(11.9px,0.944vw,15.3px)] lg:leading-[1.45] lg:font-light lg:tracking-normal",
                 enter(3),
               )}
             >
@@ -227,7 +236,7 @@ function HistoryTabPanel({
           </div>
         </div>
 
-        <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[2.222vw] lg:aspect-auto lg:h-[clamp(420px,34.375vw,560px)] lg:w-auto lg:self-center">
+        <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[min(1.889vw,27.2px)] lg:aspect-auto lg:h-[var(--history-photo)] lg:w-auto lg:self-center">
           {/* Left→right clip reveal, coordinated to start with the symbol and
               finish within the text window (~1s), on first load only. On a
               switch the image arrives settled and rides the whole-panel fly. */}

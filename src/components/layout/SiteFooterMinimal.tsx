@@ -23,7 +23,7 @@ const TONE_DOT = {
 
 // Figma: Inter (font-sans), 400, 12px @ 1440 (0.83vw), line-height 100%, centered.
 const FOOTER_TYPE =
-  "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none";
+  "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none lg:text-[clamp(9.35px,0.706vw,11.05px)]";
 
 export function SiteFooterMinimal({
   tone = "light",

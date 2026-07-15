@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
  * up on top once the frost has settled. The two frost rects are plain 30% white
  * (no blur) so they sit perfectly flush — no seam where top meets right.
  *
- * Geometry matches the static Figma L: band 421px (29.236vw) tall, strip 187px
- * (13vw) wide, over the 828×880 photo. The copy box is the Figma 680×323 @ (50,
- * 264), vertically centered.
+ * Geometry is the desktop 85% rendering of the static Figma L: the source band
+ * is 421px tall and the source strip is 187px wide over the 828×880 photo. The
+ * copy box follows the same scale and remains vertically centered.
  */
 export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
   const ready = useIntroReady();
@@ -23,20 +23,20 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
       <div
         aria-hidden="true"
         className={cn(
-          "absolute inset-x-0 top-0 h-[29.236vw] bg-white/30",
+          "absolute inset-x-0 top-0 h-[min(24.851vw,357.85px)] bg-white/30",
           ready ? "exp-frost-band" : "exp-frost-band--pending",
         )}
       />
       <div
         aria-hidden="true"
         className={cn(
-          "absolute top-[29.236vw] right-0 bottom-0 w-[13vw] bg-white/30",
+          "absolute top-[min(24.851vw,357.85px)] right-0 bottom-0 w-[min(11.05vw,159.12px)] bg-white/30",
           ready ? "exp-frost-strip" : "exp-frost-strip--pending",
         )}
       />
       <div
         className={cn(
-          "absolute top-[2.431vw] left-[3.472vw] flex h-[22.431vw] w-[47.222vw] flex-col justify-center",
+          "absolute top-[min(2.066vw,29.75px)] left-[min(2.951vw,42.5px)] flex h-[min(19.066vw,274.55px)] w-[min(40.139vw,578px)] flex-col justify-center",
           ready ? "exp-intro-text" : "exp-intro-text--pending",
         )}
       >

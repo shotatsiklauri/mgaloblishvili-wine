@@ -82,7 +82,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
   return (
     <div
       key={categoryId}
-      className="wine-list-enter flex w-full items-stretch justify-center gap-8 md:w-auto md:gap-[2.5vw]"
+      className="wine-list-enter flex w-full items-stretch justify-center gap-8 md:w-auto md:gap-[2.5vw] lg:gap-[min(2.125vw,30.6px)]"
     >
       <div className="wine-scroll-area flex w-full items-start justify-center md:w-auto">
         <ul
@@ -92,7 +92,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
             "wine-scroll-fade no-scrollbar w-full space-y-4 text-center",
             // Fixed viewport height so the list scrolls (shows the scrollbar) and
             // stays bounded regardless of item count; keeps thumb ~120px (0.33 cap).
-            "max-h-full md:h-[360px] md:overflow-y-auto md:pr-2 md:text-left md:whitespace-nowrap",
+            "max-h-full md:h-[360px] md:overflow-y-auto md:pr-2 md:text-left md:whitespace-nowrap lg:h-[306px]",
             scrollState.canScrollUp && "wine-scroll-fade--top",
             scrollState.canScrollDown && "wine-scroll-fade--bottom",
           )}
@@ -120,7 +120,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
       >
         {scrollState.visible ? (
           <span
-            className="bg-ink absolute left-1/2 w-[3px] -translate-x-1/2 rounded-full"
+            className="bg-ink absolute left-1/2 w-[3px] -translate-x-1/2 rounded-full lg:w-[2.55px]"
             style={{ height: scrollState.height, top: scrollState.top }}
           />
         ) : null}

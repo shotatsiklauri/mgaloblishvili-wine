@@ -20,7 +20,7 @@ export async function HeaderHero({ className }: HeaderHeroProps) {
       className={cn(
         "absolute inset-x-0 top-0 z-30 flex items-start justify-between",
         // Figma: burger left 20 / top ~49, ENG-GEO right 20 / top 45.
-        "px-5 pt-[45px] pb-5",
+        "px-5 pt-[45px] pb-5 lg:pt-[38.25px]",
         "text-ink-inverse",
         className,
       )}

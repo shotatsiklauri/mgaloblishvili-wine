@@ -28,9 +28,10 @@ export const HamburgerButton = forwardRef<
     >
       <span
         aria-hidden="true"
-        className="block h-[58px] w-[58px] shrink-0 bg-current lg:h-[46px] lg:w-[46px]"
+        className="block h-[58px] w-[58px] shrink-0 bg-current lg:h-[39.1px] lg:w-[39.1px]"
         style={{
-          WebkitMask: "url('/svgs/line-pattern.svg') center / contain no-repeat",
+          WebkitMask:
+            "url('/svgs/line-pattern.svg') center / contain no-repeat",
           mask: "url('/svgs/line-pattern.svg') center / contain no-repeat",
         }}
       />

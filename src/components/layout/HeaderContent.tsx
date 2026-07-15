@@ -22,8 +22,8 @@ type HeaderContentProps = {
 };
 
 // Desktop nav word positions as % of the 1440px Figma canvas (left edge of each
-// word), so the header matches Figma exactly at 1440 and scales fluidly on either
-// side. Order matches buildPrimaryNav: history, vineyards, wines, experiences.
+// word), applied inside the 85%-scaled 1224px desktop frame. Order matches
+// buildPrimaryNav: history, vineyards, wines, experiences.
 // History 154, Vineyards 358, Wines 980, Experiences 1175 (÷1440).
 const NAV_LEFT_POS = [
   "lg:left-[10.694%]",
@@ -48,13 +48,11 @@ export async function HeaderContent({
       <div
         className={cn(
           // Bar background is full-width (HeaderScrollFrame); the content itself
-          // is centered in the 1440 Figma frame so the nav words (positioned by
-          // % below) land at their exact Figma x and the header stops spreading
-          // on ultra-wide screens.
-          "relative mx-auto flex w-full max-w-[1440px] items-center",
-          // Figma desktop frame height = 120px @ 1440 (8.333vw), capped at 120
-          // so it matches the reference instead of growing past it.
-          "h-16 md:h-24 lg:h-[clamp(104px,8.333vw,120px)]",
+          // is centered in the 85%-scaled Figma frame so the nav words
+          // (positioned by % below) retain the source composition.
+          "relative mx-auto flex w-full max-w-[1440px] items-center lg:max-w-[1224px]",
+          // Figma source height = 120px; the desktop target is 85% = 102px.
+          "h-16 md:h-24 lg:h-[clamp(88.4px,7.083vw,102px)]",
           "px-5 md:px-6 lg:px-6",
         )}
       >
@@ -87,7 +85,7 @@ export async function HeaderContent({
               href={item.href}
               active={activeId === item.id}
               edgeUnderline
-              underlineClassName="lg:-right-8 lg:-left-8 lg:h-[2px]"
+              underlineClassName="lg:-right-8 lg:-left-8 lg:h-[1.7px]"
               className="h-full px-0"
             >
               {item.label}
@@ -109,7 +107,7 @@ export async function HeaderContent({
             {/* Figma logo width = 253px @ 1440 (17.57vw), clamped. */}
             <Wordmark
               size="header"
-              className="lg:w-[clamp(220px,17.57vw,280px)]"
+              className="lg:w-[clamp(187px,14.935vw,238px)]"
             />
           </Link>
         </div>

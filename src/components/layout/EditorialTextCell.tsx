@@ -15,13 +15,13 @@ export function EditorialTextCell({
   return (
     <div
       className={cn(
-        "flex w-full items-center px-6 py-10 md:px-14 lg:min-h-[476px] lg:px-20 lg:py-14 xl:px-24",
+        "flex w-full items-center px-6 py-10 md:px-14 lg:min-h-[404.6px] lg:px-20 lg:py-14 xl:px-24",
         className,
       )}
     >
       <div
         className={cn(
-          "mx-auto w-full max-w-[520px] text-left",
+          "mx-auto w-full max-w-[520px] text-left lg:max-w-[442px]",
           contentClassName,
         )}
       >

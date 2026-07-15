@@ -46,12 +46,20 @@
 }
 
 @media (min-width: 1024px) {
+  .nav-word {
+    font-size: 11.9px;
+  }
+
+  .nav-word--mtavruli {
+    font-size: 11.05px;
+  }
+
   .site-header--compact .nav-word {
-    font-size: 12.5px;
+    font-size: 10.625px;
   }
 
   .site-header--compact .nav-word--mtavruli {
-    font-size: 11.5px;
+    font-size: 9.775px;
   }
 }
 
@@ -110,6 +118,57 @@
   }
 }
 
+/* Desktop-only 15% visual reduction. Tailwind's standard spacing utilities are
+   rem-based, so the root font-size scales those consistently from lg upward.
+   Semantic type utilities and arbitrary px/vw sizes are explicit lengths and
+   therefore receive their own 0.85 overrides here or at their component. */
+@media (min-width: 1024px) {
+  html {
+    font-size: 85%;
+  }
+
+  .type-menu {
+    font-size: 10.2px;
+    letter-spacing: 0.425px;
+  }
+
+  .type-submenu {
+    font-size: 15.3px;
+  }
+
+  .type-headline {
+    font-size: 30.6px;
+  }
+
+  .type-body-editorial {
+    font-size: 11.9px;
+  }
+
+  .type-display-hero {
+    font-size: clamp(39.1px, 6.8vw, 78.2px);
+  }
+
+  .type-category-large {
+    font-size: clamp(28.9px, 4.25vw, 47.6px);
+  }
+
+  .category-index-word {
+    font-size: clamp(25.5px, 2.125vw, 37.4px);
+  }
+
+  .wine-list-word {
+    font-size: clamp(11.9px, 0.944vw, 15.3px);
+  }
+
+  .type-meta {
+    font-size: 9.35px;
+  }
+
+  .type-language {
+    font-size: clamp(9.35px, 0.708vw, 11.05px);
+  }
+}
+
 @utility type-meta {
   font-family: var(--font-sans);
   font-weight: 400;
@@ -129,14 +188,31 @@
 
 :root {
   color-scheme: light;
+  --motion-y-8: 8px;
+  --motion-y-10: 10px;
+  --motion-y-12: 12px;
+  --motion-offset-14: 14px;
+  --motion-x-48: 48px;
+  --brand-intro-blur: 16px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --motion-y-8: 6.8px;
+    --motion-y-10: 8.5px;
+    --motion-y-12: 10.2px;
+    --motion-offset-14: 11.9px;
+    --motion-x-48: 40.8px;
+    --brand-intro-blur: 13.6px;
+  }
 }
 
 /* The 1440×900 Figma frame is a reference viewport, NOT a hard document size.
    The document uses the full viewport width and grows with its content — short
    pages fill the viewport (root layout: <html class="h-full">, <body
    class="min-h-full">), taller pages scroll naturally. Framed content opts into
-   a centered `max-w-[1440px]` container per-section (header/footer inner, page
-   frames), so it never spills the whole document into a fixed box.
+   centered per-section frames; desktop explicit lengths render at 85% while
+   full-bleed media and viewport heights stay full-size.
    box-sizing:border-box is already applied globally by Tailwind Preflight. */
 html,
 body {
@@ -175,7 +251,7 @@ html::-webkit-scrollbar {
 @keyframes hero-fade-up {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(var(--motion-y-8));
   }
   to {
     opacity: 1;
@@ -219,7 +295,7 @@ html::-webkit-scrollbar {
 @keyframes menu-fade-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(var(--motion-y-12));
   }
   to {
     opacity: 1;
@@ -230,7 +306,7 @@ html::-webkit-scrollbar {
 @keyframes category-fade-down {
   from {
     opacity: 0;
-    transform: translateY(-14px);
+    transform: translateY(calc(-1 * var(--motion-offset-14)));
   }
   to {
     opacity: 1;
@@ -241,7 +317,7 @@ html::-webkit-scrollbar {
 @keyframes wine-list-fade-right {
   from {
     opacity: 0;
-    transform: translateX(-14px);
+    transform: translateX(calc(-1 * var(--motion-offset-14)));
   }
   to {
     opacity: 1;
@@ -301,7 +377,7 @@ html::-webkit-scrollbar {
 @keyframes exp-intro-text {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(var(--motion-y-10));
   }
   to {
     opacity: 1;
@@ -312,7 +388,7 @@ html::-webkit-scrollbar {
 @keyframes intro-flyin {
   from {
     opacity: 0;
-    transform: translateX(-48px);
+    transform: translateX(calc(-1 * var(--motion-x-48)));
   }
   to {
     opacity: 1;
@@ -491,7 +567,7 @@ html::-webkit-scrollbar {
 }
 .intro-flyin--pending {
   opacity: 0;
-  transform: translateX(-48px);
+  transform: translateX(calc(-1 * var(--motion-x-48)));
 }
 .intro-flyin--1 {
   animation-delay: 0ms;
@@ -620,6 +696,15 @@ html::-webkit-scrollbar {
   }
 }
 
+@media (min-width: 1024px) {
+  .wine-scroll-area {
+    max-height: min(45.9vh, 323px);
+  }
+  .wine-scroll-track {
+    height: min(45.9vh, 323px);
+  }
+}
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -667,8 +752,8 @@ html::-webkit-scrollbar {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.7);
-  -webkit-backdrop-filter: blur(16px) saturate(0.9);
-  backdrop-filter: blur(16px) saturate(0.9);
+  -webkit-backdrop-filter: blur(var(--brand-intro-blur)) saturate(0.9);
+  backdrop-filter: blur(var(--brand-intro-blur)) saturate(0.9);
   pointer-events: none;
   animation: brand-intro-layer 1500ms ease-out both;
 }
@@ -693,7 +778,7 @@ html::-webkit-scrollbar {
 
 @media (min-width: 1024px) {
   .brand-intro__stack {
-    width: 350px;
+    width: 297.5px;
   }
 }
 

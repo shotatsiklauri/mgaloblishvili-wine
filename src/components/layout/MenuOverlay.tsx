@@ -129,7 +129,7 @@ export function MenuOverlay({
                         focusRing("dark", 4),
                       )}
                     >
-                      <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center">
+                      <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]">
                         {column.title}
                       </NavWord>
                     </Link>
@@ -140,7 +140,7 @@ export function MenuOverlay({
               <ul
                 className={cn(
                   "mx-auto hidden w-full",
-                  "max-w-[1180px]",
+                  "max-w-[1180px] lg:max-w-[1003px]",
                   "grid-cols-4 gap-x-0",
                   "lg:grid",
                 )}
@@ -164,7 +164,7 @@ export function MenuOverlay({
                             DIVIDER_STAGGER[idx],
                             // Figma: ~500px tall 1px line; kept a touch shorter so
                             // it doesn't reach the footer.
-                            "pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px lg:block",
+                            "pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px lg:-top-[5.95vh] lg:block lg:h-[min(45.9vh,391px)]",
                           )}
                         />
                       ) : null}
@@ -177,7 +177,7 @@ export function MenuOverlay({
                           focusRing("dark", 4),
                         )}
                       >
-                        <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center">
+                        <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]">
                           {column.title}
                         </NavWord>
                       </Link>
@@ -191,7 +191,7 @@ export function MenuOverlay({
                               className={cn(
                                 // Figma menu words: Noto Serif Georgian 300,
                                 // 16px @ 1440 (1.11vw), line-height 100%.
-                                "font-serif text-[clamp(14px,1.11vw,18px)] font-light leading-none",
+                                "font-serif text-[clamp(14px,1.11vw,18px)] leading-none font-light lg:text-[clamp(11.9px,0.944vw,15.3px)]",
                                 "text-ink-inverse/55 hover:text-ink-inverse",
                                 "transition-colors duration-200 motion-reduce:transition-none",
                                 focusRing("dark"),
@@ -212,7 +212,7 @@ export function MenuOverlay({
           <div className="shrink-0 px-6 md:px-10">
             <div
               aria-hidden="true"
-              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 mx-auto h-px w-full max-w-[640px] origin-center"
+              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 mx-auto h-px w-full max-w-[640px] origin-center lg:max-w-[544px]"
             />
           </div>
 

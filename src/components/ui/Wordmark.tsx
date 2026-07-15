@@ -8,10 +8,10 @@ type WordmarkProps = {
 };
 
 const SIZE_CLASSES = {
-  lg: "w-[clamp(260px,46vw,460px)]",
-  sm: "w-[150px] md:w-[180px]",
-  header: "w-[150px] sm:w-[180px] md:w-[270px] lg:w-[280px]",
-  home: "w-[188px] sm:w-[225px] md:w-[338px] lg:w-[400px]",
+  lg: "w-[clamp(260px,46vw,460px)] lg:w-[clamp(221px,39.1vw,391px)]",
+  sm: "w-[150px] md:w-[180px] lg:w-[153px]",
+  header: "w-[150px] sm:w-[180px] md:w-[270px] lg:w-[238px]",
+  home: "w-[188px] sm:w-[225px] md:w-[338px] lg:w-[340px]",
 } as const;
 
 export function Wordmark({

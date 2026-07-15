@@ -34,7 +34,7 @@ export default async function HomePage() {
               width={603}
               height={152}
               priority
-              className="h-auto w-[270px] sm:w-[320px] md:w-[400px] lg:w-[clamp(440px,36.3vw,620px)]"
+              className="h-auto w-[270px] sm:w-[320px] md:w-[400px] lg:w-[clamp(374px,30.855vw,527px)]"
             />
           </h1>
         </div>
@@ -55,7 +55,7 @@ export default async function HomePage() {
           <NavLink
             key={item.id}
             href={item.href}
-            underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center"
+            underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
           >
             {item.label}
           </NavLink>

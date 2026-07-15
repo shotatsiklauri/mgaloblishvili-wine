@@ -8,10 +8,10 @@ export default function ContentLayout({
 }) {
   return (
     <div
-      className={cn("bg-surface text-ink relative isolate flex min-h-[calc(100svh/0.85)] flex-col")}
+      className={cn("bg-surface text-ink relative isolate flex min-h-[calc(100svh)] flex-col")}
     >
       <SubtleVideoBackground />
-      <div className="relative z-10 flex min-h-[calc(100svh/0.85)] flex-col">{children}</div>
+      <div className="relative z-10 flex min-h-[calc(100svh)] flex-col">{children}</div>
     </div>
   );
 }

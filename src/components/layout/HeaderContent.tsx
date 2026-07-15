@@ -47,9 +47,14 @@ export async function HeaderContent({
     <HeaderScrollFrame className={cn("site-header--compact", className)}>
       <div
         className={cn(
-          "relative flex w-full items-center",
-          // Figma desktop frame height = 120px @ 1440 (8.333vw), clamped.
-          "h-16 md:h-24 lg:h-[clamp(104px,8.333vw,136px)]",
+          // Bar background is full-width (HeaderScrollFrame); the content itself
+          // is centered in the 1440 Figma frame so the nav words (positioned by
+          // % below) land at their exact Figma x and the header stops spreading
+          // on ultra-wide screens.
+          "relative mx-auto flex w-full max-w-[1440px] items-center",
+          // Figma desktop frame height = 120px @ 1440 (8.333vw), capped at 120
+          // so it matches the reference instead of growing past it.
+          "h-16 md:h-24 lg:h-[clamp(104px,8.333vw,120px)]",
           "px-5 md:px-6 lg:px-6",
         )}
       >

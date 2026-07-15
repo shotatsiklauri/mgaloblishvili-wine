@@ -42,7 +42,7 @@ export default async function VineyardRegionPage({
   if (!region) notFound();
 
   return (
-    <div className="bg-surface-dark flex min-h-[calc(100svh/0.85)] flex-col">
+    <div className="bg-surface-dark flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="vineyards" />
       <main className="text-ink flex-1 bg-white">
         {/* Figma @1440×900: symbol 87×96 @ (53,225), title 48px @ (50,359),
@@ -55,7 +55,7 @@ export default async function VineyardRegionPage({
         {/* Section is at least the header↔footer band tall (100svh minus the
             fluid header + footer heights) so the photo can center within it with
             equal top/bottom gaps. Grows past the band for long regions. */}
-        <section className="grid w-full items-center bg-white lg:grid-cols-[41.18%_58.82%] lg:items-start lg:py-0 lg:min-h-[calc(100svh/0.85-clamp(208px,16.667vw,268px))]">
+        <section className="grid w-full items-center bg-white lg:grid-cols-[41.18%_58.82%] lg:items-start lg:py-0 lg:min-h-[calc(100svh-clamp(208px,16.667vw,268px))]">
           <div className="px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:pt-[clamp(92px,7.292vw,116px)] lg:pr-[1.667vw] lg:pb-0 lg:pl-[3.472vw]">
             <IntroFlyIn order={1}>
               <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,100px)]">

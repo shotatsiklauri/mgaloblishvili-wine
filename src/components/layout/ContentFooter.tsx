@@ -25,9 +25,10 @@ export async function ContentFooter({
   return (
     <div
       className={cn(
-        // Figma footer height = 120px @ 1440 (8.33vw), text centered.
+        // Figma footer height = 120px @ 1440 (8.33vw), text centered. Capped at
+        // 120 so it matches the reference instead of growing on wide screens.
         "flex shrink-0 items-center justify-center px-6",
-        "min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(104px,8.33vw,132px)]",
+        "min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(104px,8.33vw,120px)]",
         isBlack ? "footer-overscroll-fill-dark bg-black" : "bg-transparent",
       )}
     >

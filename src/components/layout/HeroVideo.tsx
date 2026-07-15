@@ -14,14 +14,43 @@ export function HeroVideo() {
   // Reliable muted autoplay. React's `muted` JSX prop does not dependably set the
   // DOM element's `.muted` property, so autoplay can be treated as non-muted, get
   // blocked, and show the browser's native play button. Force muted via the ref,
-  // then start playback.
+  // then start playback — retrying once the media is ready and, as a last resort,
+  // on the first user interaction. A single early play() attempt can lose the race
+  // with media loading (notably in Safari) and leave the video paused on load.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
     video.muted = true;
-    video.play().catch(() => {
-      // Autoplay can be rejected momentarily during hydration; safe to ignore.
-    });
+    video.defaultMuted = true;
+
+    const tryPlay = () => {
+      const played = video.play();
+      // Ignore rejections here; the event/interaction listeners retry.
+      if (played) played.catch(() => {});
+    };
+
+    tryPlay();
+
+    // First play() can reject before there's enough data; retry when ready.
+    video.addEventListener("loadeddata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+
+    // Last resort: if autoplay stayed blocked, start on the first interaction.
+    const onFirstInteract = () => {
+      tryPlay();
+      window.removeEventListener("pointerdown", onFirstInteract);
+      window.removeEventListener("keydown", onFirstInteract);
+    };
+    window.addEventListener("pointerdown", onFirstInteract);
+    window.addEventListener("keydown", onFirstInteract);
+
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+      window.removeEventListener("pointerdown", onFirstInteract);
+      window.removeEventListener("keydown", onFirstInteract);
+    };
   }, []);
 
   const toggleSound = () => {

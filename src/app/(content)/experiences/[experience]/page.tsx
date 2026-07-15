@@ -211,7 +211,7 @@ function EditorialExperiencePage({
         </section>
 
         {/* ===================== FOOTER ADDRESS ===================== */}
-        <section className="flex items-center justify-center px-6 py-8 lg:min-h-[7.639vw]">
+        <section className="flex items-center justify-center bg-white px-6 py-8 lg:min-h-[min(7.639vw,110px)]">
           <SiteFooterMinimal tone="light" contact={contact} />
         </section>
       </main>

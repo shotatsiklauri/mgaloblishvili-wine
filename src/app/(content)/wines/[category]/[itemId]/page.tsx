@@ -146,7 +146,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </div>
         </section>
       </main>
-      <ContentFooter background="black" />
+      <ContentFooter />
     </div>
   );
 }

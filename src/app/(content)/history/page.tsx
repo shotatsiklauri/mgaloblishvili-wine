@@ -13,7 +13,7 @@ export default async function HistoryPage() {
   const content = await getResolvedContent(locale);
 
   return (
-    <div className="flex min-h-svh flex-col lg:h-svh lg:overflow-hidden">
+    <div className="flex min-h-[calc(100svh/0.85)] flex-col lg:h-[calc(100svh/0.85)] lg:overflow-hidden">
       <HeaderContent activeId="history" />
       <main className="flex flex-1 flex-col pt-16 md:pt-24 lg:min-h-0 lg:overflow-hidden lg:pt-0">
         <HistoryTabs items={content.history.items} />

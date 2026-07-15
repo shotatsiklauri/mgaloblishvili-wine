@@ -55,7 +55,7 @@ export function MenuOverlay({
         />
         <Dialog.Content
           className={cn(
-            "bg-surface-dark text-ink-inverse fixed inset-0 z-50 h-svh overflow-hidden",
+            "bg-surface-dark text-ink-inverse fixed inset-0 z-50 h-[calc(100svh/0.85)] overflow-hidden",
             "flex flex-col",
           )}
           aria-label="Site menu"

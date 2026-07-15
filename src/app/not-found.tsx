@@ -5,7 +5,7 @@ import { Wordmark } from "@/components/ui/Wordmark";
 
 export default function NotFound() {
   return (
-    <main className="bg-surface-dark text-ink-inverse flex min-h-svh flex-col items-center justify-center gap-10 px-6 text-center">
+    <main className="bg-surface-dark text-ink-inverse flex min-h-[calc(100svh/0.85)] flex-col items-center justify-center gap-10 px-6 text-center">
       <Wordmark size="sm" />
       <div className="space-y-3">
         <p className="type-headline">

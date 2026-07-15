@@ -141,6 +141,12 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Render the whole design 15% smaller — a uniform scale that preserves every
+     proportion/alignment and does NOT touch animation timings (those are
+     temporal). On `body` (not :root) so it applies in every browser. Note: zoom
+     does NOT scale viewport units, so every full-height container below is
+     min-h-[calc(100svh/0.85)] to still fill the screen. */
+  zoom: 0.85;
 }
 
 html {

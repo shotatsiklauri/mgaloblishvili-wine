@@ -39,7 +39,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     content.nav.wines;
 
   return (
-    <div className="bg-surface-dark flex min-h-svh flex-col">
+    <div className="bg-surface-dark flex min-h-[calc(100svh/0.85)] flex-col">
       <HeaderContent activeId="wines" mobileTransparentControls="light" />
       <main className="flex-1">
         {/* Hero photo below the header; wine name centered over it.

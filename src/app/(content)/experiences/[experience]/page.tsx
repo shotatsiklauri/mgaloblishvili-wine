@@ -78,7 +78,7 @@ function EditorialExperiencePage({
   const mapHref = experience.mapUrl ?? GOOGLE_MAPS_LOCATION_URL;
 
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="flex min-h-[calc(100svh/0.85)] flex-col">
       <HeaderContent activeId="experiences" />
       <main className="text-ink flex-1 pt-16 md:pt-24 lg:pt-0">
         {/* ===================== FIRST PART — desktop (lg+) =====================

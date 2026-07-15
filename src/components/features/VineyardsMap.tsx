@@ -24,7 +24,7 @@ export async function VineyardsMap({
   const contact = await getResolvedContact(locale);
 
   return (
-    <section className="bg-surface-dark relative isolate flex min-h-[calc(100svh-4rem)] flex-1 flex-col overflow-hidden md:min-h-0">
+    <section className="bg-surface-dark relative isolate flex min-h-[calc(100svh/0.85-4rem)] flex-1 flex-col overflow-hidden md:min-h-0">
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src={mapImageUrl ?? "/images/map.jpg"}

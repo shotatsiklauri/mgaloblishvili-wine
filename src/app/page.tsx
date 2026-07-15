@@ -16,7 +16,7 @@ export default async function HomePage() {
   return (
     <main
       aria-label="Mgaloblishvili"
-      className="bg-surface-dark text-ink-inverse relative isolate flex h-svh flex-col overflow-hidden"
+      className="bg-surface-dark text-ink-inverse relative isolate flex h-[calc(100svh/0.85)] flex-col overflow-hidden"
     >
       <HeroVideo />
 

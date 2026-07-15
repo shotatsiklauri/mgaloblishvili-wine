@@ -251,6 +251,13 @@ export const enContent: SiteContent = {
         grapeOrigin: "",
         categoryId: "brandy",
       },
+      {
+        id: "vs",
+        name: "VS",
+        description: ["Aged grape brandy with a smooth, rounded character."],
+        grapeOrigin: "",
+        categoryId: "brandy",
+      },
       // Placeholder copy — replace with final Chacha text when available.
       {
         id: "chacha",

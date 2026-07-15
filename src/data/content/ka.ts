@@ -247,6 +247,13 @@ export const kaContent: SiteContent = {
         grapeOrigin: "",
         categoryId: "brandy",
       },
+      {
+        id: "vs",
+        name: "VS",
+        description: ["მომწიფებული ყურძნის ბრენდი, რბილი და დახვეწილი ხასიათით."],
+        grapeOrigin: "",
+        categoryId: "brandy",
+      },
       // Placeholder copy — replace with final Chacha text when available.
       {
         id: "chacha",

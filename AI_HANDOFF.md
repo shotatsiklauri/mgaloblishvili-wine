@@ -158,6 +158,17 @@ through the `type-*` utilities below (not raw `font-serif`).
 
 ### 3.3 Spacing / layout
 
+- **🔴 GLOBAL 15% ZOOM — `body { zoom: 0.85 }` (`globals.css`).** The whole design renders 15%
+  smaller: the Figma is @1440 but the site is intentionally shown at 85% so it isn't oversized on
+  wide monitors. It's on `body` (NOT `:root` — Chromium ignores root zoom; Safari honors it),
+  applies at **all** widths (mobile included), and does **NOT** touch animation timings (zoom is
+  spatial, not temporal). **Consequence — `zoom` does not scale viewport units,** so every
+  full-height container is compensated to **`calc(100svh / 0.85)`**:
+  `h-[calc(100svh/0.85)]` / `min-h-[calc(100svh/0.85)]`, and the viewport-locked detail sections are
+  `min-h-[calc(100svh/0.85 - clamp(…))]`. **If you add a new viewport-fill page/section, use the
+  `/0.85` form** or it leaves a ~15% white gap at the bottom. Full-bleed widths use `w-full`/`%`
+  (a raw `100vw` would leave a 15% gap on the right under zoom). To change the overall scale, edit
+  the single `0.85` — but then update the `/0.85` in the svh calcs to match.
 - **Breakpoints** = Tailwind defaults: `sm 640` · `md 768` · `lg 1024` · `xl 1280`. The
   **mobile→desktop pivot is mostly `lg`** for the header (fixed→sticky, nav words appear) and
   `md` for most editorial grids (1-col → 2-col).

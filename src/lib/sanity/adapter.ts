@@ -233,6 +233,30 @@ function mergeWineCategories(
   })
 }
 
+function mergeWineItems(
+  cmsItems: readonly Wine[],
+  staticItems: readonly Wine[],
+): readonly Wine[] {
+  if (cmsItems.length === 0) return staticItems
+
+  const mergedItems = [...cmsItems]
+  const mergedIds = new Set(cmsItems.map((item) => item.id))
+
+  for (const staticItem of staticItems) {
+    if (mergedIds.has(staticItem.id)) continue
+
+    const categoryId = staticItem.categoryId ?? 'wines'
+    const lastCategoryIndex = mergedItems.findLastIndex(
+      (item) => (item.categoryId ?? 'wines') === categoryId,
+    )
+
+    mergedItems.splice(lastCategoryIndex + 1, 0, staticItem)
+    mergedIds.add(staticItem.id)
+  }
+
+  return mergedItems
+}
+
 function adaptExperienceSections(
   item: SanityExperienceItem,
   locale: Locale,
@@ -335,8 +359,7 @@ export function adaptCmsToContent(
         wines.categories,
         staticFallback.wines.categories,
       ),
-      items:
-        wines.items.length > 0 ? wines.items : staticFallback.wines.items,
+      items: mergeWineItems(wines.items, staticFallback.wines.items),
     },
 
     experiences: {

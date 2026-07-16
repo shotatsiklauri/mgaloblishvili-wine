@@ -39,7 +39,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     content.nav.wines;
 
   return (
-    <div className="bg-surface-dark flex min-h-[calc(100svh)] flex-col">
+    <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" mobileTransparentControls="light" />
       <main className="flex-1">
         {/* Hero photo below the header; wine name centered over it.
@@ -74,7 +74,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             description 16px Noto Serif 300, grape-origin Inter 500 12px uppercase;
             bottle 308×1114 @ left 880 (61.11%). lg pins the bottle absolutely;
             mobile/tablet stack. */}
-        <section className="bg-surface/88 text-ink relative overflow-hidden lg:min-h-[min(77.35vw,1113.84px)]">
+        <section className="text-ink relative overflow-hidden lg:min-h-[min(77.35vw,1113.84px)]">
           <div className="relative z-10 mx-auto max-w-[520px] px-6 py-16 md:px-10 md:py-20 lg:mx-0 lg:max-w-[min(30.813vw,443.707px)] lg:px-0 lg:py-0 lg:pt-[min(8.415vw,121.176px)] lg:pl-[min(8.143vw,117.259px)]">
             {/* Figma: back control is just a left arrow — a 60px (4.17vw) 1px
                 line with an arrowhead @ (139,729). No text label. */}

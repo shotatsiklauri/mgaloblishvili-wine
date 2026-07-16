@@ -50,7 +50,7 @@ export default async function VineyardRegionPage({
           style={
             {
               "--vr-band":
-                "max(calc(100svh - clamp(208px, 16.667vw, 240px)), clamp(680px, 56.458vw, 813px))",
+                "max(calc(100svh - 210px), clamp(680px, 56.458vw, 813px))",
               "--vr-photo": "clamp(440px, 45.347vw, 653px)",
               "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
@@ -94,12 +94,23 @@ export default async function VineyardRegionPage({
                 className="mt-8 md:mt-9 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
               >
                 <RegionScrollText
-                  className="lg:min-h-0 lg:flex-1"
+                  className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
                   ariaLabel={`${region.title} description`}
                 >
-                  <div className="type-body-editorial text-ink/85 space-y-0 lg:text-[clamp(14px,1.111vw,16px)] lg:leading-[1.45] lg:font-light lg:tracking-normal">
+                  <div
+                    className={cn(
+                      "vineyard-region-body type-body-editorial text-ink/85 space-y-0 lg:shrink-0 lg:font-light lg:tracking-normal",
+                      (region.id === "kakheti" || region.id === "imereti") &&
+                        "lg:mt-auto",
+                    )}
+                  >
                     {region.body.map((paragraph, idx) => (
-                      <p key={idx}>{paragraph}</p>
+                      <p
+                        key={idx}
+                        className={cn(idx === 0 && "first-letter:font-bold")}
+                      >
+                        {paragraph}
+                      </p>
                     ))}
                   </div>
                 </RegionScrollText>

@@ -22,9 +22,10 @@ export async function ContentFooter({
   return (
     <div
       className={cn(
-        // Figma source height = 120px; the desktop target is 85% = 102px.
+        // Mobile/tablet retain their existing sizes; desktop matches the 105px
+        // content header.
         "flex shrink-0 items-center justify-center px-6",
-        "min-h-[88px] md:min-h-[104px] lg:min-h-[clamp(88.4px,7.081vw,102px)]",
+        "min-h-[88px] md:min-h-[104px] lg:min-h-[105px]",
         background === "white" ? "bg-white" : "bg-transparent",
       )}
     >

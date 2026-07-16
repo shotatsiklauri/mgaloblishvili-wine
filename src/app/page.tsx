@@ -55,6 +55,7 @@ export default async function HomePage() {
           <NavLink
             key={item.id}
             href={item.href}
+            wordClassName="primary-nav-word--header-size"
             underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
           >
             {item.label}

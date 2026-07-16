@@ -56,12 +56,14 @@
 
   /* Content-header-only restoration of the 1440×120 Figma geometry. The rest
      of the desktop site keeps the 85% calibration below. */
-  .site-header--figma .nav-word {
+  .site-header--figma .nav-word,
+  .primary-nav-word--header-size .nav-word {
     font-size: clamp(10.2px, 0.833vw, 12px);
     letter-spacing: 0.3em;
   }
 
-  .site-header--figma .nav-word--mtavruli {
+  .site-header--figma .nav-word--mtavruli,
+  .primary-nav-word--header-size .nav-word--mtavruli {
     font-size: clamp(9.775px, 0.764vw, 11px);
   }
 
@@ -179,6 +181,14 @@
 
   .type-language {
     font-size: clamp(9.35px, 0.708vw, 11.05px);
+  }
+
+  /* Vineyard-region copy: restore readable editorial sizing after the global
+     desktop calibration. The svh term only opens the leading on tall desktop
+     viewports and is capped so browser zoom-out cannot grow it indefinitely. */
+  .vineyard-region-body {
+    font-size: clamp(14px, 1.042vw, 15px);
+    line-height: clamp(1.45em, 2svh, 1.8em);
   }
 }
 

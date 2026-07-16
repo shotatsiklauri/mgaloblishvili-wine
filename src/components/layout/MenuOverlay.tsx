@@ -129,7 +129,10 @@ export function MenuOverlay({
                         focusRing("dark", 4),
                       )}
                     >
-                      <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]">
+                      <NavWord
+                        className="primary-nav-word--header-size"
+                        underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
+                      >
                         {column.title}
                       </NavWord>
                     </Link>
@@ -177,7 +180,10 @@ export function MenuOverlay({
                           focusRing("dark", 4),
                         )}
                       >
-                        <NavWord underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]">
+                        <NavWord
+                          className="primary-nav-word--header-size"
+                          underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
+                        >
                           {column.title}
                         </NavWord>
                       </Link>
@@ -191,7 +197,8 @@ export function MenuOverlay({
                               className={cn(
                                 // Figma menu words: Noto Serif Georgian 300,
                                 // 16px @ 1440 (1.11vw), line-height 100%.
-                                "font-serif text-[clamp(14px,1.11vw,18px)] leading-none font-light lg:text-[clamp(11.9px,0.944vw,15.3px)]",
+                                "font-serif text-[clamp(14px,1.111vw,16px)] leading-none font-light tracking-normal",
+                                "text-center",
                                 "text-ink-inverse/55 hover:text-ink-inverse",
                                 "transition-colors duration-200 motion-reduce:transition-none",
                                 focusRing("dark"),

@@ -190,7 +190,7 @@ function HistoryTabPanel({
         style={
           {
             "--history-band":
-              "calc(100svh - clamp(176.8px, 14.167vw, 227.8px))",
+              "calc(100svh - 105px - clamp(88.4px, 7.083vw, 112.2px))",
             "--history-photo": "clamp(357px, 29.219vw, 476px)",
             "--history-gap":
               "calc((var(--history-band) - var(--history-photo)) / 2)",

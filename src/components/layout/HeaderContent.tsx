@@ -53,9 +53,9 @@ export async function HeaderContent({
           // is centered in a capped 1440px Figma frame. Percentage-positioned
           // nav words therefore keep their source relationships at every width.
           "relative mx-auto flex w-full max-w-[1440px] items-center",
-          // Figma source height = 120px. It scales fluidly below the reference
-          // width, stays at least as tall as the tablet bar, and caps at 120px.
-          "h-16 md:h-24 lg:h-[clamp(96px,8.333vw,120px)]",
+          // Mobile/tablet retain their existing sizes; desktop uses the approved
+          // shared 105px header/footer height.
+          "h-16 md:h-24 lg:h-[105px]",
           "px-5 md:px-6 lg:px-[clamp(17px,1.389vw,20px)]",
         )}
       >

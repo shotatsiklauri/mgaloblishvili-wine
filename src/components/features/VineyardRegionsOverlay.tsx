@@ -209,12 +209,14 @@ export function VineyardRegionsOverlay({
         className={cn(
           "absolute z-10 hidden text-left md:block",
           // Figma @1440×900: left 1085 (75.35%), top 310 from page-top, 225×225 box.
-          // Map section sits below the ~120px header, so 310 => ~24.26% of section height.
-          "md:top-[24.26%] md:left-[72%] md:w-[min(30vw,240px)]",
-          "lg:top-[24.26%] lg:left-[75.35%] lg:w-[clamp(153px,13.281vw,221px)]",
+          // The map section begins below the 105px header, so its source top is
+          // 205px. The lg x-position uses a centered, capped 1440px canvas.
+          "md:top-[24.26%] md:right-4 md:h-[180px] md:w-[200px]",
+          "lg:top-[min(14.236vw,205px)] lg:right-auto lg:left-[calc(50%+min(25.347vw,365px))]",
+          "lg:h-[clamp(180px,15.625vw,225px)] lg:w-[clamp(200px,15.625vw,225px)]",
         )}
       >
-        <ul className="flex h-[clamp(180px,15.625vw,260px)] flex-col justify-between lg:h-[clamp(153px,13.281vw,221px)]">
+        <ul className="flex h-full flex-col justify-between">
           {regions.map((region) => (
             <li key={region.id}>
               <Link
@@ -226,7 +228,7 @@ export function VineyardRegionsOverlay({
                 onBlur={leave}
                 className={cn(
                   // Figma: Noto Serif Georgian 300, 27px @1440 (1.875vw), lh 100%.
-                  "type-submenu inline-block rounded-sm text-[clamp(22px,1.875vw,32px)] leading-none lg:text-[clamp(18.7px,1.594vw,27.2px)]",
+                  "inline-block rounded-sm font-serif text-[clamp(20px,1.875vw,27px)] leading-none font-light whitespace-nowrap",
                   "transition-colors duration-300 ease-out motion-reduce:transition-none",
                   isHighlighted(region.id)
                     ? "text-ink-inverse"

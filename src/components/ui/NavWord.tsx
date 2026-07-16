@@ -39,7 +39,7 @@ export function NavWord({
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute -right-10 -left-10 h-[3px] origin-left bg-white lg:h-[2.55px]",
+          "pointer-events-none absolute -right-10 -left-10 h-[3px] origin-left bg-white desktop:h-[2.55px]",
           "transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
           active
             ? "scale-x-100"

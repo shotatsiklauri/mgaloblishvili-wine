@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant desktop (@media (min-width: 960px));
+
 @theme {
   --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif:
@@ -45,7 +47,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .nav-word {
     font-size: 11.9px;
   }
@@ -54,27 +56,28 @@
     font-size: 11.05px;
   }
 
-  /* Content-header-only restoration of the 1440×120 Figma geometry. The rest
-     of the desktop site keeps the 85% calibration below. */
+  /* Content-header-only restoration of the source nav typography/ornaments
+     inside the approved 105px bar. The rest of the desktop site keeps the
+     85% calibration below. */
   .site-header--figma .nav-word,
   .primary-nav-word--header-size .nav-word {
-    font-size: clamp(10.2px, 0.833vw, 12px);
+    font-size: max(10.2px, calc(var(--desktop-fluid-unit) * 12));
     letter-spacing: 0.3em;
   }
 
   .site-header--figma .nav-word--mtavruli,
   .primary-nav-word--header-size .nav-word--mtavruli {
-    font-size: clamp(9.775px, 0.764vw, 11px);
+    font-size: max(9.775px, calc(var(--desktop-fluid-unit) * 11));
   }
 
   .site-header--figma .decorative-slash {
-    width: clamp(96px, 8.333vw, 120px);
+    width: max(96px, calc(var(--desktop-fluid-unit) * 120));
     height: 0.5px;
     min-height: 0;
   }
 
   .site-header--figma .type-language {
-    font-size: clamp(10.2px, 0.833vw, 12px);
+    font-size: max(10.2px, calc(var(--desktop-fluid-unit) * 12));
   }
 }
 
@@ -134,10 +137,11 @@
 }
 
 /* Desktop-only 15% visual reduction. Tailwind's standard spacing utilities are
-   rem-based, so the root font-size scales those consistently from lg upward.
-   Semantic type utilities and arbitrary px/vw sizes are explicit lengths and
-   therefore receive their own 0.85 overrides here or at their component. */
-@media (min-width: 1024px) {
+   rem-based, so the root font-size scales those consistently from the custom
+   desktop pivot upward. Semantic type utilities and arbitrary px/vw sizes are
+   explicit lengths and therefore receive their own capped overrides here or
+   at their component. */
+@media (min-width: 960px) {
   html {
     font-size: 85%;
   }
@@ -148,7 +152,7 @@
   }
 
   .type-submenu {
-    font-size: 15.3px;
+    font-size: max(15.3px, calc(var(--desktop-fluid-unit) * 15.3));
   }
 
   .type-headline {
@@ -168,11 +172,11 @@
   }
 
   .category-index-word {
-    font-size: clamp(25.5px, 2.125vw, 37.4px);
+    font-size: max(25.5px, calc(var(--desktop-fluid-unit) * 37.4));
   }
 
   .wine-list-word {
-    font-size: clamp(11.9px, 0.944vw, 15.3px);
+    font-size: max(11.9px, calc(var(--desktop-fluid-unit) * 15.3));
   }
 
   .type-meta {
@@ -180,14 +184,14 @@
   }
 
   .type-language {
-    font-size: clamp(9.35px, 0.708vw, 11.05px);
+    font-size: max(9.35px, calc(var(--desktop-fluid-unit) * 11.05));
   }
 
   /* Vineyard-region copy: restore readable editorial sizing after the global
      desktop calibration. The svh term only opens the leading on tall desktop
      viewports and is capped so browser zoom-out cannot grow it indefinitely. */
   .vineyard-region-body {
-    font-size: clamp(14px, 1.042vw, 15px);
+    font-size: max(14px, calc(var(--desktop-fluid-unit) * 15));
     line-height: clamp(1.45em, 2svh, 1.8em);
   }
 
@@ -222,6 +226,14 @@
 
 :root {
   color-scheme: light;
+  /* Scale-to-fit desktop unit. `calc(var(--desktop-fluid-unit) * X)` means "X px at
+     the 1440x1053 reference". 0.069444vw = 1px at the 1440 reference WIDTH;
+     0.094967svh = 1px at the 1053 reference HEIGHT. min() picks the tighter axis, so
+     the composition scales to fit instead of overflowing the bottom on short screens.
+     The 1.33px cap stops runaway growth on ultra-wide; the 0.75px floor keeps compact
+     desktops readable — note the floor binds below ~790px of viewport height, where
+     height-driven fitting stops and short viewports scroll (by design). */
+  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.094967svh), 1.33px);
   --motion-y-8: 8px;
   --motion-y-10: 10px;
   --motion-y-12: 12px;
@@ -230,7 +242,7 @@
   --brand-intro-blur: 16px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   :root {
     --motion-y-8: 6.8px;
     --motion-y-10: 8.5px;
@@ -730,12 +742,12 @@ html::-webkit-scrollbar {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .wine-scroll-area {
-    max-height: min(45.9vh, 323px);
+    max-height: min(45.9vh, calc(var(--desktop-fluid-unit) * 323));
   }
   .wine-scroll-track {
-    height: min(45.9vh, 323px);
+    height: min(45.9vh, calc(var(--desktop-fluid-unit) * 323));
   }
 }
 
@@ -810,9 +822,9 @@ html::-webkit-scrollbar {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .brand-intro__stack {
-    width: 297.5px;
+    width: max(253px, calc(var(--desktop-fluid-unit) * 297.5));
   }
 }
 

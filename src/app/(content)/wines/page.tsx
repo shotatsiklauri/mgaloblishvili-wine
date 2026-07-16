@@ -18,7 +18,7 @@ export default async function WinesPage() {
   return (
     <div className="flex min-h-[calc(100svh)] flex-col md:h-[calc(100svh)] md:overflow-hidden">
       <HeaderContent activeId="wines" />
-      <main className="flex min-h-0 flex-1 flex-col pt-16 md:pt-24 lg:pt-0">
+      <main className="flex min-h-0 flex-1 flex-col pt-16 md:pt-24 desktop:pt-0">
         <WinesView categories={categories} wines={content.wines.items} />
       </main>
       <ContentFooter />

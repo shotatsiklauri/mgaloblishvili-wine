@@ -80,17 +80,17 @@ function EditorialExperiencePage({
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="experiences" />
-      <main className="text-ink flex-1 pt-16 md:pt-24 lg:pt-0">
+      <main className="text-ink desktop:pt-0 flex-1 pt-16 md:pt-24">
         {/* ===================== FIRST PART — desktop (lg+) =====================
             Pixel-mapped to the Figma proportions and rendered at 85% from lg.
             Left column 57.5%, right 42.5%; explicit lengths are capped at their
             scaled 1440 values. */}
-        <section className="hidden lg:flex lg:pt-[min(6.434vw,92.65px)]">
+        <section className="desktop:flex desktop:pt-[calc(var(--desktop-fluid-unit)*92.65)] hidden">
           {/* LEFT COLUMN — one tasting photo (people.jpg), source 828×880 (Figma).
               The 30% white frost wraps its top + right into an L and the intro copy
               sits over the frosted top band; both animate in on load (top band
               bottom→top, right strip left→right, copy fades up after). */}
-          <div className="relative h-[min(51.944vw,748px)] w-[57.5%] overflow-hidden">
+          <div className="relative h-[calc(var(--desktop-fluid-unit)*748)] w-[57.5%] overflow-hidden">
             <Image
               src={peopleSrc}
               alt=""
@@ -107,7 +107,7 @@ function EditorialExperiencePage({
           {/* RIGHT COLUMN — wine photo, then the symbol + welcome copy. */}
           <div className="w-[42.5%]">
             {/* Source starts 22px lower than the left column and is 418px tall. */}
-            <div className="relative mt-[min(1.299vw,18.7px)] h-[min(24.674vw,355.3px)] overflow-hidden">
+            <div className="relative mt-[calc(var(--desktop-fluid-unit)*18.7)] h-[calc(var(--desktop-fluid-unit)*355.3)] overflow-hidden">
               <Image
                 src={wineSrc}
                 alt=""
@@ -117,8 +117,8 @@ function EditorialExperiencePage({
               />
             </div>
             {/* Source inset 50px; source wine→symbol gap 52px. */}
-            <div className="mt-[min(3.069vw,44.2px)] pl-[min(2.951vw,42.5px)]">
-              <div className="relative h-[min(4.25vw,61.2px)] w-[min(3.837vw,55.25px)]">
+            <div className="mt-[calc(var(--desktop-fluid-unit)*44.2)] pl-[calc(var(--desktop-fluid-unit)*42.5)]">
+              <div className="relative h-[calc(var(--desktop-fluid-unit)*61.2)] w-[calc(var(--desktop-fluid-unit)*55.25)]">
                 <Image
                   src="/svgs/TheSymbol.svg"
                   alt=""
@@ -127,7 +127,7 @@ function EditorialExperiencePage({
                   className="object-contain object-left"
                 />
               </div>
-              <div className="mt-[min(1.063vw,15.3px)] w-[min(30.223vw,435.2px)] max-w-full">
+              <div className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*435.2)] max-w-full">
                 {secondSection ? (
                   <ExperienceProse section={secondSection} />
                 ) : null}
@@ -137,7 +137,7 @@ function EditorialExperiencePage({
         </section>
 
         {/* ===================== FIRST PART — mobile / tablet ===================== */}
-        <section className="lg:hidden">
+        <section className="desktop:hidden">
           {/* One tasting photo with the frost capping its top (holding the intro
               copy); the people stay visible below it. */}
           <div className="relative min-h-[520px] overflow-hidden md:min-h-[600px]">
@@ -185,13 +185,13 @@ function EditorialExperiencePage({
             with a 30% white haze over the top ~90% (Figma overlay 537 of 598).
             Reveals top→bottom (+ slow zoom) the first time it scrolls into view,
             mirroring the vineyards photo but on the vertical axis. */}
-        <section className="mt-10 lg:mt-[min(8.973vw,129.2px)]">
+        <section className="desktop:mt-[calc(var(--desktop-fluid-unit)*129.2)] mt-10">
           <Link
             href={mapHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open location in Google Maps"
-            className="relative block cursor-pointer overflow-hidden rounded-[2px] lg:rounded-[1.7px]"
+            className="desktop:rounded-[1.7px] relative block cursor-pointer overflow-hidden rounded-[2px]"
           >
             <InViewReveal durationMs={800} zoom>
               <Image
@@ -211,7 +211,7 @@ function EditorialExperiencePage({
         </section>
 
         {/* ===================== FOOTER ADDRESS ===================== */}
-        <section className="flex items-center justify-center bg-white px-6 py-8 lg:min-h-[min(6.493vw,93.5px)]">
+        <section className="desktop:min-h-[calc(var(--desktop-fluid-unit)*93.5)] flex items-center justify-center bg-white px-6 py-8">
           <SiteFooterMinimal tone="light" contact={contact} />
         </section>
       </main>
@@ -229,13 +229,13 @@ function ExperienceProse({
   return (
     <div
       className={cn(
-        "font-serif text-[15px] leading-[1.5] md:text-[16px] lg:text-[clamp(11.9px,0.944vw,15.3px)]",
+        "desktop:text-[max(11.9px,calc(var(--desktop-fluid-unit)*13.6))] font-serif text-[15px] leading-[1.5] md:text-[16px]",
         className,
       )}
     >
       {/* Figma: the first line is bold (700); the rest is Medium (500), same size. */}
       <h2 className="font-bold">{section.heading}</h2>
-      <div className="text-ink/85 mt-5 space-y-4 font-medium lg:mt-[min(1.19vw,17.136px)] lg:space-y-[min(0.935vw,13.464px)]">
+      <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*17.136)] desktop:space-y-[calc(var(--desktop-fluid-unit)*13.464)] mt-5 space-y-4 font-medium">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

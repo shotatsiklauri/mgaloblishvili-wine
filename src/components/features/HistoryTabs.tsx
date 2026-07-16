@@ -48,13 +48,13 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
       onValueChange={handleChange}
       orientation="horizontal"
       activationMode="manual"
-      className="flex flex-1 flex-col lg:min-h-0"
+      className="desktop:min-h-0 flex flex-1 flex-col"
     >
       {/* Panels overlap during a swap: the incoming one is in flow (defines the
           height, no layout shift) and the outgoing one is absolutely overlaid.
           overflow-x-clip contains the horizontal slide without clipping the
           vertical/scroll on mobile. */}
-      <div className="relative flex flex-1 flex-col overflow-x-clip lg:min-h-0">
+      <div className="desktop:min-h-0 relative flex flex-1 flex-col overflow-x-clip">
         {historyItems.map((tab) => {
           const isActive = active === tab.id;
           const isExiting = exiting?.id === tab.id;
@@ -90,8 +90,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
           aria-label="History sections"
           className={cn(
             "grid grid-cols-1 sm:grid-cols-3",
-            "lg:mx-auto lg:w-full lg:max-w-[min(57.8vw,832.32px)]",
-            "lg:h-[clamp(88.4px,7.083vw,112.2px)]",
+            "desktop:mx-auto desktop:h-[max(88.4px,calc(var(--desktop-fluid-unit)*102))] desktop:w-full desktop:max-w-[max(624px,calc(var(--desktop-fluid-unit)*832.32))]",
           )}
         >
           {historyItems.map((tab) => (
@@ -100,9 +99,9 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               value={tab.id}
               className={cn(
                 "group relative flex cursor-pointer items-center justify-center py-5",
-                "lg:items-start lg:py-0 lg:pt-[clamp(34px,3.069vw,51px)]",
+                "desktop:items-start desktop:py-0 desktop:pt-[max(34px,calc(var(--desktop-fluid-unit)*44.2))]",
                 "text-center font-sans leading-none font-semibold uppercase",
-                "text-[clamp(11px,0.833vw,13px)] tracking-[0.3em] lg:text-[clamp(9.35px,0.708vw,11.05px)]",
+                "desktop:text-[max(9.35px,calc(var(--desktop-fluid-unit)*10.2))] text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 focusRing("light"),
                 "text-ink-muted hover:text-accent focus-visible:text-accent",
@@ -113,7 +112,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               <span
                 aria-hidden="true"
                 className={cn(
-                  "pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black lg:h-[2.55px]",
+                  "desktop:h-[2.55px] pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black",
                   "scale-x-0 transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
                   "group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[state=active]:scale-x-100",
                 )}
@@ -163,7 +162,7 @@ function HistoryTabPanel({
   const layout = isExiting
     ? "absolute inset-0 block"
     : isActive
-      ? "lg:min-h-0 lg:flex-1"
+      ? "desktop:min-h-0 desktop:flex-1"
       : "hidden";
 
   const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
@@ -189,19 +188,23 @@ function HistoryTabPanel({
       <section
         style={
           {
+            // 105 = the scaled content-header height.
             "--history-band":
-              "calc(100svh - 105px - clamp(88.4px, 7.083vw, 112.2px))",
-            "--history-photo": "clamp(357px, 29.219vw, 476px)",
+              "calc(100svh - var(--desktop-fluid-unit) * 105 - var(--history-tabs))",
+            "--history-tabs":
+              "max(88.4px, calc(var(--desktop-fluid-unit) * 102))",
+            "--history-photo":
+              "max(357px, calc(var(--desktop-fluid-unit) * 421))",
             "--history-gap":
               "calc((var(--history-band) - var(--history-photo)) / 2)",
           } as CSSProperties
         }
-        className="grid w-full items-center lg:min-h-[var(--history-band)] lg:grid-cols-[46.25%_53.75%] lg:items-start lg:py-0"
+        className="desktop:min-h-[var(--history-band)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
       >
-        <div className="px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16 lg:pt-[clamp(78.2px,6.198vw,98.6px)] lg:pr-[var(--history-gap)] lg:pb-0 lg:pl-[min(2.951vw,42.5px)]">
+        <div className="desktop:pt-[max(78.2px,calc(var(--desktop-fluid-unit)*89.25))] desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16">
           <div
             className={cn(
-              "relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(61.2px,5.136vw,85px)]",
+              "desktop:aspect-[87/96] desktop:w-[max(61.2px,calc(var(--desktop-fluid-unit)*74))] relative aspect-square w-24 overflow-hidden",
               enter(1),
             )}
           >
@@ -214,10 +217,10 @@ function HistoryTabPanel({
             />
           </div>
 
-          <div className="mt-9 max-w-[540px] lg:mt-[clamp(25.5px,2.243vw,37.4px)] lg:max-w-none">
+          <div className="desktop:mt-[max(25.5px,calc(var(--desktop-fluid-unit)*32.3))] desktop:max-w-none mt-9 max-w-[540px]">
             <h1
               className={cn(
-                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,48px)]",
+                "desktop:text-[max(40px,calc(var(--desktop-fluid-unit)*48))] font-serif text-[44px] leading-none font-normal md:text-[48px]",
                 enter(2),
               )}
             >
@@ -225,7 +228,7 @@ function HistoryTabPanel({
             </h1>
             <div
               className={cn(
-                "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:font-light lg:tracking-normal",
+                "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*27.2)] desktop:font-light desktop:tracking-normal mt-8 space-y-0 md:mt-9",
                 enter(3),
               )}
             >
@@ -236,7 +239,7 @@ function HistoryTabPanel({
           </div>
         </div>
 
-        <div className="relative aspect-[851/666] w-full overflow-hidden lg:mr-[min(1.889vw,27.2px)] lg:aspect-auto lg:h-[var(--history-photo)] lg:w-auto lg:self-center">
+        <div className="desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:aspect-auto desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center relative aspect-[851/666] w-full overflow-hidden">
           {/* Left→right clip reveal, coordinated to start with the symbol and
               finish within the text window (~1s), on first load only. On a
               switch the image arrives settled and rides the whole-panel fly. */}
@@ -256,7 +259,7 @@ function HistoryTabPanel({
               alt=""
               fill
               priority={tab.id === "encounter"}
-              sizes="(min-width: 1024px) 52vw, 100vw"
+              sizes="(min-width: 960px) 52vw, 100vw"
               className={cn("object-cover", introActive && "intro-zoom")}
             />
           </div>

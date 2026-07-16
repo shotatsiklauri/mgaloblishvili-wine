@@ -49,17 +49,18 @@ export default async function VineyardRegionPage({
         <section
           style={
             {
+              // 210 = the scaled 105px header + 105px footer.
               "--vr-band":
-                "max(calc(100svh - 210px), clamp(680px, 56.458vw, 813px))",
-              "--vr-photo": "clamp(440px, 45.347vw, 653px)",
+                "max(calc(100svh - var(--desktop-fluid-unit) * 210), max(680px, calc(var(--desktop-fluid-unit) * 813)))",
+              "--vr-photo": "max(440px, calc(var(--desktop-fluid-unit) * 653))",
               "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
           }
-          className="grid w-full items-center lg:min-h-[var(--vr-band)] lg:grid-cols-[41.18%_58.82%] lg:items-start lg:py-0"
+          className="desktop:min-h-[var(--vr-band)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
         >
-          <div className="flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:h-[var(--vr-band)] lg:pt-[clamp(92px,7.292vw,105px)] lg:pr-[var(--vr-gap)] lg:pb-[var(--vr-gap)] lg:pl-[min(3.472vw,50px)]">
+          <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*105))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             <IntroFlyIn order={1}>
-              <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,87px)]">
+              <div className="desktop:aspect-[87/96] desktop:w-[max(72px,calc(var(--desktop-fluid-unit)*87))] relative aspect-square w-24 overflow-hidden">
                 <Image
                   src="/svgs/TheSymbol.svg"
                   alt=""
@@ -70,9 +71,9 @@ export default async function VineyardRegionPage({
               </div>
             </IntroFlyIn>
 
-            <div className="mt-9 max-w-[540px] lg:mt-[clamp(30px,2.639vw,38px)] lg:flex lg:min-h-0 lg:max-w-none lg:flex-1 lg:flex-col">
+            <div className="desktop:mt-[max(30px,calc(var(--desktop-fluid-unit)*38))] desktop:flex desktop:min-h-0 desktop:max-w-none desktop:flex-1 desktop:flex-col mt-9 max-w-[540px]">
               <IntroFlyIn order={2}>
-                <h1 className="font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,48px)]">
+                <h1 className="desktop:text-[max(40px,calc(var(--desktop-fluid-unit)*48))] font-serif text-[44px] leading-none font-normal md:text-[48px]">
                   {region.title}
                 </h1>
               </IntroFlyIn>
@@ -80,7 +81,7 @@ export default async function VineyardRegionPage({
                 <IntroFlyIn order={3}>
                   <p
                     className={cn(
-                      "mt-3 font-sans text-[13px] leading-[1.35] font-normal lg:mt-[clamp(14px,1.319vw,19px)] lg:text-[clamp(14px,1.111vw,16px)] lg:leading-none lg:font-light",
+                      "desktop:mt-[max(14px,calc(var(--desktop-fluid-unit)*19))] desktop:text-[max(14px,calc(var(--desktop-fluid-unit)*16))] desktop:leading-none desktop:font-light mt-3 font-sans text-[13px] leading-[1.35] font-normal",
                       locale === "en" && "uppercase",
                     )}
                   >
@@ -91,17 +92,17 @@ export default async function VineyardRegionPage({
 
               <IntroFlyIn
                 order={4}
-                className="mt-8 md:mt-9 lg:mt-[clamp(30.6px,2.306vw,33.2px)] lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
+                className="desktop:mt-[max(30.6px,calc(var(--desktop-fluid-unit)*33.2))] desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col mt-8 md:mt-9"
               >
                 <RegionScrollText
-                  className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
+                  className="desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col"
                   ariaLabel={`${region.title} description`}
                 >
                   <div
                     className={cn(
-                      "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 space-y-0 lg:shrink-0 lg:font-light lg:tracking-normal",
+                      "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:shrink-0 desktop:font-light desktop:tracking-normal space-y-0",
                       (region.id === "kakheti" || region.id === "imereti") &&
-                        "lg:mt-auto",
+                        "desktop:mt-auto",
                     )}
                   >
                     {region.body.map((paragraph, idx) => (
@@ -112,7 +113,7 @@ export default async function VineyardRegionPage({
               </IntroFlyIn>
             </div>
           </div>
-          <div className="relative aspect-[851/666] w-full overflow-hidden lg:aspect-auto lg:h-[var(--vr-photo)] lg:self-center">
+          <div className="desktop:aspect-auto desktop:h-[var(--vr-photo)] desktop:self-center relative aspect-[851/666] w-full overflow-hidden">
             <IntroAwareHorizontalReveal
               className="absolute inset-0"
               durationMs={800}
@@ -122,7 +123,7 @@ export default async function VineyardRegionPage({
                 alt=""
                 fill
                 priority
-                sizes="(min-width: 1024px) 58vw, 100vw"
+                sizes="(min-width: 960px) 58vw, 100vw"
                 className="intro-zoom object-cover"
               />
             </IntroAwareHorizontalReveal>

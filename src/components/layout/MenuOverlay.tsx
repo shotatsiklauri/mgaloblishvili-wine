@@ -65,7 +65,7 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6 lg:h-28 lg:px-7">
+          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*105)] desktop:px-7 flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
@@ -104,7 +104,7 @@ export function MenuOverlay({
               aria-label="Mgaloblishvili — Home"
               className={cn(
                 "menu-stagger menu-stagger--logo",
-                "mt-2 inline-flex shrink-0 self-center lg:mt-6",
+                "desktop:mt-6 mt-2 inline-flex shrink-0 self-center",
                 focusRing("dark"),
               )}
             >
@@ -112,7 +112,7 @@ export function MenuOverlay({
             </Link>
 
             <nav aria-label="Primary" className="my-auto w-full">
-              <ul className="mx-auto flex w-full max-w-[320px] flex-col items-center gap-12 lg:hidden">
+              <ul className="desktop:hidden mx-auto flex w-full max-w-[320px] flex-col items-center gap-12">
                 {menuColumns.map((column, idx) => (
                   <li
                     key={column.id}
@@ -131,7 +131,7 @@ export function MenuOverlay({
                     >
                       <NavWord
                         className="primary-nav-word--header-size"
-                        underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
+                        underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
                       >
                         {column.title}
                       </NavWord>
@@ -143,9 +143,9 @@ export function MenuOverlay({
               <ul
                 className={cn(
                   "mx-auto hidden w-full",
-                  "max-w-[1180px] lg:max-w-[1003px]",
+                  "desktop:max-w-[max(752px,calc(var(--desktop-fluid-unit)*1003))] max-w-[1180px]",
                   "grid-cols-4 gap-x-0",
-                  "lg:grid",
+                  "desktop:grid",
                 )}
               >
                 {menuColumns.map((column, idx) => {
@@ -167,7 +167,7 @@ export function MenuOverlay({
                             DIVIDER_STAGGER[idx],
                             // Figma: ~500px tall 1px line; kept a touch shorter so
                             // it doesn't reach the footer.
-                            "pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px lg:-top-[5.95vh] lg:block lg:h-[min(45.9vh,391px)]",
+                            "desktop:-top-[5.95vh] desktop:block desktop:h-[min(45.9vh,calc(var(--desktop-fluid-unit)*391))] pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px",
                           )}
                         />
                       ) : null}
@@ -182,7 +182,7 @@ export function MenuOverlay({
                       >
                         <NavWord
                           className="primary-nav-word--header-size"
-                          underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
+                          underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
                         >
                           {column.title}
                         </NavWord>
@@ -197,7 +197,7 @@ export function MenuOverlay({
                               className={cn(
                                 // Figma menu words: Noto Serif Georgian 300,
                                 // 16px @ 1440 (1.11vw), line-height 100%.
-                                "font-serif text-[clamp(14px,1.111vw,16px)] leading-none font-light tracking-normal",
+                                "font-serif text-[max(14px,calc(var(--desktop-fluid-unit)*16))] leading-none font-light tracking-normal",
                                 "text-center",
                                 "text-ink-inverse/55 hover:text-ink-inverse",
                                 "transition-colors duration-200 motion-reduce:transition-none",
@@ -219,7 +219,7 @@ export function MenuOverlay({
           <div className="shrink-0 px-6 md:px-10">
             <div
               aria-hidden="true"
-              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 mx-auto h-px w-full max-w-[640px] origin-center lg:max-w-[544px]"
+              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[max(462px,calc(var(--desktop-fluid-unit)*544))] mx-auto h-px w-full max-w-[640px] origin-center"
             />
           </div>
 

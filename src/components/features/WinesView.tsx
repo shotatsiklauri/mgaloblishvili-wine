@@ -23,7 +23,7 @@ export function WinesView({
 
   // Same spacing in both states so the words don't shift when the list opens.
   const categoryLinks = (
-    <CategoryList className="space-y-[15px] text-center md:text-left lg:space-y-[12.75px]">
+    <CategoryList className="space-y-[15px] text-center md:text-left desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)]">
       {categories.map((category) => {
         const active = category.id === activeCategoryId;
         return (
@@ -48,7 +48,7 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] lg:pt-[15.3vh] lg:pl-[min(14.935vw,215.064px)]">
+      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)]">
         {categoryLinks}
       </div>
     );
@@ -59,18 +59,18 @@ export function WinesView({
   // (words block 217 + 3px), and is raised so the words sit within it (Figma
   // list top 186 ≈ 128px above the words top).
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] lg:pt-[15.3vh] lg:pl-[min(14.935vw,215.064px)]">
+    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)]">
       <div
         className={cn(
           "flex w-full flex-col items-center gap-10",
-          "md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px] lg:gap-[2.55px]",
+          "md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px] desktop:gap-[2.55px]",
         )}
       >
-        <div className="shrink-0 text-center md:w-[15.07vw] md:text-left lg:w-[min(12.81vw,184.464px)]">
+        <div className="shrink-0 text-center md:w-[15.07vw] md:text-left desktop:w-[calc(var(--desktop-fluid-unit)*184.464)]">
           {categoryLinks}
         </div>
 
-        <div className="w-full md:mt-[-5.76vw] md:w-auto lg:mt-[max(-70.502px,-4.896vw)]">
+        <div className="w-full md:mt-[-5.76vw] md:w-auto desktop:mt-[calc(var(--desktop-fluid-unit)*-70.502)]">
           <WineScrollList wines={wines} categoryId={activeCategoryId} />
         </div>
       </div>

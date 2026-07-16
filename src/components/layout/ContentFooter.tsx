@@ -25,7 +25,7 @@ export async function ContentFooter({
         // Mobile/tablet retain their existing sizes; desktop matches the 105px
         // content header.
         "flex shrink-0 items-center justify-center px-6",
-        "min-h-[88px] md:min-h-[104px] lg:min-h-[105px]",
+        "min-h-[88px] md:min-h-[104px] desktop:min-h-[calc(var(--desktop-fluid-unit)*105)]",
         background === "white" ? "bg-white" : "bg-transparent",
       )}
     >

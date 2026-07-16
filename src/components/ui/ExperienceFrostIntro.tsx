@@ -23,20 +23,20 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
       <div
         aria-hidden="true"
         className={cn(
-          "absolute inset-x-0 top-0 h-[min(24.851vw,357.85px)] bg-white/30",
+          "absolute inset-x-0 top-0 h-[calc(var(--desktop-fluid-unit)*357.85)] bg-white/30",
           ready ? "exp-frost-band" : "exp-frost-band--pending",
         )}
       />
       <div
         aria-hidden="true"
         className={cn(
-          "absolute top-[min(24.851vw,357.85px)] right-0 bottom-0 w-[min(11.05vw,159.12px)] bg-white/30",
+          "absolute top-[calc(var(--desktop-fluid-unit)*357.85)] right-0 bottom-0 w-[calc(var(--desktop-fluid-unit)*159.12)] bg-white/30",
           ready ? "exp-frost-strip" : "exp-frost-strip--pending",
         )}
       />
       <div
         className={cn(
-          "absolute top-[min(2.066vw,29.75px)] left-[min(2.951vw,42.5px)] flex h-[min(19.066vw,274.55px)] w-[min(40.139vw,578px)] flex-col justify-center",
+          "absolute top-[calc(var(--desktop-fluid-unit)*29.75)] left-[calc(var(--desktop-fluid-unit)*42.5)] flex h-[calc(var(--desktop-fluid-unit)*274.55)] w-[calc(var(--desktop-fluid-unit)*578)] flex-col justify-center",
           ready ? "exp-intro-text" : "exp-intro-text--pending",
         )}
       >

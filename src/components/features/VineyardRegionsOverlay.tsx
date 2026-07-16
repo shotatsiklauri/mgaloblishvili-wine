@@ -212,8 +212,8 @@ export function VineyardRegionsOverlay({
           // The map section begins below the 105px header, so its source top is
           // 205px. The lg x-position uses a centered, capped 1440px canvas.
           "md:top-[24.26%] md:right-4 md:h-[180px] md:w-[200px]",
-          "lg:top-[min(14.236vw,205px)] lg:right-auto lg:left-[calc(50%+min(25.347vw,365px))]",
-          "lg:h-[clamp(180px,15.625vw,225px)] lg:w-[clamp(200px,15.625vw,225px)]",
+          "desktop:top-[calc(var(--desktop-fluid-unit)*205)] desktop:right-auto desktop:left-[calc(50%+(var(--desktop-fluid-unit)*365))]",
+          "desktop:h-[max(180px,calc(var(--desktop-fluid-unit)*225))] desktop:w-[max(200px,calc(var(--desktop-fluid-unit)*225))]",
         )}
       >
         <ul className="flex h-full flex-col justify-between">
@@ -228,7 +228,7 @@ export function VineyardRegionsOverlay({
                 onBlur={leave}
                 className={cn(
                   // Figma: Noto Serif Georgian 300, 27px @1440 (1.875vw), lh 100%.
-                  "inline-block rounded-sm font-serif text-[clamp(20px,1.875vw,27px)] leading-none font-light whitespace-nowrap",
+                  "inline-block rounded-sm font-serif text-[max(20px,calc(var(--desktop-fluid-unit)*27))] leading-none font-light whitespace-nowrap",
                   "transition-colors duration-300 ease-out motion-reduce:transition-none",
                   isHighlighted(region.id)
                     ? "text-ink-inverse"

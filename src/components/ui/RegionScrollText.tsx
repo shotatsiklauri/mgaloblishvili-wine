@@ -6,7 +6,7 @@ import { focusRing } from "@/lib/focus-ring";
 
 type RegionScrollTextProps = {
   readonly children: ReactNode;
-  /** Layout utilities for the scroll frame (height/flex, e.g. `lg:flex-1`). */
+  /** Layout utilities for the scroll frame (height/flex, e.g. `desktop:flex-1`). */
   readonly className?: string;
   readonly ariaLabel?: string;
 };
@@ -55,8 +55,9 @@ export function RegionScrollText({
       role="region"
       aria-label={ariaLabel}
       className={cn(
-        // Scrolls only at lg (mobile/tablet keep the natural flowing text).
-        "no-scrollbar min-h-0 rounded-sm lg:overflow-y-auto",
+        // Scrolls only in the shared desktop layout; smaller screens keep the
+        // natural flowing text.
+        "no-scrollbar min-h-0 rounded-sm desktop:overflow-y-auto",
         fade.top && "wine-scroll-fade--top",
         fade.bottom && "wine-scroll-fade--bottom",
         focusRing("light"),

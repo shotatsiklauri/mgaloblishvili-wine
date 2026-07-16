@@ -31,10 +31,10 @@ export function HeaderScrollFrame({
     <header
       data-scrolled={scrolled}
       className={cn(
-        "group/header text-ink-inverse fixed inset-x-0 top-0 z-30 border-b lg:sticky",
+        "group/header text-ink-inverse fixed inset-x-0 top-0 z-30 border-b desktop:sticky",
         "bg-transparent border-transparent transition-colors duration-300 motion-reduce:transition-none",
         "data-[scrolled=true]:bg-surface-dark data-[scrolled=true]:border-ink-inverse/5",
-        "lg:bg-surface-dark lg:border-ink-inverse/5",
+        "desktop:bg-surface-dark desktop:border-ink-inverse/5",
         className,
       )}
     >

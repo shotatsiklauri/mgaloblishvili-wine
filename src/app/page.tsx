@@ -34,7 +34,7 @@ export default async function HomePage() {
               width={603}
               height={152}
               priority
-              className="h-auto w-[270px] sm:w-[320px] md:w-[400px] lg:w-[clamp(374px,30.855vw,527px)]"
+              className="desktop:w-[max(374px,calc(var(--desktop-fluid-unit)*527))] h-auto w-[270px] sm:w-[320px] md:w-[400px]"
             />
           </h1>
         </div>
@@ -48,7 +48,7 @@ export default async function HomePage() {
         className={cn(
           "hero-ui-enter hero-ui-enter--nav",
           "absolute top-[74.7%] left-1/2 z-10 -translate-x-1/2",
-          "hidden md:flex md:items-start md:justify-center md:gap-x-16 lg:gap-x-20",
+          "desktop:gap-x-[max(68px,calc(var(--desktop-fluid-unit)*80))] hidden md:flex md:items-start md:justify-center md:gap-x-16",
         )}
       >
         {primaryNav.map((item) => (
@@ -56,7 +56,7 @@ export default async function HomePage() {
             key={item.id}
             href={item.href}
             wordClassName="primary-nav-word--header-size"
-            underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center lg:w-[140.25px]"
+            underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
           >
             {item.label}
           </NavLink>

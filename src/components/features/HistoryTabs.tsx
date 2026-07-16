@@ -217,7 +217,7 @@ function HistoryTabPanel({
           <div className="mt-9 max-w-[540px] lg:mt-[clamp(25.5px,2.243vw,37.4px)] lg:max-w-none">
             <h1
               className={cn(
-                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(34px,2.833vw,47.6px)]",
+                "font-serif text-[44px] leading-none font-normal md:text-[48px] lg:text-[clamp(40px,3.333vw,48px)]",
                 enter(2),
               )}
             >
@@ -225,7 +225,7 @@ function HistoryTabPanel({
             </h1>
             <div
               className={cn(
-                "type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:text-[clamp(11.9px,0.944vw,15.3px)] lg:leading-[1.45] lg:font-light lg:tracking-normal",
+                "vineyard-region-body type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:font-light lg:tracking-normal",
                 enter(3),
               )}
             >

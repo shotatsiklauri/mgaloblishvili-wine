@@ -462,8 +462,10 @@ max-w-[1440px] items-center`**, height
 ### `/history` — tabs + story panels
 
 - **File:** `HistoryTabs.tsx` (Radix `Tabs`, `activationMode="manual"`). Panel image via
-  the shared horizontal reveal/zoom; heading/body use the scaled editorial typography. **Tab bar**
-  is at the bottom; triggers reuse the `nav-word` underline (`duration-[1420ms]`).
+  the shared horizontal reveal/zoom; panel headings and body copy use the same responsive
+  typography as `/vineyards/[region]` (`40→48px` desktop heading plus
+  `.vineyard-region-body` sizing/leading). **Tab bar** is at the bottom; triggers reuse the
+  `nav-word` underline (`duration-[1420ms]`).
 - **Desktop panel geometry:** `--history-band` is the viewport space above the tab bar,
   `--history-photo` is the capped photo height, and
   `--history-gap = (var(--history-band) - var(--history-photo)) / 2`. The text column uses that gap

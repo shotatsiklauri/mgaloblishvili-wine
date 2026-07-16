@@ -54,12 +54,25 @@
     font-size: 11.05px;
   }
 
-  .site-header--compact .nav-word {
-    font-size: 10.625px;
+  /* Content-header-only restoration of the 1440×120 Figma geometry. The rest
+     of the desktop site keeps the 85% calibration below. */
+  .site-header--figma .nav-word {
+    font-size: clamp(10.2px, 0.833vw, 12px);
+    letter-spacing: 0.3em;
   }
 
-  .site-header--compact .nav-word--mtavruli {
-    font-size: 9.775px;
+  .site-header--figma .nav-word--mtavruli {
+    font-size: clamp(9.775px, 0.764vw, 11px);
+  }
+
+  .site-header--figma .decorative-slash {
+    width: clamp(96px, 8.333vw, 120px);
+    height: 0.5px;
+    min-height: 0;
+  }
+
+  .site-header--figma .type-language {
+    font-size: clamp(10.2px, 0.833vw, 12px);
   }
 }
 

@@ -21,9 +21,9 @@ type HeaderContentProps = {
   mobileTransparentControls?: "dark" | "light";
 };
 
-// Desktop nav word positions as % of the 1440px Figma canvas (left edge of each
-// word), applied inside the 85%-scaled 1224px desktop frame. Order matches
-// buildPrimaryNav: history, vineyards, wines, experiences.
+// Desktop nav word positions as % of the capped 1440px Figma canvas (left edge
+// of each word). Order matches buildPrimaryNav: history, vineyards, wines,
+// experiences.
 // History 154, Vineyards 358, Wines 980, Experiences 1175 (÷1440).
 const NAV_LEFT_POS = [
   "lg:left-[10.694%]",
@@ -44,16 +44,19 @@ export async function HeaderContent({
   const usesLightMobileControls = mobileTransparentControls === "light";
 
   return (
-    <HeaderScrollFrame className={cn("site-header--compact", className)}>
+    <HeaderScrollFrame
+      className={cn("site-header--figma lg:border-b-0", className)}
+    >
       <div
         className={cn(
           // Bar background is full-width (HeaderScrollFrame); the content itself
-          // is centered in the 85%-scaled Figma frame so the nav words
-          // (positioned by % below) retain the source composition.
-          "relative mx-auto flex w-full max-w-[1440px] items-center lg:max-w-[1224px]",
-          // Figma source height = 120px; the desktop target is 85% = 102px.
-          "h-16 md:h-24 lg:h-[clamp(88.4px,7.083vw,102px)]",
-          "px-5 md:px-6 lg:px-6",
+          // is centered in a capped 1440px Figma frame. Percentage-positioned
+          // nav words therefore keep their source relationships at every width.
+          "relative mx-auto flex w-full max-w-[1440px] items-center",
+          // Figma source height = 120px. It scales fluidly below the reference
+          // width, stays at least as tall as the tablet bar, and caps at 120px.
+          "h-16 md:h-24 lg:h-[clamp(96px,8.333vw,120px)]",
+          "px-5 md:px-6 lg:px-[clamp(17px,1.389vw,20px)]",
         )}
       >
         <div className="flex items-center">
@@ -62,6 +65,7 @@ export async function HeaderContent({
               <HamburgerButton
                 tone="light"
                 className={cn(
+                  "lg:[&>span]:h-[clamp(49.3px,4.028vw,58px)] lg:[&>span]:w-[clamp(49.3px,4.028vw,58px)]",
                   usesLightMobileControls ? "text-ink-inverse" : "text-ink",
                   "group-data-[scrolled=true]/header:text-ink-inverse lg:text-ink-inverse",
                 )}
@@ -85,7 +89,10 @@ export async function HeaderContent({
               href={item.href}
               active={activeId === item.id}
               edgeUnderline
-              underlineClassName="lg:-right-8 lg:-left-8 lg:h-[1.7px]"
+              wordClassName={cn(
+                index < 2 && "lg:translate-y-[clamp(2.5px,0.243vw,3.5px)]",
+              )}
+              underlineClassName="lg:right-auto lg:left-1/2 lg:h-[2px] lg:w-[clamp(117px,11.458vw,165px)] lg:-translate-x-1/2"
               className="h-full px-0"
             >
               {item.label}
@@ -107,7 +114,7 @@ export async function HeaderContent({
             {/* Figma logo width = 253px @ 1440 (17.57vw), clamped. */}
             <Wordmark
               size="header"
-              className="lg:w-[clamp(187px,14.935vw,238px)]"
+              className="lg:w-[clamp(180px,17.569vw,253px)] lg:[&_img]:w-full"
             />
           </Link>
         </div>
@@ -117,6 +124,7 @@ export async function HeaderContent({
             current={locale}
             tone={usesLightMobileControls ? "dark" : "light"}
             className={cn(
+              "lg:h-[clamp(26px,2.083vw,30px)] lg:w-[clamp(22px,1.806vw,26px)] lg:justify-between lg:gap-0",
               "group-data-[scrolled=true]/header:[&_button[aria-pressed=true]]:text-ink-inverse",
               "group-data-[scrolled=true]/header:[&_button[aria-pressed=false]]:text-ink-inverse/70",
               "lg:[&_button[aria-pressed=true]]:text-ink-inverse",

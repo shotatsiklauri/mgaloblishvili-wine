@@ -7,6 +7,7 @@ type NavLinkProps = {
   href: string;
   active?: boolean;
   className?: string;
+  wordClassName?: string;
   edgeUnderline?: boolean;
   underlineClassName?: string;
   children: React.ReactNode;
@@ -16,6 +17,7 @@ export function NavLink({
   href,
   active = false,
   className,
+  wordClassName,
   edgeUnderline = false,
   underlineClassName,
   children,
@@ -34,6 +36,7 @@ export function NavLink({
       <NavWord
         active={active}
         edgeUnderline={edgeUnderline}
+        className={wordClassName}
         underlineClassName={underlineClassName}
       >
         {children}

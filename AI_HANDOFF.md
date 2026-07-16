@@ -51,7 +51,8 @@ do **not** cite them:
 - Removed the `body { zoom: 0.85 }` experiment and its `calc(100svh/0.85)` compensations; built the
   proper full-viewport shell (`globals.css`, `layout.tsx`, all page wrappers back to plain `svh`).
 - The initial pass capped header/footer at the 120px source size and centered the header in the
-  1440px source frame; the 2026-07-16 follow-up below applies the approved 85% desktop values.
+  1440px source frame; the 2026-07-16 follow-up applied the approved 85% desktop values. The
+  content header was subsequently restored to its supplied 1440×120 source geometry (see §3.3).
 - `/vineyards/[region]`: every fluid value capped at its 1440 Figma value; body moved into a new
   **`RegionScrollText`** frame (no-scrollbar scroll) whose bottom aligns to the photo via the
   `--vr-band`/`--vr-photo` CSS vars.
@@ -61,11 +62,12 @@ do **not** cite them:
 
 **Follow-up (2026-07-16):** page footers are white; the home and `/vineyards` landing-page footers
 remain transparent over their media. Desktop UI (`lg+`) is intentionally rendered **15% smaller**
-than the source Figma measurements while mobile/tablet are unchanged. The implementation uses a
-desktop root `font-size: 85%` for rem-based Tailwind utilities plus explicit 0.85-scaled caps for
-px/vw geometry — never CSS `zoom` or a document transform. The region detail therefore preserves
-a minimum 691.05px desktop content band and a 555.05px photo (85% of 813/653); shorter viewports
-scroll instead of compressing the composition.
+than the source Figma measurements while mobile/tablet are unchanged, except for explicitly
+documented source-geometry restorations (currently the content header and vineyard-region detail).
+The implementation uses a desktop root `font-size: 85%` for rem-based Tailwind utilities plus
+component-level capped px/vw geometry — never CSS `zoom` or a document transform. The region detail
+preserves a minimum 813px desktop content band and a 653px photo; shorter viewports scroll instead
+of compressing the composition.
 
 ---
 
@@ -175,9 +177,10 @@ through the `type-*` utilities below (not raw `font-serif`).
 | `type-language`       | sans   | 400    | `clamp(11px,0.833vw,13px)` → 85% `lg` | 1           | no tracking, uppercase         | ENG/GEO switcher                                  |
 
 **Nav word sizing** (plain classes in `globals.css`, applied together with `type-menu`):
-`.nav-word` = 13.5px (→14px `md`, →11.9px `lg`, →10.625px compact `lg`). Georgian variant
-`.nav-word--mtavruli` = 12.5px (→13px `md`, →11.05px `lg`, →9.775px compact `lg`). `NavWord`
-also adds `tracking-[0.3em]`.
+`.nav-word` = 13.5px (→14px `md`, →11.9px `lg`). Georgian variant
+`.nav-word--mtavruli` = 12.5px (→13px `md`, →11.05px `lg`). The content header has a scoped
+Figma override that reaches 12px/11px at 1440 and restores `0.3em` tracking; menu overlays and
+other `NavWord` consumers keep the global desktop calibration.
 
 ### 3.3 Sizing / layout architecture ⭐ (read before touching any layout)
 
@@ -197,8 +200,9 @@ behavior; do not introduce them).
   scaled separately in their component clamps. **Do not apply it below 1024px.**
 - Height base lives in `layout.tsx`: `<html class="h-full">` + `<body class="min-h-full flex flex-col">`.
   So **short pages fill the viewport; tall pages grow and scroll naturally.**
-- Full width is the default; framed content opts into a centered per-section max (for example, the
-  1440 source header frame becomes `1224px = 1440 × 0.85` at `lg`), never on the whole document.
+- Full width is the default; framed content opts into a centered per-section max. The content header
+  deliberately keeps its capped `1440px` source coordinate frame so its supplied Figma x-positions
+  remain exact; this is a component-level exception, never a document clamp.
 
 **The fluid-cap convention (this is the core rule):** for an original source rule
 `clamp(min, Xvw, X×14.4)`, the `lg` implementation is
@@ -216,17 +220,18 @@ rules unchanged**. Raw uncapped `vw` is still a bug because it grows unbounded o
 
 **Viewport-fill heights** use plain `svh`: `min-h-svh` (short-pages-fill) or `h-svh`/
 `md:h-svh`/`lg:h-svh` + `overflow-hidden` for the viewport-locked pages (vineyards map, wines,
-history). With 102px desktop header + 102px footer, the desktop content-band input is
-`calc(100svh - clamp(176.8px,14.167vw,204px))`.
+history). A generic header+footer desktop content-band input is now
+`calc(100svh - clamp(96px,8.333vw,120px) - clamp(88.4px,7.081vw,102px))`; feature pages with
+another fixed band (for example, the history tabs) coordinate their own subtraction locally.
 
-The vineyard-region detail uses that viewport band as one input but enforces the scaled design
-minimum: `max(viewportBand, clamp(578px,47.989vw,691.05px))`. This makes short desktop viewports
-scroll while preserving the approved composition.
+The vineyard-region detail uses its own source-geometry band:
+`max(calc(100svh - clamp(208px,16.667vw,240px)), clamp(680px,56.458vw,813px))`. This makes short
+desktop viewports scroll while preserving the approved composition.
 
-- **Header & footer cap at 102px on desktop:** header `lg:h-[clamp(88.4px,7.083vw,102px)]`
-  (`HeaderContent.tsx`), footer `lg:min-h-[clamp(88.4px,7.081vw,102px)]`
-  (`ContentFooter.tsx`). Backgrounds remain full-width while header content centers in the
-  scaled `lg:max-w-[1224px]` frame.
+- **Content header caps at its 120px Figma height; footer caps at 102px:** header
+  `lg:h-[clamp(96px,8.333vw,120px)]` (`HeaderContent.tsx`), footer
+  `lg:min-h-[clamp(88.4px,7.081vw,102px)]` (`ContentFooter.tsx`). Backgrounds remain full-width
+  while header content centers in its capped `max-w-[1440px]` coordinate frame.
 - **Breakpoints** = Tailwind defaults: `sm 640` · `md 768` · `lg 1024` · `xl 1280`. The
   **mobile→desktop pivot is mostly `lg`** for the header (fixed→sticky, nav words appear) and
   `md` for most editorial grids (1-col → 2-col).
@@ -245,12 +250,11 @@ scroll while preserving the approved composition.
     <ContentFooter /> {/* except experience detail — see §6 */}
   </div>
   ```
-- The content **header** is a `relative mx-auto flex w-full max-w-[1440px]
-lg:max-w-[1224px]` bar (not a grid).
+- The content **header** is a `relative mx-auto flex w-full max-w-[1440px]` bar (not a grid).
   The centered logo is `absolute` at 50%; the four desktop nav words are `absolute`, positioned by
   **percent of the 1440 frame** (`NAV_LEFT_POS` in `HeaderContent.tsx`: History 10.694% · Vineyards
   24.861% · Wines 68.056% · Experiences 81.597%) so the source relationships survive inside the
-  scaled frame. Height `h-16 md:h-24 lg:h-[clamp(88.4px,7.083vw,102px)]`.
+  capped frame. Height `h-16 md:h-24 lg:h-[clamp(96px,8.333vw,120px)]`.
 
 > **Changing the overall scale:** the root percentage covers only rem-based Tailwind values.
 > Explicit px/vw clamps must be changed by the same factor, and the header/footer caps plus content
@@ -413,18 +417,22 @@ Point at anything in a screenshot → here is the file(s), the classes/tokens, a
 
 - **File:** `HeaderContent.tsx` inside `HeaderScrollFrame.tsx`. The bar background (on
   `HeaderScrollFrame`) is **full-width**; the content div is **`relative mx-auto flex w-full
-max-w-[1440px] lg:max-w-[1224px] items-center`**, height
-  `h-16 md:h-24 lg:h-[clamp(88.4px,7.083vw,102px)]`.
+max-w-[1440px] items-center`**, height
+  `h-16 md:h-24 lg:h-[clamp(96px,8.333vw,120px)]`.
 - **Nav words** (desktop) are `absolute`, positioned by **% of the source frame** via `NAV_LEFT_POS`
   (History 10.694% · Vineyards 24.861% · Wines 68.056% · Experiences 81.597%), so centering the
-  scaled content frame preserves the Figma composition. **Logo** is `absolute` centered at 50%.
-  To move a nav word, edit its `NAV_LEFT_POS` percentage — not a grid column.
+  capped content frame preserves the Figma composition. **Logo** is `absolute` centered at 50%.
+  The left pair has a scoped 2.5–3.5px vertical offset to match its supplied Figma top (21px vs.
+  18px on the right). To move a nav word, edit its `NAV_LEFT_POS` percentage — not a grid column.
 - **Scroll behavior:** transparent over content on mobile, turns `bg-surface-dark` after
   `scrollY>8` (`data-[scrolled=true]`); always dark on `lg` (`lg:sticky`). Some pages pass
   `mobileTransparentControls="light"` (vineyards, wine detail, experience detail) so the
   burger/lang start white over imagery.
 - **Center logo:** `Wordmark size="header"` → `/images/Mgaloblishvili-Logo.svg`, desktop width
-  `lg:w-[clamp(187px,14.935vw,238px)]` (mobile/tablet widths from `Wordmark`).
+  `lg:w-[clamp(180px,17.569vw,253px)]` (mobile/tablet widths from `Wordmark`). ENG/GEO is a
+  `26×30px` capped group with a 20px capped right inset. Header nav slashes restore the source
+  120px diagonal length, the burger restores its 58px mask box, and the active underline caps at
+  165px only inside `.site-header--figma`; overlay/home navigation stays unchanged.
 
 ### Nav word (with diagonal slash + growing underline)
 
@@ -482,16 +490,15 @@ Kartli,Racha-Lechkhumi,Guria-Samegrelo}.svg`. Hover/active fill `rgba(255,255,25
   `HeaderContent` and the white `ContentFooter`: a **41.18% / 58.82%** grid (`lg:grid-cols-[41.18%_58.82%]`)
   — Figma photo `left 593 / 1440 = 41.18%`. Left = symbol + localized title/subtitle + body;
   right = the region photo (`region.image1Url ?? /images/vineyard-kakheti.png`).
-- **All fluid values are capped at their 1440 Figma sizes** (see §3.3): title
-  and then rendered at the approved 85% desktop scale (see §3.3): title
-  `clamp(34px,2.833vw,40.8px)`, body/subtitle `clamp(11.9px,0.944vw,13.6px)`, symbol
-  `clamp(61.2px,5.136vw,73.95px)`, pads `min(2.951vw,42.5px)` / `min(1.417vw,20.4px)` / top
-  `clamp(78.2px,6.198vw,89.25px)`. **Body line-height is `1.45`** (Figma reports `100%` but its drawn
+- **All fluid values are capped at their restored 1440 Figma sizes** (see §3.3): title
+  `clamp(40px,3.333vw,48px)`, body/subtitle `clamp(14px,1.111vw,16px)`, symbol
+  `clamp(72px,6.042vw,87px)`, left pad `min(3.472vw,50px)`, and top
+  `clamp(92px,7.292vw,105px)`. **Body line-height is `1.45`** (Figma reports `100%` but its drawn
   373px block ÷ 16 lines = 23.3px = 1.45 — the 1.45 is correct; do not "fix" it to 100%).
 - **Two shared CSS vars on the `<section>` drive the geometry:**
-  `--vr-band = max(calc(100svh - clamp(176.8px,14.167vw,204px)),
-clamp(578px,47.989vw,691.05px))` and
-  `--vr-photo = clamp(374px,38.545vw,555.05px)` (photo height). The **photo** is
+  `--vr-band = max(calc(100svh - clamp(208px,16.667vw,240px)),
+clamp(680px,56.458vw,813px))` and
+  `--vr-photo = clamp(440px,45.347vw,653px)` (photo height). The **photo** is
   `lg:h-[var(--vr-photo)] lg:self-center` (centered in the band → equal top/bottom gaps).
 - **Text column** is `lg:h-[var(--vr-band)]` and a **flex column**: symbol/title/subtitle pinned at
   the top, the **body frame flexes to fill** (`lg:flex-1 lg:min-h-0`), and the column's
@@ -572,20 +579,20 @@ Tailwind breakpoints here are the defaults: **base (<640)** · **sm 640** · **m
 **lg 1024** · **xl 1280**. Use the tells below to infer which one a screenshot is showing, then
 target that variant in your prompt. Each tell is a real responsive class copied from source.
 
-| Visual tell                                                                                                                                                                          | Breakpoint                                                                      | Source (class · file)                                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Content header: nav words flank the logo (left **and** right) vs. only burger · logo · ENG/GEO                                                                                       | words = **≥ lg** · none = **< lg**                                              | nav words `absolute … hidden … lg:flex` at `NAV_LEFT_POS` %, content `mx-auto max-w-[1440px] lg:max-w-[1224px]` · `HeaderContent.tsx` |
-| Content header **bar height**: short ≈64px vs. tall ≈96px                                                                                                                            | short = **< md** · tall = **≥ md**                                              | `h-16 md:h-24` · `HeaderContent.tsx`                                                                                                  |
-| Content header **background**: transparent over the hero/map vs. solid `surface-dark`                                                                                                | transparent = **mobile, unscrolled** · solid = **scrolled (any width) OR ≥ lg** | `bg-transparent` / `data-[scrolled=true]:bg-surface-dark` / `lg:bg-surface-dark`, `fixed … lg:sticky` · `HeaderScrollFrame.tsx`       |
-| Home page: horizontal **row of nav words** across the bottom                                                                                                                         | present = **≥ md** · absent = **< md**                                          | `hidden w-full md:flex` · `page.tsx`                                                                                                  |
-| Menu overlay: 4 centered **stacked** links vs. 4 **columns** with vertical dividers + submenu lists                                                                                  | stacked = **< lg** · columns = **≥ lg**                                         | `lg:hidden` vs `hidden … lg:flex` + `grid-cols-4` + divider `… lg:block` · `MenuOverlay.tsx`                                          |
-| Region detail: **text then photo** vs. **41/59 text-left / photo-right**                                                                                                             | stacked = **< lg** · side-by-side = **≥ lg**                                    | `lg:grid-cols-[41.18%_58.82%]` · vineyard region `page.tsx`                                                                           |
-| Experience detail: **one stacked column** vs. **2×2** image/text grid                                                                                                                | stacked = **< lg** · grid = **≥ lg**                                            | `grid-cols-1 lg:grid-cols-2` · experience `page.tsx`                                                                                  |
-| Wine detail: description **above** the bottle vs. **text-left / bottle-right** two columns                                                                                           | stacked = **< lg** · two-col = **≥ lg**                                         | `grid-cols-1 lg:grid-cols-[minmax(0,440px)_1fr]` · wine detail `page.tsx`                                                             |
-| Wines category: category words **above** the wine list vs. **words-left / list-right** (+ vertical scroll indicator appears)                                                         | stacked = **< md** · side-by-side = **≥ md**                                    | `flex-col md:flex-row` · `WinesView.tsx`; track `hidden … md:block` · `WineScrollList.tsx`                                            |
-| Vineyards: **portrait mobile map** (`map-mobile.jpg`) + centered plain region list, page scrolls vs. **interactive hover map** (`map.jpg`) + right-side region list, viewport-locked | mobile map = **< md** · hover map = **≥ md**                                    | `md:hidden` / `md:block` · `VineyardsMap.tsx` + `VineyardRegionsOverlay.tsx`; `md:h-svh md:overflow-hidden` · `vineyards/page.tsx`    |
-| History: three tab triggers **stacked** (one per row) vs. **three across** in one row                                                                                                | stacked = **< sm** · row = **≥ sm**                                             | `grid-cols-1 sm:grid-cols-3` · `HistoryTabs.tsx` (its panel image/text splits at `lg:grid-cols-2`)                                    |
-| History / Wines pages: visible **top gap** below the fixed header vs. content flush to top                                                                                           | gap = **< lg** · flush = **≥ lg**                                               | `pt-16 md:pt-24 lg:pt-0` · those `page.tsx`                                                                                           |
+| Visual tell                                                                                                                                                                          | Breakpoint                                                                      | Source (class · file)                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Content header: nav words flank the logo (left **and** right) vs. only burger · logo · ENG/GEO                                                                                       | words = **≥ lg** · none = **< lg**                                              | nav words `absolute … hidden … lg:flex` at `NAV_LEFT_POS` %, content `mx-auto max-w-[1440px]` · `HeaderContent.tsx`                |
+| Content header **bar height**: short ≈64px vs. tall/fluid 96–120px                                                                                                                   | short = **< md** · tablet = **md** · fluid source frame = **≥ lg**              | `h-16 md:h-24 lg:h-[clamp(96px,8.333vw,120px)]` · `HeaderContent.tsx`                                                              |
+| Content header **background**: transparent over the hero/map vs. solid `surface-dark`                                                                                                | transparent = **mobile, unscrolled** · solid = **scrolled (any width) OR ≥ lg** | `bg-transparent` / `data-[scrolled=true]:bg-surface-dark` / `lg:bg-surface-dark`, `fixed … lg:sticky` · `HeaderScrollFrame.tsx`    |
+| Home page: horizontal **row of nav words** across the bottom                                                                                                                         | present = **≥ md** · absent = **< md**                                          | `hidden w-full md:flex` · `page.tsx`                                                                                               |
+| Menu overlay: 4 centered **stacked** links vs. 4 **columns** with vertical dividers + submenu lists                                                                                  | stacked = **< lg** · columns = **≥ lg**                                         | `lg:hidden` vs `hidden … lg:flex` + `grid-cols-4` + divider `… lg:block` · `MenuOverlay.tsx`                                       |
+| Region detail: **text then photo** vs. **41/59 text-left / photo-right**                                                                                                             | stacked = **< lg** · side-by-side = **≥ lg**                                    | `lg:grid-cols-[41.18%_58.82%]` · vineyard region `page.tsx`                                                                        |
+| Experience detail: **one stacked column** vs. **2×2** image/text grid                                                                                                                | stacked = **< lg** · grid = **≥ lg**                                            | `grid-cols-1 lg:grid-cols-2` · experience `page.tsx`                                                                               |
+| Wine detail: description **above** the bottle vs. **text-left / bottle-right** two columns                                                                                           | stacked = **< lg** · two-col = **≥ lg**                                         | `grid-cols-1 lg:grid-cols-[minmax(0,440px)_1fr]` · wine detail `page.tsx`                                                          |
+| Wines category: category words **above** the wine list vs. **words-left / list-right** (+ vertical scroll indicator appears)                                                         | stacked = **< md** · side-by-side = **≥ md**                                    | `flex-col md:flex-row` · `WinesView.tsx`; track `hidden … md:block` · `WineScrollList.tsx`                                         |
+| Vineyards: **portrait mobile map** (`map-mobile.jpg`) + centered plain region list, page scrolls vs. **interactive hover map** (`map.jpg`) + right-side region list, viewport-locked | mobile map = **< md** · hover map = **≥ md**                                    | `md:hidden` / `md:block` · `VineyardsMap.tsx` + `VineyardRegionsOverlay.tsx`; `md:h-svh md:overflow-hidden` · `vineyards/page.tsx` |
+| History: three tab triggers **stacked** (one per row) vs. **three across** in one row                                                                                                | stacked = **< sm** · row = **≥ sm**                                             | `grid-cols-1 sm:grid-cols-3` · `HistoryTabs.tsx` (its panel image/text splits at `lg:grid-cols-2`)                                 |
+| History / Wines pages: visible **top gap** below the fixed header vs. content flush to top                                                                                           | gap = **< lg** · flush = **≥ lg**                                               | `pt-16 md:pt-24 lg:pt-0` · those `page.tsx`                                                                                        |
 
 **Combine tells — they narrow a band, not conflict.** Because different tells flip at different
 breakpoints (sm / md / lg), one screenshot will usually satisfy tells from more than one breakpoint
@@ -791,11 +798,12 @@ overwrites live client edits + the 3 singletons** with the static baseline.
    Mkhedruli.
 4. **Scrollbars are hidden site-wide** (`globals.css` on `html`). Scrolling still works. The
    `/vineyards` map page is additionally viewport-locked (`md:h-svh md:overflow-hidden`).
-   4a. **Sizing: desktop is 85%, cap `vw` at 1440, never `zoom`/page-scale (§3.3).** At `lg`, rem-based
-   utilities inherit `html { font-size:85% }`; explicit measurements use 0.85-scaled `clamp()`/
-   `min()` values capped at their scaled 1440 size. Mobile/tablet stay unchanged. Do **not** replace
-   this with `body{zoom}`, a page-level `transform:scale`, or a document `max-width`/`max-height`
-   clamp. Viewport-fill sections still use plain `svh`; there is no `/0.85` height compensation.
+   4a. **Sizing: desktop defaults to 85%, cap `vw` at 1440, never `zoom`/page-scale (§3.3).** At
+   `lg`, rem-based utilities inherit `html { font-size:85% }`; explicit measurements use capped
+   `clamp()`/`min()` values, with source-size exceptions documented per component (content header,
+   vineyard-region detail). Mobile/tablet stay unchanged. Do **not** replace this with `body{zoom}`,
+   a page-level `transform:scale`, or a document `max-width`/`max-height` clamp. Viewport-fill
+   sections still use plain `svh`; there is no `/0.85` height compensation.
    4b. **`/vineyards/[region]` text is a `RegionScrollText` frame with no visible scrollbar.** Long
    regions (Imereti) hide overflow into a hover-scroll (fade masks only). The frame bottom is
    aligned to the photo via `--vr-band`/`--vr-photo`; `--vr-gap` also keeps its right edge the same

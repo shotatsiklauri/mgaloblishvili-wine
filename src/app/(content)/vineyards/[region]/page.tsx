@@ -52,11 +52,12 @@ export default async function VineyardRegionPage({
               "--vr-band":
                 "max(calc(100svh - clamp(208px, 16.667vw, 240px)), clamp(680px, 56.458vw, 813px))",
               "--vr-photo": "clamp(440px, 45.347vw, 653px)",
+              "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
           }
           className="grid w-full items-center lg:min-h-[var(--vr-band)] lg:grid-cols-[41.18%_58.82%] lg:items-start lg:py-0"
         >
-          <div className="flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:h-[var(--vr-band)] lg:pt-[clamp(92px,7.292vw,105px)] lg:pr-[min(1.667vw,24px)] lg:pb-[calc((var(--vr-band)_-_var(--vr-photo))/2)] lg:pl-[min(3.472vw,50px)]">
+          <div className="flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16 lg:h-[var(--vr-band)] lg:pt-[clamp(92px,7.292vw,105px)] lg:pr-[var(--vr-gap)] lg:pb-[var(--vr-gap)] lg:pl-[min(3.472vw,50px)]">
             <IntroFlyIn order={1}>
               <div className="relative aspect-square w-24 overflow-hidden lg:aspect-[87/96] lg:w-[clamp(72px,6.042vw,87px)]">
                 <Image

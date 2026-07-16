@@ -190,6 +190,17 @@
     font-size: clamp(14px, 1.042vw, 15px);
     line-height: clamp(1.45em, 2svh, 1.8em);
   }
+
+  .vineyard-region-lead > p:first-child::first-letter {
+    font-family:
+      var(--font-serif-georgian), var(--font-serif-latin), ui-serif, Georgia,
+      serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(1em + 2px);
+    line-height: 1;
+    letter-spacing: 0;
+  }
 }
 
 @utility type-meta {

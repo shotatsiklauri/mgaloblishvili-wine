@@ -464,8 +464,9 @@ max-w-[1440px] items-center`**, height
 - **File:** `HistoryTabs.tsx` (Radix `Tabs`, `activationMode="manual"`). Panel image via
   the shared horizontal reveal/zoom; panel headings and body copy use the same responsive
   typography as `/vineyards/[region]` (`40→48px` desktop heading plus
-  `.vineyard-region-body` sizing/leading). **Tab bar** is at the bottom; triggers reuse the
-  `nav-word` underline (`duration-[1420ms]`).
+  `.vineyard-region-body` sizing/leading). The body also reuses `.vineyard-region-lead`, so its
+  first character is Regular 400 and 2px larger than the surrounding Light copy. **Tab bar** is at
+  the bottom; triggers reuse the `nav-word` underline (`duration-[1420ms]`).
 - **Desktop panel geometry:** `--history-band` is the viewport space above the tab bar,
   `--history-photo` is the capped photo height, and
   `--history-gap = (var(--history-band) - var(--history-photo)) / 2`. The text column uses that gap
@@ -505,7 +506,8 @@ Kartli,Racha-Lechkhumi,Guria-Samegrelo}.svg`. Hover/active fill `rgba(255,255,25
   `clamp(40px,3.333vw,48px)`, subtitle `clamp(14px,1.111vw,16px)`, body
   `clamp(14px,1.042vw,15px)`, symbol
   `clamp(72px,6.042vw,87px)`, left pad `min(3.472vw,50px)`, and top
-  `clamp(92px,7.292vw,105px)`. Body leading is
+  `clamp(92px,7.292vw,105px)`. The subtitle-to-body gap is shared by every region at
+  `clamp(30.6px,2.306vw,33.2px)`. Body leading is
   `clamp(1.45em,2svh,1.8em)`: 1.45 at ordinary desktop heights, opening only on tall viewports
   and capping at 1.8.
 - **Two shared CSS vars on the `<section>` drive the geometry:**
@@ -523,9 +525,11 @@ clamp(680px,56.458vw,813px))` and
   Change `--vr-photo` and the photo height plus all three gaps follow automatically.
 - **Body is a `RegionScrollText` frame** (§5): the extra copy of long regions (Imereti) **hides
   into a no-scrollbar scroll** (only the top/bottom fade masks show; scrollable on hover/focus)
-  instead of pushing the page. Only the first character of the first body paragraph is bold via
-  `first-letter:font-bold`. Short regions (Kakheti) fit with no fade. This is why the page fits one
-  screen on tall viewports — do not replace it with a fixed-`px` body height.
+  instead of pushing the page. On desktop, `.vineyard-region-lead` makes only the first character
+  of the first paragraph Regular 400, normal style, 100% line-height, zero tracking, and `2px`
+  larger than the surrounding Light copy (17px over the capped 15px body at the 1440 reference).
+  Short regions (Kakheti) fit with no fade. This is why the page fits one screen on tall viewports
+  — do not replace it with a fixed-`px` body height.
 - **Entrance motion:** symbol/title/subtitle via `IntroFlyIn` (order 1–3); the photo is wrapped in
   `IntroAwareHorizontalReveal durationMs={800}` (left→right) with `intro-zoom` on the image; a
   frosted strip (`absolute left-0 w-[15%]`, `bg-white/70 backdrop-blur-md`) uses the same reveal at

@@ -91,7 +91,7 @@ export default async function VineyardRegionPage({
 
               <IntroFlyIn
                 order={4}
-                className="mt-8 md:mt-9 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
+                className="mt-8 md:mt-9 lg:mt-[clamp(30.6px,2.306vw,33.2px)] lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
               >
                 <RegionScrollText
                   className="lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
@@ -99,18 +99,13 @@ export default async function VineyardRegionPage({
                 >
                   <div
                     className={cn(
-                      "vineyard-region-body type-body-editorial text-ink/85 space-y-0 lg:shrink-0 lg:font-light lg:tracking-normal",
+                      "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 space-y-0 lg:shrink-0 lg:font-light lg:tracking-normal",
                       (region.id === "kakheti" || region.id === "imereti") &&
                         "lg:mt-auto",
                     )}
                   >
                     {region.body.map((paragraph, idx) => (
-                      <p
-                        key={idx}
-                        className={cn(idx === 0 && "first-letter:font-bold")}
-                      >
-                        {paragraph}
-                      </p>
+                      <p key={idx}>{paragraph}</p>
                     ))}
                   </div>
                 </RegionScrollText>

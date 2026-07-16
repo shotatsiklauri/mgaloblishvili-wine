@@ -225,7 +225,7 @@ function HistoryTabPanel({
             </h1>
             <div
               className={cn(
-                "vineyard-region-body type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:font-light lg:tracking-normal",
+                "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 mt-8 space-y-0 md:mt-9 lg:font-light lg:tracking-normal",
                 enter(3),
               )}
             >

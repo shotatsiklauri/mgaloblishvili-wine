@@ -127,7 +127,10 @@ function EditorialExperiencePage({
                   className="object-contain object-left"
                 />
               </div>
-              <div className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*435.2)] max-w-full">
+              {/* Figma text box = 512 wide (was 435.2, i.e. 512 × the 0.85
+                  calibration). Widening past 512 changes nothing — the copy has
+                  already hit its minimum line count. */}
+              <div className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full">
                 {secondSection ? (
                   <ExperienceProse section={secondSection} />
                 ) : null}
@@ -229,13 +232,18 @@ function ExperienceProse({
   return (
     <div
       className={cn(
-        "desktop:text-[max(11.9px,calc(var(--desktop-fluid-unit)*13.6))] font-serif text-[15px] leading-[1.5] md:text-[16px]",
+        // Figma: Noto Serif Georgian, 16px, letter-spacing 0. `font-serif` is the
+        // Noto Serif Latin→Georgian stack. Rendered at the true 16px (NOT the
+        // page's 0.85 calibration, which was showing it at 13.6). Figma reports
+        // line-height 100%, but its own artwork draws ~1.5 — a literal 100%
+        // would collapse the lines — so 1.5 stands.
+        "desktop:text-[calc(var(--desktop-fluid-unit)*16)] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
         className,
       )}
     >
-      {/* Figma: the first line is bold (700); the rest is Medium (500), same size. */}
+      {/* Figma: the first line is bold (700); the body is Light (300), same size. */}
       <h2 className="font-bold">{section.heading}</h2>
-      <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*17.136)] desktop:space-y-[calc(var(--desktop-fluid-unit)*13.464)] mt-5 space-y-4 font-medium">
+      <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*17.136)] desktop:space-y-[calc(var(--desktop-fluid-unit)*13.464)] mt-5 space-y-4 font-light">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

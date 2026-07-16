@@ -60,7 +60,10 @@ export default async function VineyardRegionPage({
         >
           <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*105))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             <IntroFlyIn order={1}>
-              <div className="desktop:aspect-[87/96] desktop:w-[max(72px,calc(var(--desktop-fluid-unit)*87))] relative aspect-square w-24 overflow-hidden">
+              {/* Figma: symbol 69×76 (was 87×96). No `max()` floor here — a
+                  72px floor would now exceed the 69px reference width and pin
+                  it; the fluid unit already floors itself at 0.75. */}
+              <div className="desktop:aspect-[69/76] desktop:w-[calc(var(--desktop-fluid-unit)*69)] relative aspect-square w-24 overflow-hidden">
                 <Image
                   src="/svgs/TheSymbol.svg"
                   alt=""

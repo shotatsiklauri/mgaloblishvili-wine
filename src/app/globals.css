@@ -360,6 +360,21 @@ html::-webkit-scrollbar {
   }
 }
 
+/* Content-header entrance: the bar renders empty and its contents fade in from
+   above (top → bottom), reusing the shared category-fade-down motion. Gated on
+   the brand intro (see HeaderFadeDown) so it never plays behind the overlay;
+   --pending holds the hidden start state until then. The animated element must
+   not carry its own transform — the logo is centred by a parent wrapper and the
+   nav words are nudged on an inner span for exactly this reason. */
+.header-fade-down {
+  animation: category-fade-down 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.header-fade-down--pending {
+  opacity: 0;
+  transform: translateY(calc(-1 * var(--motion-offset-14)));
+}
+
 @keyframes wine-list-fade-right {
   from {
     opacity: 0;
@@ -868,6 +883,13 @@ html::-webkit-scrollbar {
   }
   /* Reduced motion: no slide — opacity fade only, no positional movement. */
   .intro-flyin--pending {
+    transform: none !important;
+  }
+  /* Reduced motion: header contents fade only, no downward travel. */
+  .header-fade-down {
+    animation-name: menu-fade-in !important;
+  }
+  .header-fade-down--pending {
     transform: none !important;
   }
   /* Reduced motion: no zoom — image stays at rest. */

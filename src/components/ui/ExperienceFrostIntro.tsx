@@ -27,10 +27,15 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
           ready ? "exp-frost-band" : "exp-frost-band--pending",
         )}
       />
+      {/* Right arm of the L. Width is a PERCENTAGE of the photo, not a fluid-unit
+          length: the column's width is itself a percentage, so a unit-based width
+          would drift (19.2% of the photo at 1440, only ~8.7% at 1920). At 11.4%
+          the strip clears the man on the right of the shot — it used to start at
+          80.8%, landing straight on his back. */}
       <div
         aria-hidden="true"
         className={cn(
-          "absolute top-[calc(var(--desktop-fluid-unit)*357.85)] right-0 bottom-0 w-[calc(var(--desktop-fluid-unit)*159.12)] bg-white/30",
+          "absolute top-[calc(var(--desktop-fluid-unit)*357.85)] right-0 bottom-0 w-[11.4%] bg-white/30",
           ready ? "exp-frost-strip" : "exp-frost-strip--pending",
         )}
       />

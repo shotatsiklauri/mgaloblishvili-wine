@@ -10,6 +10,7 @@ import { HeaderContent } from "@/components/layout/HeaderContent";
 import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
 import { InViewReveal } from "@/components/ui/InViewReveal";
 import { ExperienceFrostIntro } from "@/components/ui/ExperienceFrostIntro";
+import { RegionScrollText } from "@/components/ui/RegionScrollText";
 import { getResolvedContact, type ResolvedContact } from "@/lib/sanity/contact";
 
 const GOOGLE_MAPS_LOCATION_URL =
@@ -128,13 +129,20 @@ function EditorialExperiencePage({
                 />
               </div>
               {/* Figma text box = 512 wide (was 435.2, i.e. 512 × the 0.85
-                  calibration). Widening past 512 changes nothing — the copy has
-                  already hit its minimum line count. */}
-              <div className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full">
+                  calibration). The copy sits in the same no-scrollbar scroll
+                  frame as the vineyard-region body: its height is fixed so the
+                  last visible line ends level with the bottom of the left photo,
+                  and any overflow hides into a hover/focus scroll with only the
+                  fade masks showing. Both sides scale off the fluid unit, so the
+                  alignment holds at every viewport. */}
+              <RegionScrollText
+                className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full desktop:h-[calc(var(--desktop-fluid-unit)*253.3)]"
+                ariaLabel={experience.title}
+              >
                 {secondSection ? (
                   <ExperienceProse section={secondSection} />
                 ) : null}
-              </div>
+              </RegionScrollText>
             </div>
           </div>
         </section>

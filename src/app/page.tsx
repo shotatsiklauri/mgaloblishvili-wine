@@ -34,7 +34,7 @@ export default async function HomePage() {
               width={603}
               height={152}
               priority
-              className="desktop:w-[max(374px,calc(var(--desktop-fluid-unit)*527))] h-auto w-[270px] sm:w-[320px] md:w-[400px]"
+              className="desktop:w-[max(374px,calc(var(--desktop-fluid-unit)*522))] h-auto w-[270px] sm:w-[320px] md:w-[400px]"
             />
           </h1>
         </div>

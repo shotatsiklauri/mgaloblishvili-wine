@@ -240,12 +240,12 @@ function ExperienceProse({
   return (
     <div
       className={cn(
-        // Figma: Noto Serif Georgian, 16px, letter-spacing 0. `font-serif` is the
-        // Noto Serif Latin→Georgian stack. Rendered at the true 16px (NOT the
-        // page's 0.85 calibration, which was showing it at 13.6). Figma reports
-        // line-height 100%, but its own artwork draws ~1.5 — a literal 100%
-        // would collapse the lines — so 1.5 stands.
-        "desktop:text-[calc(var(--desktop-fluid-unit)*16)] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
+        // Body type matches /vineyards/* exactly: max(14px, unit·15) — 15px at
+        // the reference with a 14px floor on compact desktops. `font-serif` is
+        // the Noto Serif Latin→Georgian stack; letter-spacing 0. Line-height
+        // stays a fixed 1.5 (vineyards' `2svh` clause is tied to that page's
+        // viewport-locked band; 1.5 sits inside its 1.45–1.8 range).
+        "desktop:text-[max(14px,calc(var(--desktop-fluid-unit)*15))] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
         className,
       )}
     >

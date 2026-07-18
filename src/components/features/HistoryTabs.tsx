@@ -188,9 +188,9 @@ function HistoryTabPanel({
       <section
         style={
           {
-            // 105 = the scaled content-header height.
+            // 120 = the scaled content-header height (Figma).
             "--history-band":
-              "calc(100svh - var(--desktop-fluid-unit) * 105 - var(--history-tabs))",
+              "calc(100svh - var(--desktop-fluid-unit) * 120 - var(--history-tabs))",
             "--history-tabs":
               "max(88.4px, calc(var(--desktop-fluid-unit) * 102))",
             "--history-photo":
@@ -239,7 +239,19 @@ function HistoryTabPanel({
           </div>
         </div>
 
-        <div className="desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:aspect-auto desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center relative aspect-[851/666] w-full overflow-hidden">
+        <div
+          className={cn(
+            "relative aspect-[851/666] w-full overflow-hidden desktop:aspect-auto",
+            // The Symbol tab uses a distinct portrait photo (TheSymbol.jpg,
+            // native 485×631) with its own Figma box: 307×399 at (862,250) in the
+            // 1440×900 frame. The photo cell's left edge is 666 (46.25% col), so
+            // ml = 862−666 = 196; the section starts below the 120px header, so
+            // mt = 250−120 = 130. Anchored top-left rather than centered.
+            tab.id === "symbol"
+              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*130)] desktop:ml-[calc(var(--desktop-fluid-unit)*196)] desktop:h-[calc(var(--desktop-fluid-unit)*399)] desktop:w-[calc(var(--desktop-fluid-unit)*307)] desktop:self-start"
+              : "desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center",
+          )}
+        >
           {/* Left→right clip reveal, coordinated to start with the symbol and
               finish within the text window (~1s), on first load only. On a
               switch the image arrives settled and rides the whole-panel fly. */}

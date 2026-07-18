@@ -65,7 +65,7 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*105)] desktop:px-7 flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
+          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-7 flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",

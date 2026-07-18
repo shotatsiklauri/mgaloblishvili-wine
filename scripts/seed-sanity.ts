@@ -166,7 +166,7 @@ plans.push({
 const HISTORY_IMAGES: Record<HistoryItemId, string | undefined> = {
   encounter: "Family.jpg",
   crossroads: "Crossroads.jpg",
-  symbol: undefined,
+  symbol: "TheSymbol.jpg",
 };
 
 plans.push({

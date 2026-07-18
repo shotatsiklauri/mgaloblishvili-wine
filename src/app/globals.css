@@ -65,9 +65,14 @@
     letter-spacing: 0.3em;
   }
 
-  .site-header--figma .nav-word--mtavruli,
-  .primary-nav-word--header-size .nav-word--mtavruli {
+  .site-header--figma .nav-word--mtavruli {
     font-size: max(9.775px, calc(var(--desktop-fluid-unit) * 11));
+  }
+
+  /* Home nav (main page): the Georgian Mtavruli words read visually smaller than
+     the Latin, so they run +3px larger than the English 12px here (11 → 14). */
+  .primary-nav-word--header-size .nav-word--mtavruli {
+    font-size: max(12px, calc(var(--desktop-fluid-unit) * 14));
   }
 
   .site-header--figma .decorative-slash {
@@ -227,16 +232,14 @@
 :root {
   color-scheme: light;
   /* Scale-to-fit desktop unit. `calc(var(--desktop-fluid-unit) * X)` means "X px at
-     the 1440x1053 reference". 0.069444vw = 1px at the 1440 reference WIDTH;
-     0.094967svh = 1px at the 1053 reference HEIGHT. min() picks the tighter axis, so
-     the composition scales to fit instead of overflowing the bottom on short screens.
-     The 0.75px floor keeps compact desktops readable — it binds below ~790px of
-     viewport height, where height-driven fitting stops and short viewports scroll.
-     The 2.75px cap lets the design keep scaling UP to fill large monitors (4K/5K)
-     as a proportional zoom of the 1440 layout, instead of freezing small in a huge
-     canvas. It only ever binds on very tall viewports (~2895px+); the svh term keeps
-     wide-but-short screens sane, so this is safe to raise. */
-  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.094967svh), 2.75px);
+     the 1440x900 Figma reference" — so a Figma pixel maps 1:1 to the number in code.
+     0.069444vw = 1px at the 1440 reference WIDTH; 0.111111svh = 1px at the 900
+     reference HEIGHT. min() picks the tighter axis, so the composition scales to fit
+     instead of overflowing the bottom on short screens. Unit = 1.0 at 1440x900 and
+     grows/shrinks proportionally from there, so the design scales as one block and
+     never breaks. The 0.75px floor keeps very short viewports readable (binds below
+     ~675px tall); the 2.75px cap prevents runaway growth on huge monitors. */
+  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.111111svh), 2.75px);
   /* The scaled design frame: the 1440 reference width times the unit. Content
      areas cap at this and center (`desktop:mx-auto desktop:max-w-[var(--frame-max)]`),
      so every %-based column becomes a share of the SAME scaled width as the

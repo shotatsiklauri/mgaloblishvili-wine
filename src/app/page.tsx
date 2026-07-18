@@ -8,6 +8,15 @@ import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
 import { NavLink } from "@/components/ui/NavLink";
 import { cn } from "@/lib/utils";
 
+// Home nav word-box centers as % of the 1440×900 Figma frame; order matches
+// buildPrimaryNav: history, vineyards, wines, experiences. See the nav comment.
+const HOME_NAV_CENTER = [
+  "desktop:left-[27.6%]",
+  "desktop:left-[42.22%]",
+  "desktop:left-[55.72%]",
+  "desktop:left-[70.42%]",
+] as const;
+
 export default async function HomePage() {
   const locale = await getServerLocale();
   const content = getContent(locale);
@@ -34,32 +43,45 @@ export default async function HomePage() {
               width={603}
               height={152}
               priority
-              className="desktop:w-[max(374px,calc(var(--desktop-fluid-unit)*522))] h-auto w-[270px] sm:w-[320px] md:w-[400px]"
+              className="desktop:w-[calc(var(--desktop-fluid-unit)*523)] h-auto w-[270px] sm:w-[320px] md:w-[400px]"
             />
           </h1>
         </div>
       </div>
 
-      {/* Section nav — below the logo (Figma word-top 672 ≈ 74.7% of 900). Each
+      {/* Section nav — below the logo (Figma word-top 672 = 74.667% of 900). Each
           word carries a decorative slash and reveals a 165px white underline on
-          hover/focus. */}
+          hover/focus. Tablet keeps a centered row; desktop pins each word at its
+          exact Figma x inside the centered design frame (so it scales as one block
+          with the rest). Word-box CENTERS as % of the 1440 frame (Figma left +
+          width/2): History 355+84.85/2=397.4 → 27.6%, Vineyards 559+98/2=608 →
+          42.22%, Wines 760+84.85/2=802.4 → 55.72%, Experiences 955+118/2=1014 →
+          70.42%. */}
       <nav
         aria-label="Sections"
         className={cn(
           "hero-ui-enter hero-ui-enter--nav",
-          "absolute top-[74.7%] left-1/2 z-10 -translate-x-1/2",
-          "desktop:gap-x-[max(68px,calc(var(--desktop-fluid-unit)*80))] hidden md:flex md:items-start md:justify-center md:gap-x-16",
+          "absolute top-[74.667%] left-1/2 z-10 -translate-x-1/2",
+          "hidden md:flex md:items-start md:justify-center md:gap-x-16",
+          "desktop:block desktop:w-full desktop:max-w-[var(--frame-max)]",
         )}
       >
-        {primaryNav.map((item) => (
-          <NavLink
+        {primaryNav.map((item, index) => (
+          <div
             key={item.id}
-            href={item.href}
-            wordClassName="primary-nav-word--header-size"
-            underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
+            className={cn(
+              "desktop:absolute desktop:top-0 desktop:-translate-x-1/2",
+              HOME_NAV_CENTER[index],
+            )}
           >
-            {item.label}
-          </NavLink>
+            <NavLink
+              href={item.href}
+              wordClassName="primary-nav-word--header-size"
+              underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[calc(var(--desktop-fluid-unit)*165)] desktop:h-[calc(var(--desktop-fluid-unit)*3)]"
+            >
+              {item.label}
+            </NavLink>
+          </div>
         ))}
       </nav>
 

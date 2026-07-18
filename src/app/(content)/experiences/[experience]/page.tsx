@@ -101,7 +101,19 @@ function EditorialExperiencePage({
               className="object-cover object-center"
             />
             <ExperienceFrostIntro>
-              {firstSection ? <ExperienceProse section={firstSection} /> : null}
+              {/* Same no-scrollbar scroll frame as the right column: the intro
+                  copy is bound to the frost band's copy height so it stays
+                  inside the frosted area in every language. English fits; the
+                  longer Georgian copy scrolls internally (fade masks signal it)
+                  instead of overflowing onto the dark photo and "jumping". */}
+              {firstSection ? (
+                <RegionScrollText
+                  className="desktop:h-full"
+                  ariaLabel={firstSection.heading}
+                >
+                  <ExperienceProse section={firstSection} />
+                </RegionScrollText>
+              ) : null}
             </ExperienceFrostIntro>
           </div>
 

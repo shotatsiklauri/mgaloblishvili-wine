@@ -50,15 +50,16 @@ export async function HeaderContent({
     >
       <div
         className={cn(
-          // Bar background stays full-width (on HeaderScrollFrame); the content
-          // caps at the scaled design frame and centers, so the whole header
-          // scales as one block with the page and the %-positioned nav words land
-          // at their Figma x within that frame (equal side margins beyond it on
-          // wider-than-reference screens).
-          "relative mx-auto flex w-full items-center desktop:max-w-[var(--frame-max)]",
-          // Mobile/tablet retain their existing sizes; desktop uses the approved
-          // shared 105px header/footer height, scaled by the fluid unit.
-          "desktop:h-[calc(var(--desktop-fluid-unit)*105)] h-16 md:h-24",
+          // Header chrome is FULL-WIDTH (not framed): the burger sits at the left
+          // screen edge and ENG/GEO at the right edge, matching Figma — they must
+          // not be pulled inward by the content frame. Nav words are positioned by
+          // % of the viewport (NAV_LEFT_POS) and the logo is centred, so the whole
+          // bar keeps the Figma alignment and spreads proportionally on wide screens.
+          "relative flex w-full items-center",
+          // Mobile/tablet retain their existing sizes; desktop is the Figma
+          // 120px bar (logo centres at 60.5, words at their Figma vertical),
+          // scaled by the fluid unit.
+          "desktop:h-[calc(var(--desktop-fluid-unit)*120)] h-16 md:h-24",
           "desktop:px-[max(17px,calc(var(--desktop-fluid-unit)*20))] px-5 md:px-6",
         )}
       >
@@ -92,14 +93,15 @@ export async function HeaderContent({
               href={item.href}
               active={activeId === item.id}
               edgeUnderline
-              // The words sit low in the bar (below the logo's centreline,
-              // nearer the underline) rather than vertically centred. Applied to
-              // the word itself, so the underline stays pinned to the bar's
-              // bottom edge and the parent keeps its entrance transform free.
+              // Words sit low in the bar (bottom side, nearer the underline),
+              // not vertically centred. Same size/styling; only the vertical
+              // offset drops them down. History & Vineyards go a touch lower than
+              // Wines & Experiences. Applied to the word so the underline stays
+              // pinned to the bar bottom.
               wordClassName={cn(
-                "desktop:translate-y-[calc(var(--desktop-fluid-unit)*21)]",
+                "desktop:translate-y-[calc(var(--desktop-fluid-unit)*24)]",
                 index < 2 &&
-                  "desktop:translate-y-[calc(var(--desktop-fluid-unit)*24.5)]",
+                  "desktop:translate-y-[calc(var(--desktop-fluid-unit)*27.5)]",
               )}
               underlineClassName="desktop:right-auto desktop:left-1/2 desktop:h-[2px] desktop:w-[max(117px,calc(var(--desktop-fluid-unit)*165))] desktop:-translate-x-1/2"
               className="h-full px-0"
@@ -112,10 +114,9 @@ export async function HeaderContent({
         {/* Logo — centered on the frame (Figma center 720 = 1440 / 2). The
             centring transform lives on this wrapper so the entrance animation
             inside it can own its own transform without conflict. */}
-        {/* Sits a touch below the bar's centreline (offset on `top`, not on the
-            transform, which is busy centring — and whose child owns the
-            entrance animation). Mobile stays centred. */}
-        <div className="desktop:top-[calc(50%_+_var(--desktop-fluid-unit)*7)] absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center">
+        {/* Figma @1440×900: logo centred in the 120px bar (top 34.88, h 51.23 →
+            centre 60.5). */}
+        <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center">
           <HeaderFadeDown>
             <Link
               href="/"

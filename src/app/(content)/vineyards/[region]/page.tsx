@@ -49,16 +49,16 @@ export default async function VineyardRegionPage({
         <section
           style={
             {
-              // 210 = the scaled 105px header + 105px footer.
+              // 225 = the scaled 120px header (Figma) + 105px footer.
               "--vr-band":
-                "max(calc(100svh - var(--desktop-fluid-unit) * 210), max(680px, calc(var(--desktop-fluid-unit) * 813)))",
+                "max(calc(100svh - var(--desktop-fluid-unit) * 225), max(680px, calc(var(--desktop-fluid-unit) * 813)))",
               "--vr-photo": "max(440px, calc(var(--desktop-fluid-unit) * 653))",
               "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
           }
           className="desktop:min-h-[var(--vr-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
         >
-          <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*105))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
+          <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*120))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             <IntroFlyIn order={1}>
               {/* Figma: symbol 69×76 (was 87×96). No `max()` floor here — a
                   72px floor would now exceed the 69px reference width and pin

@@ -230,10 +230,13 @@
      the 1440x1053 reference". 0.069444vw = 1px at the 1440 reference WIDTH;
      0.094967svh = 1px at the 1053 reference HEIGHT. min() picks the tighter axis, so
      the composition scales to fit instead of overflowing the bottom on short screens.
-     The 1.33px cap stops runaway growth on ultra-wide; the 0.75px floor keeps compact
-     desktops readable — note the floor binds below ~790px of viewport height, where
-     height-driven fitting stops and short viewports scroll (by design). */
-  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.094967svh), 1.33px);
+     The 0.75px floor keeps compact desktops readable — it binds below ~790px of
+     viewport height, where height-driven fitting stops and short viewports scroll.
+     The 2.75px cap lets the design keep scaling UP to fill large monitors (4K/5K)
+     as a proportional zoom of the 1440 layout, instead of freezing small in a huge
+     canvas. It only ever binds on very tall viewports (~2895px+); the svh term keeps
+     wide-but-short screens sane, so this is safe to raise. */
+  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.094967svh), 2.75px);
   --motion-y-8: 8px;
   --motion-y-10: 10px;
   --motion-y-12: 12px;

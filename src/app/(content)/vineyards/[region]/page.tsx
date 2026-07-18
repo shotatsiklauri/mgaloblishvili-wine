@@ -101,11 +101,16 @@ export default async function VineyardRegionPage({
                   className="desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col"
                   ariaLabel={`${region.title} description`}
                 >
+                  {/* Body flows from the top, right under the subtitle. It used
+                      to be bottom-pinned (`mt-auto`) for the two longest regions
+                      so the last line met the photo bottom — but on large screens
+                      the wide column wraps the text short, so it no longer fills
+                      the tall frame and that pin opened a big gap under the
+                      subtitle. Top-aligned keeps the copy grouped with its
+                      heading; any slack sits below, beside the lower photo. */}
                   <div
                     className={cn(
                       "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:shrink-0 desktop:font-light desktop:tracking-normal space-y-0",
-                      (region.id === "kakheti" || region.id === "imereti") &&
-                        "desktop:mt-auto",
                     )}
                   >
                     {region.body.map((paragraph, idx) => (

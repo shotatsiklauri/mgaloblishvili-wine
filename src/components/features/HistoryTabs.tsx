@@ -194,7 +194,7 @@ function HistoryTabPanel({
             "--history-tabs":
               "max(88.4px, calc(var(--desktop-fluid-unit) * 102))",
             "--history-photo":
-              "max(357px, calc(var(--desktop-fluid-unit) * 421))",
+              "max(424px, calc(var(--desktop-fluid-unit) * 500))",
             "--history-gap":
               "calc((var(--history-band) - var(--history-photo)) / 2)",
           } as CSSProperties

@@ -32,6 +32,7 @@ export function SubtleVideoBackground() {
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover opacity-[0.31] [filter:grayscale(1)_contrast(0.75)_brightness(1.15)]"
         >
+          <source src="/Video_Mgaloblishvili.webm" type="video/webm" />
           <source src="/Video_Mgaloblishvili.mp4" type="video/mp4" />
         </video>
       ) : null}

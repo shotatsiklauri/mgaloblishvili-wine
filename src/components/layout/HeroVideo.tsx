@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { focusRing } from "@/lib/focus-ring";
 import { cn } from "@/lib/utils";
 
-const POSTER_DATA_URL =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%2305090a'/></svg>";
+const POSTER_SRC = "/Video_Mgaloblishvili-poster.jpg";
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
+  // `playing` gates the crossfade from the poster (loading state) to the live
+  // video, and only flips true once frames are actually rendering.
+  const [playing, setPlaying] = useState(false);
 
   // Reliable muted autoplay. React's `muted` JSX prop does not dependably set the
   // DOM element's `.muted` property, so autoplay can be treated as non-muted, get
@@ -17,6 +20,7 @@ export function HeroVideo() {
   // then start playback — retrying once the media is ready and, as a last resort,
   // on the first user interaction. A single early play() attempt can lose the race
   // with media loading (notably in Safari) and leave the video paused on load.
+  // (The re-encoded MP4/WebM are faststart, so this now succeeds on first load.)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -30,8 +34,12 @@ export function HeroVideo() {
       if (played) played.catch(() => {});
     };
 
-    tryPlay();
+    const onPlaying = () => setPlaying(true);
 
+    tryPlay();
+    if (!video.paused && video.readyState >= 3) setPlaying(true);
+
+    video.addEventListener("playing", onPlaying);
     // First play() can reject before there's enough data; retry when ready.
     video.addEventListener("loadeddata", tryPlay);
     video.addEventListener("canplay", tryPlay);
@@ -46,6 +54,7 @@ export function HeroVideo() {
     window.addEventListener("keydown", onFirstInteract);
 
     return () => {
+      video.removeEventListener("playing", onPlaying);
       video.removeEventListener("loadeddata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
       window.removeEventListener("pointerdown", onFirstInteract);
@@ -71,6 +80,18 @@ export function HeroVideo() {
 
   return (
     <>
+      {/* Loading state: the real first frame shows instantly (never a black box),
+          then the live video crossfades over the identical frame once it's
+          actually playing. */}
+      <Image
+        aria-hidden="true"
+        src={POSTER_SRC}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none absolute inset-0 -z-10 object-cover"
+      />
       <video
         ref={videoRef}
         aria-hidden="true"
@@ -80,9 +101,15 @@ export function HeroVideo() {
         playsInline
         preload="auto"
         disablePictureInPicture
-        poster={POSTER_DATA_URL}
-        className="hero-video-enter absolute inset-0 -z-10 h-full w-full object-cover"
+        poster={POSTER_SRC}
+        className={cn(
+          "absolute inset-0 -z-10 h-full w-full object-cover transition-opacity duration-700 ease-out motion-reduce:transition-none",
+          playing ? "opacity-100" : "opacity-0",
+        )}
       >
+        {/* WebM (4.5M) is preferred where supported; MP4 (7.1M) covers Safari.
+            Both are faststart so playback begins before the file finishes. */}
+        <source src="/Video_Mgaloblishvili.webm" type="video/webm" />
         <source src="/Video_Mgaloblishvili.mp4" type="video/mp4" />
       </video>
 

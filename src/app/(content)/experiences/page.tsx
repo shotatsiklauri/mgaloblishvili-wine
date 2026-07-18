@@ -16,7 +16,7 @@ export default async function ExperiencesPage() {
   return (
     <div className="flex min-h-[calc(100svh)] flex-col md:h-[calc(100svh)] md:overflow-hidden">
       <HeaderContent activeId="experiences" />
-      <main className="flex min-h-0 flex-1 flex-col">
+      <main className="flex min-h-0 flex-1 flex-col desktop:mx-auto desktop:w-full desktop:max-w-[var(--frame-max)]">
         <ExperiencesView experiences={content.experiences.items} />
       </main>
       <ContentFooter />

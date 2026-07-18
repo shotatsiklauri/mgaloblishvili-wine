@@ -74,7 +74,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             description 16px Noto Serif 300, grape-origin Inter 500 12px uppercase;
             bottle 308×1114 @ left 880 (61.11%). lg pins the bottle absolutely;
             mobile/tablet stack. */}
-        <section className="text-ink desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] relative overflow-hidden">
+        <section className="text-ink desktop:mx-auto desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] desktop:max-w-[var(--frame-max)] relative overflow-hidden">
           <div className="desktop:mx-0 desktop:max-w-[calc(var(--desktop-fluid-unit)*443.707)] desktop:px-0 desktop:py-0 desktop:pt-[calc(var(--desktop-fluid-unit)*121.176)] desktop:pl-[calc(var(--desktop-fluid-unit)*117.259)] relative z-10 mx-auto max-w-[520px] px-6 py-16 md:px-10 md:py-20">
             {/* Figma: back control is just a left arrow — a 60px (4.17vw) 1px
                 line with an arrowhead @ (139,729). No text label. */}

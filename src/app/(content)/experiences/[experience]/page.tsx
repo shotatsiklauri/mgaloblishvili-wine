@@ -81,7 +81,7 @@ function EditorialExperiencePage({
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="experiences" />
-      <main className="text-ink desktop:pt-0 flex-1 pt-16 md:pt-24">
+      <main className="text-ink desktop:pt-0 desktop:mx-auto desktop:w-full desktop:max-w-[var(--frame-max)] flex-1 pt-16 md:pt-24">
         {/* ===================== FIRST PART — desktop (lg+) =====================
             Pixel-mapped to the Figma proportions and rendered at 85% from lg.
             Left column 57.5%, right 42.5%; explicit lengths are capped at their

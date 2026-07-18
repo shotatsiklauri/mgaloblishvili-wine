@@ -50,10 +50,12 @@ export async function HeaderContent({
     >
       <div
         className={cn(
-          // Bar background and coordinate frame are full-width. Percentage-
-          // positioned nav words therefore keep their source relationships
-          // instead of jumping into a centered 1440px box on wide screens.
-          "relative mx-auto flex w-full items-center",
+          // Bar background stays full-width (on HeaderScrollFrame); the content
+          // caps at the scaled design frame and centers, so the whole header
+          // scales as one block with the page and the %-positioned nav words land
+          // at their Figma x within that frame (equal side margins beyond it on
+          // wider-than-reference screens).
+          "relative mx-auto flex w-full items-center desktop:max-w-[var(--frame-max)]",
           // Mobile/tablet retain their existing sizes; desktop uses the approved
           // shared 105px header/footer height, scaled by the fluid unit.
           "desktop:h-[calc(var(--desktop-fluid-unit)*105)] h-16 md:h-24",

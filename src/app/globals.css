@@ -237,6 +237,12 @@
      canvas. It only ever binds on very tall viewports (~2895px+); the svh term keeps
      wide-but-short screens sane, so this is safe to raise. */
   --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.094967svh), 2.75px);
+  /* The scaled design frame: the 1440 reference width times the unit. Content
+     areas cap at this and center (`desktop:mx-auto desktop:max-w-[var(--frame-max)]`),
+     so every %-based column becomes a share of the SAME scaled width as the
+     unit-based type/photos — the whole composition scales as one block and only
+     letterboxes (equal side margins) on screens wider than the reference shape. */
+  --frame-max: calc(var(--desktop-fluid-unit) * 1440);
   --motion-y-8: 8px;
   --motion-y-10: 10px;
   --motion-y-12: 12px;

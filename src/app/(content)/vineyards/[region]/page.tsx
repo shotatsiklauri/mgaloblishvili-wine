@@ -56,7 +56,7 @@ export default async function VineyardRegionPage({
               "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
           }
-          className="desktop:min-h-[var(--vr-band)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
+          className="desktop:min-h-[var(--vr-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
         >
           <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*105))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             <IntroFlyIn order={1}>

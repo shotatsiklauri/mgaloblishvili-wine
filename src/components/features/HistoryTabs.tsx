@@ -199,7 +199,7 @@ function HistoryTabPanel({
               "calc((var(--history-band) - var(--history-photo)) / 2)",
           } as CSSProperties
         }
-        className="desktop:min-h-[var(--history-band)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
+        className="desktop:min-h-[var(--history-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
       >
         <div className="desktop:pt-[max(78.2px,calc(var(--desktop-fluid-unit)*89.25))] desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16">
           <div

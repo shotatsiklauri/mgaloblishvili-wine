@@ -40,7 +40,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
-      <HeaderContent activeId="wines" mobileTransparentControls="light" />
+      <HeaderContent activeId="wines" />
       <main className="flex-1">
         {/* Hero photo below the header; wine name centered over it.
             Figma @1440: title Noto Serif 300, 81px (5.625vw), lh 100%, #FFF. */}

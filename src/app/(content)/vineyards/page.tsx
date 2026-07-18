@@ -14,7 +14,7 @@ export default async function VineyardsPage() {
 
   return (
     <div className="bg-surface-dark flex min-h-[calc(100svh)] flex-col overflow-x-hidden md:h-[calc(100svh)] md:overflow-hidden">
-      <HeaderContent activeId="vineyards" mobileTransparentControls="light" />
+      <HeaderContent activeId="vineyards" />
       <main className="flex flex-1 flex-col overflow-x-hidden md:min-h-0 md:overflow-hidden">
         <VineyardsMap
           regions={content.vineyards.regions}

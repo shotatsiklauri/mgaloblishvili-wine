@@ -19,7 +19,6 @@ import { HeaderScrollFrame } from "./HeaderScrollFrame";
 type HeaderContentProps = {
   activeId?: NavRouteId;
   className?: string;
-  mobileTransparentControls?: "dark" | "light";
 };
 
 // Desktop nav word positions as percentages derived from the 1440px Figma
@@ -33,16 +32,11 @@ const NAV_LEFT_POS = [
   "desktop:left-[81.597%]",
 ] as const;
 
-export async function HeaderContent({
-  activeId,
-  className,
-  mobileTransparentControls = "dark",
-}: HeaderContentProps) {
+export async function HeaderContent({ activeId, className }: HeaderContentProps) {
   const locale = await getServerLocale();
   const content = getContent(locale);
   const primaryNav = buildPrimaryNav(content);
   const menuColumns = buildMenuColumns(content);
-  const usesLightMobileControls = mobileTransparentControls === "light";
 
   return (
     <HeaderScrollFrame
@@ -68,11 +62,7 @@ export async function HeaderContent({
             trigger={
               <HamburgerButton
                 tone="light"
-                className={cn(
-                  "desktop:[&>span]:h-[max(49.3px,calc(var(--desktop-fluid-unit)*58))] desktop:[&>span]:w-[max(49.3px,calc(var(--desktop-fluid-unit)*58))]",
-                  usesLightMobileControls ? "text-ink-inverse" : "text-ink",
-                  "group-data-[scrolled=true]/header:text-ink-inverse desktop:text-ink-inverse",
-                )}
+                className="desktop:[&>span]:h-[max(49.3px,calc(var(--desktop-fluid-unit)*58))] desktop:[&>span]:w-[max(49.3px,calc(var(--desktop-fluid-unit)*58))]"
               />
             }
             menuColumns={menuColumns}
@@ -121,11 +111,7 @@ export async function HeaderContent({
             <Link
               href="/"
               aria-label="Mgaloblishvili — Home"
-              className={cn(
-                "desktop:invert-0 inline-flex group-data-[scrolled=true]/header:invert-0",
-                usesLightMobileControls ? "invert-0" : "invert",
-                focusRing("dark"),
-              )}
+              className={cn("inline-flex invert-0", focusRing("dark"))}
             >
               {/* Figma logo width = 253px @ 1440 (17.57vw), clamped. */}
               <Wordmark
@@ -139,14 +125,8 @@ export async function HeaderContent({
         <HeaderFadeDown className="ml-auto flex items-center justify-end">
           <LanguageSwitcher
             current={locale}
-            tone={usesLightMobileControls ? "dark" : "light"}
-            className={cn(
-              "desktop:h-[max(26px,calc(var(--desktop-fluid-unit)*30))] desktop:w-[max(22px,calc(var(--desktop-fluid-unit)*26))] desktop:justify-between desktop:gap-0",
-              "group-data-[scrolled=true]/header:[&_button[aria-pressed=true]]:text-ink-inverse",
-              "group-data-[scrolled=true]/header:[&_button[aria-pressed=false]]:text-ink-inverse/70",
-              "desktop:[&_button[aria-pressed=true]]:text-ink-inverse",
-              "desktop:[&_button[aria-pressed=false]]:text-ink-inverse/70",
-            )}
+            tone="dark"
+            className="desktop:h-[max(26px,calc(var(--desktop-fluid-unit)*30))] desktop:w-[max(22px,calc(var(--desktop-fluid-unit)*26))] desktop:justify-between desktop:gap-0"
           />
         </HeaderFadeDown>
       </div>

@@ -49,7 +49,6 @@ export default async function VineyardRegionPage({
         <section
           style={
             {
-              // 225 = the scaled 120px header (Figma) + 105px footer.
               "--vr-band":
                 "max(calc(100svh - var(--desktop-fluid-unit) * 225), max(680px, calc(var(--desktop-fluid-unit) * 813)))",
               "--vr-photo": "max(440px, calc(var(--desktop-fluid-unit) * 653))",
@@ -60,9 +59,6 @@ export default async function VineyardRegionPage({
         >
           <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*120))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             <IntroFlyIn order={1}>
-              {/* Figma: symbol 69×76 (was 87×96). No `max()` floor here — a
-                  72px floor would now exceed the 69px reference width and pin
-                  it; the fluid unit already floors itself at 0.75. */}
               <div className="desktop:aspect-[69/76] desktop:w-[calc(var(--desktop-fluid-unit)*69)] relative aspect-square w-24 overflow-hidden">
                 <Image
                   src="/svgs/TheSymbol.svg"
@@ -101,13 +97,6 @@ export default async function VineyardRegionPage({
                   className="desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col"
                   ariaLabel={`${region.title} description`}
                 >
-                  {/* Body flows from the top, right under the subtitle. It used
-                      to be bottom-pinned (`mt-auto`) for the two longest regions
-                      so the last line met the photo bottom — but on large screens
-                      the wide column wraps the text short, so it no longer fills
-                      the tall frame and that pin opened a big gap under the
-                      subtitle. Top-aligned keeps the copy grouped with its
-                      heading; any slack sits below, beside the lower photo. */}
                   <div
                     className={cn(
                       "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:shrink-0 desktop:font-light desktop:tracking-normal space-y-0",

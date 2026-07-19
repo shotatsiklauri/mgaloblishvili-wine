@@ -72,8 +72,6 @@ function EditorialExperiencePage({
 }) {
   const [firstSection, secondSection] = sections;
   const wineSrc = experience.image1Url ?? "/images/wine_glass.png";
-  // The left column is ONE photo (people.jpg by default) with the 70% frost
-  // wrapping its top + right — not a separate hero image over it.
   const peopleSrc = experience.image2Url ?? "/images/people.jpg";
   const mapSrc = experience.mapImageUrl ?? "/images/Map-mgaloblishvili.jpg";
   const mapHref = experience.mapUrl ?? GOOGLE_MAPS_LOCATION_URL;
@@ -82,15 +80,7 @@ function EditorialExperiencePage({
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="experiences" />
       <main className="text-ink desktop:pt-0 desktop:mx-auto desktop:w-full desktop:max-w-[var(--frame-max)] flex-1 pt-16 md:pt-24">
-        {/* ===================== FIRST PART — desktop (lg+) =====================
-            Pixel-mapped to the Figma proportions and rendered at 85% from lg.
-            Left column 57.5%, right 42.5%; explicit lengths are capped at their
-            scaled 1440 values. */}
         <section className="desktop:flex desktop:pt-[calc(var(--desktop-fluid-unit)*92.65)] hidden">
-          {/* LEFT COLUMN — one tasting photo (people.jpg), source 828×880 (Figma).
-              The 30% white frost wraps its top + right into an L and the intro copy
-              sits over the frosted top band; both animate in on load (top band
-              bottom→top, right strip left→right, copy fades up after). */}
           <div className="relative h-[calc(var(--desktop-fluid-unit)*748)] w-[57.5%] overflow-hidden">
             <Image
               src={peopleSrc}
@@ -101,11 +91,6 @@ function EditorialExperiencePage({
               className="object-cover object-center"
             />
             <ExperienceFrostIntro>
-              {/* Same no-scrollbar scroll frame as the right column: the intro
-                  copy is bound to the frost band's copy height so it stays
-                  inside the frosted area in every language. English fits; the
-                  longer Georgian copy scrolls internally (fade masks signal it)
-                  instead of overflowing onto the dark photo and "jumping". */}
               {firstSection ? (
                 <RegionScrollText
                   className="desktop:h-full"
@@ -117,9 +102,7 @@ function EditorialExperiencePage({
             </ExperienceFrostIntro>
           </div>
 
-          {/* RIGHT COLUMN — wine photo, then the symbol + welcome copy. */}
           <div className="w-[42.5%]">
-            {/* Source starts 22px lower than the left column and is 418px tall. */}
             <div className="relative mt-[calc(var(--desktop-fluid-unit)*18.7)] h-[calc(var(--desktop-fluid-unit)*355.3)] overflow-hidden">
               <Image
                 src={wineSrc}
@@ -129,7 +112,6 @@ function EditorialExperiencePage({
                 className="object-cover object-center"
               />
             </div>
-            {/* Source inset 50px; source wine→symbol gap 52px. */}
             <div className="mt-[calc(var(--desktop-fluid-unit)*44.2)] pl-[calc(var(--desktop-fluid-unit)*42.5)]">
               <div className="relative h-[calc(var(--desktop-fluid-unit)*61.2)] w-[calc(var(--desktop-fluid-unit)*55.25)]">
                 <Image
@@ -140,15 +122,8 @@ function EditorialExperiencePage({
                   className="object-contain object-left"
                 />
               </div>
-              {/* Figma text box = 512 wide (was 435.2, i.e. 512 × the 0.85
-                  calibration). The copy sits in the same no-scrollbar scroll
-                  frame as the vineyard-region body: its height is fixed so the
-                  last visible line ends level with the bottom of the left photo,
-                  and any overflow hides into a hover/focus scroll with only the
-                  fade masks showing. Both sides scale off the fluid unit, so the
-                  alignment holds at every viewport. */}
               <RegionScrollText
-                className="mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full desktop:h-[calc(var(--desktop-fluid-unit)*253.3)]"
+                className="desktop:h-[calc(var(--desktop-fluid-unit)*253.3)] mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full"
                 ariaLabel={experience.title}
               >
                 {secondSection ? (
@@ -159,10 +134,7 @@ function EditorialExperiencePage({
           </div>
         </section>
 
-        {/* ===================== FIRST PART — mobile / tablet ===================== */}
         <section className="desktop:hidden">
-          {/* One tasting photo with the frost capping its top (holding the intro
-              copy); the people stay visible below it. */}
           <div className="relative min-h-[520px] overflow-hidden md:min-h-[600px]">
             <Image
               src={peopleSrc}
@@ -203,11 +175,6 @@ function EditorialExperiencePage({
           </div>
         </section>
 
-        {/* ===================== MAP =====================
-            Source gap before the map: 152px. Full-bleed, 2px radius,
-            with a 30% white haze over the top ~90% (Figma overlay 537 of 598).
-            Reveals top→bottom (+ slow zoom) the first time it scrolls into view,
-            mirroring the vineyards photo but on the vertical axis. */}
         <section className="desktop:mt-[calc(var(--desktop-fluid-unit)*129.2)] mt-10">
           <Link
             href={mapHref}
@@ -233,7 +200,6 @@ function EditorialExperiencePage({
           </Link>
         </section>
 
-        {/* ===================== FOOTER ADDRESS ===================== */}
         <section className="desktop:min-h-[calc(var(--desktop-fluid-unit)*93.5)] flex items-center justify-center bg-white px-6 py-8">
           <SiteFooterMinimal tone="light" contact={contact} />
         </section>
@@ -252,16 +218,10 @@ function ExperienceProse({
   return (
     <div
       className={cn(
-        // Body type matches /vineyards/* exactly: max(14px, unit·15) — 15px at
-        // the reference with a 14px floor on compact desktops. `font-serif` is
-        // the Noto Serif Latin→Georgian stack; letter-spacing 0. Line-height
-        // stays a fixed 1.5 (vineyards' `2svh` clause is tied to that page's
-        // viewport-locked band; 1.5 sits inside its 1.45–1.8 range).
         "desktop:text-[max(14px,calc(var(--desktop-fluid-unit)*15))] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
         className,
       )}
     >
-      {/* Figma: the first line is bold (700); the body is Light (300), same size. */}
       <h2 className="font-bold">{section.heading}</h2>
       <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*17.136)] desktop:space-y-[calc(var(--desktop-fluid-unit)*13.464)] mt-5 space-y-4 font-light">
         {section.body.map((paragraph, index) => (

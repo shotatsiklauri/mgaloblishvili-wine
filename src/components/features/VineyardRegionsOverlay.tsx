@@ -81,9 +81,6 @@ const REGION_SVG_OVERLAYS: Record<
   },
 };
 
-// Region shapes were hand-calibrated against the original 1920x1080 map. The replacement map
-// has a larger 2230x1203 canvas, with the country artwork inset rather than uniformly enlarged.
-// Keep the visible overlays and their interaction paths in the same remapped coordinate space.
 const MAP_VIEWBOX = "0 0 2230 1203";
 const SOURCE_TO_MAP_TRANSFORM = "matrix(0.85 0 0 0.8 240 180)";
 
@@ -208,9 +205,6 @@ export function VineyardRegionsOverlay({
         aria-label="Vineyard regions"
         className={cn(
           "absolute z-10 hidden text-left md:block",
-          // Figma @1440×900: left 1085 (75.35%), top 310 from page-top, 225×225 box.
-          // The map section begins below the 105px header, so its source top is
-          // 205px. The lg x-position uses a centered, capped 1440px canvas.
           "md:top-[24.26%] md:right-4 md:h-[180px] md:w-[200px]",
           "desktop:top-[calc(var(--desktop-fluid-unit)*205)] desktop:right-auto desktop:left-[calc(50%+(var(--desktop-fluid-unit)*365))]",
           "desktop:h-[max(180px,calc(var(--desktop-fluid-unit)*225))] desktop:w-[max(200px,calc(var(--desktop-fluid-unit)*225))]",
@@ -227,7 +221,6 @@ export function VineyardRegionsOverlay({
                 onFocus={enter(region.id)}
                 onBlur={leave}
                 className={cn(
-                  // Figma: Noto Serif Georgian 300, 27px @1440 (1.875vw), lh 100%.
                   "inline-block rounded-sm font-serif text-[max(20px,calc(var(--desktop-fluid-unit)*27))] leading-none font-light whitespace-nowrap",
                   "transition-colors duration-300 ease-out motion-reduce:transition-none",
                   isHighlighted(region.id)

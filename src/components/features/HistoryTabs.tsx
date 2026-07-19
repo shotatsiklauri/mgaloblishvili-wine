@@ -21,10 +21,6 @@ const PANEL_PHOTOS: Record<HistoryItemId, string> = {
 type Direction = "fwd" | "back";
 
 export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
-  // Controlled so each panel knows when it becomes active (and replays its
-  // entrance). `exiting` is the section currently animating out, plus the swap
-  // direction — forward (to a later tab) slides out-left/in-right, backward
-  // slides out-right/in-left. It's cleared when the exit animation finishes.
   const [active, setActive] = useState<HistoryItemId>("encounter");
   const [exiting, setExiting] = useState<{
     id: HistoryItemId;
@@ -50,10 +46,6 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
       activationMode="manual"
       className="desktop:min-h-0 flex flex-1 flex-col"
     >
-      {/* Panels overlap during a swap: the incoming one is in flow (defines the
-          height, no layout shift) and the outgoing one is absolutely overlaid.
-          overflow-x-clip contains the horizontal slide without clipping the
-          vertical/scroll on mobile. */}
       <div className="desktop:min-h-0 relative flex flex-1 flex-col overflow-x-clip">
         {historyItems.map((tab) => {
           const isActive = active === tab.id;
@@ -82,10 +74,6 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
       </div>
 
       <div className="shrink-0 bg-white">
-        {/* Figma tab bar: full-width white band, 120px tall (@1440), group
-            centered (~982px @ 1440); words
-            Inter 600 / 12px / 0.3em near the top, 3px black underline at the
-            bottom that reveals on hover/active, accent text when active. */}
         <Tabs.List
           aria-label="History sections"
           className={cn(
@@ -143,11 +131,6 @@ function HistoryTabPanel({
   const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
   const ready = useIntroReady();
 
-  // The inner symbol/title/text/image entrances replay every time this section
-  // becomes active — so each switched-to tab gets the same fly-in + left→right
-  // reveal + zoom as Encounter on first load. While a section is exiting we keep
-  // its inner content settled (isExiting) so it stays fully visible as it flies
-  // away rather than snapping back to the hidden start.
   const introActive = ready && (isActive || isExiting);
   const introPending = !ready && isActive;
   const enter = (order: 1 | 2 | 3) =>
@@ -157,8 +140,6 @@ function HistoryTabPanel({
         ? "intro-flyin--pending"
         : "";
 
-  // Active = in flow (defines height). Exiting = overlaid (block overrides
-  // Radix's `hidden` on the now-inactive panel). Otherwise hidden.
   const layout = isExiting
     ? "absolute inset-0 block"
     : isActive
@@ -179,16 +160,9 @@ function HistoryTabPanel({
       onAnimationEnd={handleAnimationEnd}
       className={cn("outline-none", layout, slideClass)}
     >
-      {/* Same symbol/title/text typography as /vineyards/[region]; photo differs.
-          Figma @1440×900: symbol 87×96 @ (53,225), title 48px @ (50,359), body
-          serif-300 16px filling its column. Photo 742×495 @ (666,190) => cols
-          split at 666px (46.25%) and the photo has a 32px right margin (it does
-          not reach the edge). Section fills the header↔tab-bar band so the photo
-          centers vertically with equal gaps. */}
       <section
         style={
           {
-            // 120 = the scaled content-header height (Figma).
             "--history-band":
               "calc(100svh - var(--desktop-fluid-unit) * 120 - var(--history-tabs))",
             "--history-tabs":
@@ -241,20 +215,12 @@ function HistoryTabPanel({
 
         <div
           className={cn(
-            "relative aspect-[851/666] w-full overflow-hidden desktop:aspect-auto",
-            // The Symbol tab uses a distinct portrait photo (TheSymbol.jpg,
-            // native 485×631) with its own Figma box: 307×399 at (862,250) in the
-            // 1440×900 frame. The photo cell's left edge is 666 (46.25% col), so
-            // ml = 862−666 = 196; the section starts below the 120px header, so
-            // mt = 250−120 = 130. Anchored top-left rather than centered.
+            "desktop:aspect-auto relative aspect-[851/666] w-full overflow-hidden",
             tab.id === "symbol"
               ? "desktop:mt-[calc(var(--desktop-fluid-unit)*130)] desktop:ml-[calc(var(--desktop-fluid-unit)*196)] desktop:h-[calc(var(--desktop-fluid-unit)*399)] desktop:w-[calc(var(--desktop-fluid-unit)*307)] desktop:self-start"
               : "desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center",
           )}
         >
-          {/* Left→right clip reveal, coordinated to start with the symbol and
-              finish within the text window (~1s), on first load only. On a
-              switch the image arrives settled and rides the whole-panel fly. */}
           <div
             className={cn(
               "absolute inset-0",

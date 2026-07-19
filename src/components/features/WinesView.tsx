@@ -21,9 +21,8 @@ export function WinesView({
 
   const CategoryList = isIndex ? AnimatedCategoryList : "ul";
 
-  // Same spacing in both states so the words don't shift when the list opens.
   const categoryLinks = (
-    <CategoryList className="space-y-[15px] text-center md:text-left desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)]">
+    <CategoryList className="desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)] space-y-[15px] text-center md:text-left">
       {categories.map((category) => {
         const active = category.id === activeCategoryId;
         return (
@@ -48,29 +47,25 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)]">
+      <div className="desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
         {categoryLinks}
       </div>
     );
   }
 
-  // Open state: words stay pinned at their index position (md:items-start — no
-  // vertical re-centering), the list sits to their right at Figma left 473
-  // (words block 217 + 3px), and is raised so the words sit within it (Figma
-  // list top 186 ≈ 128px above the words top).
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw] desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)]">
+    <div className="desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       <div
         className={cn(
           "flex w-full flex-col items-center gap-10",
-          "md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px] desktop:gap-[2.55px]",
+          "desktop:gap-[2.55px] md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px]",
         )}
       >
-        <div className="shrink-0 text-center md:w-[15.07vw] md:text-left desktop:w-[calc(var(--desktop-fluid-unit)*184.464)]">
+        <div className="desktop:w-[calc(var(--desktop-fluid-unit)*184.464)] shrink-0 text-center md:w-[15.07vw] md:text-left">
           {categoryLinks}
         </div>
 
-        <div className="w-full md:mt-[-5.76vw] md:w-auto desktop:mt-[calc(var(--desktop-fluid-unit)*-70.502)]">
+        <div className="desktop:mt-[calc(var(--desktop-fluid-unit)*-70.502)] w-full md:mt-[-5.76vw] md:w-auto">
           <WineScrollList wines={wines} categoryId={activeCategoryId} />
         </div>
       </div>

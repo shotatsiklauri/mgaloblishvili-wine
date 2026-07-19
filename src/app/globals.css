@@ -56,9 +56,6 @@
     font-size: 11.05px;
   }
 
-  /* Content-header-only restoration of the source nav typography/ornaments
-     inside the approved 105px bar. The rest of the desktop site keeps the
-     85% calibration below. */
   .site-header--figma .nav-word,
   .primary-nav-word--header-size .nav-word {
     font-size: max(10.2px, calc(var(--desktop-fluid-unit) * 12));
@@ -69,8 +66,6 @@
     font-size: max(9.775px, calc(var(--desktop-fluid-unit) * 11));
   }
 
-  /* Home nav (main page): the Georgian Mtavruli words read visually smaller than
-     the Latin, so they run +3px larger than the English 12px here (11 → 14). */
   .primary-nav-word--header-size .nav-word--mtavruli {
     font-size: max(12px, calc(var(--desktop-fluid-unit) * 14));
   }
@@ -122,9 +117,6 @@
   line-height: 1.2;
 }
 
-/* Desktop size for the category index words (Wines / Experiences).
-   Figma: 36px @ 1440 (2.5vw), line-height 100%. Mobile keeps type-category-large.
-   Unlayered so it wins over the utilities-layer type-category-large at md+. */
 @media (min-width: 768px) {
   .category-index-word {
     font-size: clamp(30px, 2.5vw, 44px);
@@ -132,8 +124,6 @@
   }
 }
 
-/* Wine category list items (Figma: 16px @ 1440 = 1.11vw, line-height 100%).
-   Desktop only; mobile keeps type-submenu. Unlayered to win over the utility. */
 @media (min-width: 768px) {
   .wine-list-word {
     font-size: clamp(14px, 1.11vw, 18px);
@@ -141,11 +131,6 @@
   }
 }
 
-/* Desktop-only 15% visual reduction. Tailwind's standard spacing utilities are
-   rem-based, so the root font-size scales those consistently from the custom
-   desktop pivot upward. Semantic type utilities and arbitrary px/vw sizes are
-   explicit lengths and therefore receive their own capped overrides here or
-   at their component. */
 @media (min-width: 960px) {
   html {
     font-size: 85%;
@@ -192,9 +177,6 @@
     font-size: max(9.35px, calc(var(--desktop-fluid-unit) * 11.05));
   }
 
-  /* Vineyard-region copy: restore readable editorial sizing after the global
-     desktop calibration. The svh term only opens the leading on tall desktop
-     viewports and is capped so browser zoom-out cannot grow it indefinitely. */
   .vineyard-region-body {
     font-size: max(14px, calc(var(--desktop-fluid-unit) * 15));
     line-height: clamp(1.45em, 2svh, 1.8em);
@@ -220,7 +202,6 @@
 }
 
 @utility type-language {
-  /* Figma ENG/GEO: Inter 400, 12px @ 1440 (0.83vw), line-height 100%, no tracking. */
   font-family: var(--font-sans);
   font-weight: 400;
   font-size: clamp(11px, 0.833vw, 13px);
@@ -231,20 +212,7 @@
 
 :root {
   color-scheme: light;
-  /* Scale-to-fit desktop unit. `calc(var(--desktop-fluid-unit) * X)` means "X px at
-     the 1440x900 Figma reference" — so a Figma pixel maps 1:1 to the number in code.
-     0.069444vw = 1px at the 1440 reference WIDTH; 0.111111svh = 1px at the 900
-     reference HEIGHT. min() picks the tighter axis, so the composition scales to fit
-     instead of overflowing the bottom on short screens. Unit = 1.0 at 1440x900 and
-     grows/shrinks proportionally from there, so the design scales as one block and
-     never breaks. The 0.75px floor keeps very short viewports readable (binds below
-     ~675px tall); the 2.75px cap prevents runaway growth on huge monitors. */
   --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.111111svh), 2.75px);
-  /* The scaled design frame: the 1440 reference width times the unit. Content
-     areas cap at this and center (`desktop:mx-auto desktop:max-w-[var(--frame-max)]`),
-     so every %-based column becomes a share of the SAME scaled width as the
-     unit-based type/photos — the whole composition scales as one block and only
-     letterboxes (equal side margins) on screens wider than the reference shape. */
   --frame-max: calc(var(--desktop-fluid-unit) * 1440);
   --motion-y-8: 8px;
   --motion-y-10: 10px;
@@ -265,13 +233,6 @@
   }
 }
 
-/* The 1440×900 Figma frame is a reference viewport, NOT a hard document size.
-   The document uses the full viewport width and grows with its content — short
-   pages fill the viewport (root layout: <html class="h-full">, <body
-   class="min-h-full">), taller pages scroll naturally. Framed content opts into
-   centered per-section frames; desktop explicit lengths render at 85% while
-   full-bleed media and viewport heights stay full-size.
-   box-sizing:border-box is already applied globally by Tailwind Preflight. */
 html,
 body {
   background: var(--color-background);
@@ -372,12 +333,6 @@ html::-webkit-scrollbar {
   }
 }
 
-/* Content-header entrance: the bar renders empty and its contents fade in from
-   above (top → bottom), reusing the shared category-fade-down motion. Gated on
-   the brand intro (see HeaderFadeDown) so it never plays behind the overlay;
-   --pending holds the hidden start state until then. The animated element must
-   not carry its own transform — the logo is centred by a parent wrapper and the
-   nav words are nudged on an inner span for exactly this reason. */
 .header-fade-down {
   animation: category-fade-down 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -398,9 +353,6 @@ html::-webkit-scrollbar {
   }
 }
 
-/* --reveal-from is how much of the image is clipped from the right at the start
-   (default 100% = fully hidden). Set it lower (e.g. 25%) to leave that much
-   already visible and only wipe in the remaining slice. */
 @keyframes reveal-left-to-right {
   from {
     -webkit-clip-path: inset(0 var(--reveal-from, 100%) 0 0);
@@ -412,8 +364,6 @@ html::-webkit-scrollbar {
   }
 }
 
-/* Same clip wipe as reveal-left-to-right, but running top→bottom (the wipe
-   clears the bottom inset). Used by the /experiences map when it scrolls in. */
 @keyframes reveal-top-to-bottom {
   from {
     -webkit-clip-path: inset(0 0 100% 0);
@@ -425,8 +375,6 @@ html::-webkit-scrollbar {
   }
 }
 
-/* /experiences frosted intro: the top band wipes bottom→top and the right strip
-   wipes left→right; once both settle the intro copy fades up on top. */
 @keyframes exp-frost-up {
   from {
     -webkit-clip-path: inset(100% 0 0 0);
@@ -545,7 +493,6 @@ html::-webkit-scrollbar {
 }
 
 .menu-divider-v {
-  /* Figma: 1px vertical line, white at 30% opacity. */
   transform-origin: top;
   animation: menu-divider-grow-v 910ms ease-out both;
   background: rgba(255, 255, 255, 0.3);
@@ -586,8 +533,6 @@ html::-webkit-scrollbar {
   animation: reveal-left-to-right 1704ms ease-out both;
 }
 
-/* Top→bottom variant (scroll-triggered by InViewReveal). Pending holds the
-   fully-clipped start so there is no flash before it enters the viewport. */
 .vertical-reveal-enter--pending {
   -webkit-clip-path: inset(0 0 100% 0);
   clip-path: inset(0 0 100% 0);
@@ -598,8 +543,6 @@ html::-webkit-scrollbar {
   animation: reveal-top-to-bottom 800ms ease-out both;
 }
 
-/* /experiences frost + intro copy (played once the brand intro clears). The two
-   frost rects are plain (no blur) so they sit flush with no seam. */
 .exp-frost-band--pending {
   -webkit-clip-path: inset(100% 0 0 0);
   clip-path: inset(100% 0 0 0);
@@ -608,8 +551,7 @@ html::-webkit-scrollbar {
   -webkit-clip-path: inset(0 100% 0 0);
   clip-path: inset(0 100% 0 0);
 }
-/* 800ms ease-out — same speed as the /history photo reveal (and vineyards /
-   wines / map), so every left→right / bottom→top / top→bottom wipe matches. */
+
 .exp-frost-band {
   will-change: clip-path;
   animation: exp-frost-up 800ms ease-out both;
@@ -621,19 +563,10 @@ html::-webkit-scrollbar {
 .exp-intro-text--pending {
   opacity: 0;
 }
-/* Delay ≈ frost duration so the copy only appears once the frost has settled. */
 .exp-intro-text {
   animation: exp-intro-text 600ms ease-out 850ms both;
 }
 
-/* Section entrance shared by the history, vineyard-region and wine-detail pages:
-   content elements (symbol / title / subtitle / paragraph) fly in from the left
-   (translateX -48px → 0, opacity 0 → 1) on a very tight stagger so it reads as
-   one coordinated motion, alongside the photo's left-to-right clip wipe; all
-   settle within ~0.7s. `both` holds the offset/transparent 0% state through the
-   stagger delay (no flash) and the final resting state after. --pending holds
-   that start state until the content is active and the brand-intro has cleared;
-   toggling pending → enter is what (re)starts the slide each activation. */
 .intro-flyin {
   animation: intro-flyin 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
@@ -655,24 +588,11 @@ html::-webkit-scrollbar {
   animation-delay: 120ms;
 }
 
-/* Slow, subtle image zoom that begins the moment the 800ms left-to-right reveal
-   finishes (delay = reveal duration, so there's no pause) and holds at the end.
-   Applied to the <img> only; the container stays fixed with overflow-hidden so
-   just the image scales. It restarts with the reveal when the section changes
-   (History toggles this class; vineyard/wine remount the reveal wrapper, which
-   remounts the image and this animation with it). */
 .intro-zoom {
   animation: intro-zoom 1750ms ease-out 800ms both;
   will-change: transform;
 }
 
-/* /history section-switch: the whole outgoing panel flies out to one side while
-   fading, and the whole incoming panel flies in from the opposite side while
-   fading up — forward (to a later section) = out-left / in-right, backward =
-   out-right / in-left. Bold travel (40%) + crossfade so each swap clearly reads
-   as "flew out / flew in". On a switch the panel's inner symbol/title/text/image
-   entrances are held settled (they only play on first load), so this fly is the
-   single, clean motion instead of competing with the inner replays. */
 @keyframes history-panel-in-right {
   from {
     transform: translateX(40%);
@@ -893,23 +813,19 @@ html::-webkit-scrollbar {
   .menu-divider-v {
     animation-name: menu-fade-in !important;
   }
-  /* Reduced motion: no slide — opacity fade only, no positional movement. */
   .intro-flyin--pending {
     transform: none !important;
   }
-  /* Reduced motion: header contents fade only, no downward travel. */
   .header-fade-down {
     animation-name: menu-fade-in !important;
   }
   .header-fade-down--pending {
     transform: none !important;
   }
-  /* Reduced motion: no zoom — image stays at rest. */
   .intro-zoom {
     animation: none !important;
     transform: none !important;
   }
-  /* Reduced motion: instant section swap, no slide (still fires animationend). */
   .history-panel-enter-fwd,
   .history-panel-enter-back,
   .history-panel-exit-fwd,
@@ -921,14 +837,12 @@ html::-webkit-scrollbar {
     -webkit-clip-path: none !important;
     clip-path: none !important;
   }
-  /* Reduced motion: no wipe, and never leave the map clipped/hidden. */
   .vertical-reveal-enter,
   .vertical-reveal-enter--pending {
     animation-name: none !important;
     -webkit-clip-path: none !important;
     clip-path: none !important;
   }
-  /* Reduced motion: /experiences frost + copy appear at rest, never hidden. */
   .exp-frost-band,
   .exp-frost-strip,
   .exp-frost-band--pending,

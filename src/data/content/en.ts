@@ -236,7 +236,6 @@ export const enContent: SiteContent = {
         ],
         grapeOrigin: "Tsinandali, Kakheti",
       },
-      // Placeholder copy — replace with final Brandy text when available.
       {
         id: "xo",
         name: "XO",
@@ -258,7 +257,6 @@ export const enContent: SiteContent = {
         grapeOrigin: "",
         categoryId: "brandy",
       },
-      // Placeholder copy — replace with final Chacha text when available.
       {
         id: "chacha",
         name: "Chacha",

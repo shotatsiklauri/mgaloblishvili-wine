@@ -31,10 +31,7 @@ export function HeaderScrollFrame({
     <header
       data-scrolled={scrolled}
       className={cn(
-        "group/header text-ink-inverse fixed inset-x-0 top-0 z-30 border-b desktop:sticky",
-        // Solid dark bar at all times. It was transparent on mobile until
-        // scrolled; now it stays black so it never floats over page/hero content
-        // on small screens (desktop was already always dark).
+        "group/header text-ink-inverse desktop:sticky fixed inset-x-0 top-0 z-30 border-b",
         "bg-surface-dark border-ink-inverse/5 transition-colors duration-300 motion-reduce:transition-none",
         className,
       )}

@@ -42,11 +42,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" />
       <main className="flex-1">
-        {/* Hero photo below the header; wine name centered over it.
-            Figma @1440: title Noto Serif 300, 81px (5.625vw), lh 100%, #FFF. */}
         <section className="desktop:h-[max(306px,calc(var(--desktop-fluid-unit)*367.2))] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
-          {/* Hero photo: 3/4 is shown immediately; only the last quarter wipes
-              in left→right (revealFrom="25%"). */}
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
             durationMs={800}
@@ -70,14 +66,8 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </h1>
         </section>
 
-        {/* Figma @1440: text left @138 (9.58vw) — title 36px Noto Serif 400,
-            description 16px Noto Serif 300, grape-origin Inter 500 12px uppercase;
-            bottle 308×1114 @ left 880 (61.11%). lg pins the bottle absolutely;
-            mobile/tablet stack. */}
         <section className="text-ink desktop:mx-auto desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] desktop:max-w-[var(--frame-max)] relative overflow-hidden">
           <div className="desktop:mx-0 desktop:max-w-[calc(var(--desktop-fluid-unit)*443.707)] desktop:px-0 desktop:py-0 desktop:pt-[calc(var(--desktop-fluid-unit)*121.176)] desktop:pl-[calc(var(--desktop-fluid-unit)*117.259)] relative z-10 mx-auto max-w-[520px] px-6 py-16 md:px-10 md:py-20">
-            {/* Figma: back control is just a left arrow — a 60px (4.17vw) 1px
-                line with an arrowhead @ (139,729). No text label. */}
             <Link
               href={routes.wineCategory(category)}
               aria-label={categoryLabel}
@@ -133,8 +123,6 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </div>
 
           <div className="desktop:absolute desktop:top-[calc(var(--desktop-fluid-unit)*113.962)] desktop:left-[61.11%] desktop:block desktop:pb-0 flex justify-center pb-16">
-            {/* Left→right clip reveal on the bottle, same 800ms as the other
-                detail pages. w-fit so the clip is relative to the bottle itself. */}
             <IntroAwareHorizontalReveal durationMs={800} className="w-fit">
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}

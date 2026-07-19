@@ -232,29 +232,33 @@ export const kaContent: SiteContent = {
         ],
         grapeOrigin: "წინანდალი, კახეთი",
       },
-      // Placeholder copy — replace with final Brandy text when available.
       {
         id: "xo",
         name: "XO",
-        description: ["მომწიფებული ყურძნის ბრენდი, რბილი და დახვეწილი ხასიათით."],
+        description: [
+          "მომწიფებული ყურძნის ბრენდი, რბილი და დახვეწილი ხასიათით.",
+        ],
         grapeOrigin: "",
         categoryId: "brandy",
       },
       {
         id: "vsop",
         name: "VSOP",
-        description: ["მომწიფებული ყურძნის ბრენდი, დაბალანსებული და რბილი ხასიათით."],
+        description: [
+          "მომწიფებული ყურძნის ბრენდი, დაბალანსებული და რბილი ხასიათით.",
+        ],
         grapeOrigin: "",
         categoryId: "brandy",
       },
       {
         id: "vs",
         name: "VS",
-        description: ["მომწიფებული ყურძნის ბრენდი, რბილი და დახვეწილი ხასიათით."],
+        description: [
+          "მომწიფებული ყურძნის ბრენდი, რბილი და დახვეწილი ხასიათით.",
+        ],
         grapeOrigin: "",
         categoryId: "brandy",
       },
-      // Placeholder copy — replace with final Chacha text when available.
       {
         id: "chacha",
         name: "ჭაჭა",

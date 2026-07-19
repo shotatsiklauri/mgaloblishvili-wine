@@ -9,8 +9,6 @@ type SiteFooterMinimalProps = {
   contact?: ResolvedContact;
 };
 
-// Footer text adapts to the footer background: dark text on the transparent
-// (light-page) footers, soft white on the solid-black footers.
 const TONE_TEXT = {
   light: "text-ink-muted",
   dark: "text-ink-inverse/55",
@@ -21,8 +19,6 @@ const TONE_DOT = {
   dark: "text-ink-inverse/40",
 } as const;
 
-// Figma: Inter (font-sans), 400, 12px @ 1440 before the approved desktop
-// density adjustment. Keep that adjusted reference size fluid through 1920.
 const FOOTER_TYPE =
   "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none desktop:text-[max(9.35px,calc(var(--desktop-fluid-unit)*10.166))]";
 

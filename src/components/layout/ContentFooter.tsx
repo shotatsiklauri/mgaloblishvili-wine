@@ -4,10 +4,7 @@ import { getServerLocale } from "@/lib/locale";
 import { getResolvedContact } from "@/lib/sanity/contact";
 
 type ContentFooterProps = {
-  // Page footers are white by default. The home and /vineyards landing pages
-  // render SiteFooterMinimal directly over their media, so they stay transparent.
   background?: "white" | "transparent";
-  // Text color defaults to dark on white/transparent light-page footers.
   text?: "dark" | "light";
 };
 
@@ -22,10 +19,8 @@ export async function ContentFooter({
   return (
     <div
       className={cn(
-        // Mobile/tablet retain their existing sizes; desktop matches the 105px
-        // content header.
         "flex shrink-0 items-center justify-center px-6",
-        "min-h-[88px] md:min-h-[104px] desktop:min-h-[calc(var(--desktop-fluid-unit)*105)]",
+        "desktop:min-h-[calc(var(--desktop-fluid-unit)*105)] min-h-[88px] md:min-h-[104px]",
         background === "white" ? "bg-white" : "bg-transparent",
       )}
     >

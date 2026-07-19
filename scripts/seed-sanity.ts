@@ -320,9 +320,6 @@ enContent.experiences.items.forEach((experience: Experience, index: number) => {
     label: `Experience — ${experience.title}`,
     build: async () => {
       const kaExperience = kaExperiencesById.get(id);
-      // heroImage is no longer used by the experiences page (the left column is
-      // now the single people.jpg with the frost). Kept populated for the schema
-      // but repointed off the deleted gastronomy.png.
       const heroImage = await imageField("people.jpg");
       const image1 = await imageField("wine_glass.png");
       const image2 = await imageField("people.jpg");

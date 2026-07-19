@@ -165,8 +165,6 @@ export function MenuOverlay({
                           className={cn(
                             "menu-divider-v",
                             DIVIDER_STAGGER[idx],
-                            // Figma: ~500px tall 1px line; kept a touch shorter so
-                            // it doesn't reach the footer.
                             "desktop:-top-[5.95vh] desktop:block desktop:h-[min(45.9vh,calc(var(--desktop-fluid-unit)*391))] pointer-events-none absolute -top-[7vh] -right-0 hidden h-[min(54vh,460px)] w-px",
                           )}
                         />
@@ -195,8 +193,6 @@ export function MenuOverlay({
                               href={entry.href}
                               onClick={() => handleOpenChange(false)}
                               className={cn(
-                                // Figma menu words: Noto Serif Georgian 300,
-                                // 16px @ 1440 (1.11vw), line-height 100%.
                                 "font-serif text-[max(14px,calc(var(--desktop-fluid-unit)*16))] leading-none font-light tracking-normal",
                                 "text-center",
                                 "text-ink-inverse/55 hover:text-ink-inverse",

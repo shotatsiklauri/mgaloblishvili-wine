@@ -8,8 +8,6 @@ import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
 import { NavLink } from "@/components/ui/NavLink";
 import { cn } from "@/lib/utils";
 
-// Home nav word-box centers as % of the 1440×900 Figma frame; order matches
-// buildPrimaryNav: history, vineyards, wines, experiences. See the nav comment.
 const HOME_NAV_CENTER = [
   "desktop:left-[27.6%]",
   "desktop:left-[42.22%]",
@@ -31,8 +29,6 @@ export default async function HomePage() {
 
       <HeaderHero className="hero-ui-enter hero-ui-enter--header" />
 
-      {/* Product-of-Georgia logo — centered on the frame (Figma: 523px @ 1440,
-          vertical center 450 = 900 / 2). */}
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center px-6">
         <div className="hero-ui-enter hero-ui-enter--logo pointer-events-auto text-center">
           <h1 className="inline-block leading-none select-none">

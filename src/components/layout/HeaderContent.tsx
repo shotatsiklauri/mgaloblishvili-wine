@@ -50,6 +50,14 @@ export async function HeaderContent({ activeId, className }: HeaderContentProps)
           // % of the viewport (NAV_LEFT_POS) and the logo is centred, so the whole
           // bar keeps the Figma alignment and spreads proportionally on wide screens.
           "relative flex w-full items-center",
+          // Clip the bar on desktop so the nav words' decorative slashes (85px
+          // hairlines at -45°) can't spill their lower tips below the bar onto
+          // the page/hero — they were visible as stray diagonal lines over dark
+          // heroes (e.g. /wines/*/*). The active/hover underline sits at bottom-0
+          // (not -1px) so it stays inside this clip. Entrance content starts only
+          // ~14px above its resting spot, still within the bar, so the fade-down
+          // is unaffected.
+          "desktop:overflow-hidden",
           // Mobile/tablet retain their existing sizes; desktop is the Figma
           // 120px bar (logo centres at 60.5, words at their Figma vertical),
           // scaled by the fluid unit.

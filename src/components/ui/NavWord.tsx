@@ -44,7 +44,7 @@ export function NavWord({
           active
             ? "scale-x-100"
             : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100",
-          edgeUnderline ? "-bottom-px md:-right-14 md:-left-14" : "-bottom-3",
+          edgeUnderline ? "bottom-0 md:-right-14 md:-left-14" : "-bottom-3",
           underlineClassName,
         )}
       />

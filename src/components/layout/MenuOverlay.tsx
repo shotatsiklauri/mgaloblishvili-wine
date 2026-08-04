@@ -117,7 +117,7 @@ export function MenuOverlay({
               aria-label="Mgaloblishvili — Home"
               className={cn(
                 "menu-stagger menu-stagger--logo",
-                "desktop:mt-6 desktop:inline-flex desktop:shrink-0 desktop:self-center hidden",
+                "desktop:mt-4 desktop:inline-flex desktop:shrink-0 desktop:self-center hidden",
                 focusRing("dark"),
               )}
             >

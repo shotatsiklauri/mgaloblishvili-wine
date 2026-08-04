@@ -18,6 +18,12 @@ const PANEL_PHOTOS: Record<HistoryItemId, string> = {
   symbol: "/images/TheSymbol.jpg",
 };
 
+// Tabs listed here ignore the CMS image and always use the local file above.
+// The Symbol's CMS asset is stale and the available Sanity token is read-only,
+// so it cannot be replaced in the CMS right now. Remove the id from this set
+// once the correct image is published in Studio, so the field is editable again.
+const USE_LOCAL_PHOTO = new Set<HistoryItemId>(["symbol"]);
+
 type Direction = "fwd" | "back";
 
 export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
@@ -128,7 +134,9 @@ function HistoryTabPanel({
   slideClass,
   onExitEnd,
 }: HistoryTabPanelProps) {
-  const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
+  const photoSrc = USE_LOCAL_PHOTO.has(tab.id)
+    ? PANEL_PHOTOS[tab.id]
+    : (tab.imageUrl ?? PANEL_PHOTOS[tab.id]);
   const ready = useIntroReady();
 
   const introActive = ready && (isActive || isExiting);
@@ -217,7 +225,7 @@ function HistoryTabPanel({
           className={cn(
             "desktop:aspect-auto relative aspect-[851/666] w-full overflow-hidden",
             tab.id === "symbol"
-              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*130)] desktop:ml-[calc(var(--desktop-fluid-unit)*196)] desktop:h-[calc(var(--desktop-fluid-unit)*399)] desktop:w-[calc(var(--desktop-fluid-unit)*307)] desktop:self-start"
+              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:h-[calc(var(--desktop-fluid-unit)*495)] desktop:w-[calc(var(--desktop-fluid-unit)*742)] desktop:self-start"
               : "desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center",
           )}
         >

@@ -65,7 +65,7 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-7 flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
+          <div className="desktop:absolute desktop:inset-x-0 desktop:top-0 desktop:z-10 desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-7 flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
@@ -214,15 +214,17 @@ export function MenuOverlay({
             </div>
           </div>
 
-          <div className="shrink-0 px-6 md:px-10">
-            <div
-              aria-hidden="true"
-              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[max(462px,calc(var(--desktop-fluid-unit)*544))] mx-auto h-px w-full max-w-[640px] origin-center"
-            />
-          </div>
+          <div className="desktop:absolute desktop:inset-x-0 desktop:bottom-0 desktop:z-10 shrink-0">
+            <div className="px-6 md:px-10">
+              <div
+                aria-hidden="true"
+                className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[max(462px,calc(var(--desktop-fluid-unit)*544))] mx-auto h-px w-full max-w-[640px] origin-center"
+              />
+            </div>
 
-          <div className="menu-stagger menu-stagger--contact shrink-0 px-6 py-6 md:py-8">
-            <SiteFooterMinimal layout="stacked" tone="dark" />
+            <div className="menu-stagger menu-stagger--contact px-6 py-6 md:py-8">
+              <SiteFooterMinimal layout="stacked" tone="dark" />
+            </div>
           </div>
         </Dialog.Content>
       </Dialog.Portal>

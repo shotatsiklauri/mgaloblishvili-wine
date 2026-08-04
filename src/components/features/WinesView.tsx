@@ -47,14 +47,14 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
+      <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-10 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
         {categoryLinks}
       </div>
     );
   }
 
   return (
-    <div className="desktop:pt-[15.3vh] desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
+    <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-center justify-center px-6 py-6 md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       <div
         className={cn(
           "flex w-full flex-col items-center gap-10",
@@ -65,7 +65,7 @@ export function WinesView({
           {categoryLinks}
         </div>
 
-        <div className="desktop:mt-[calc(var(--desktop-fluid-unit)*-70.502)] w-full md:mt-[-5.76vw] md:w-auto">
+        <div className="desktop:mt-[calc(var(--desktop-fluid-unit)*-70.502)] desktop:h-0 w-full md:mt-[-5.76vw] md:w-auto">
           <WineScrollList wines={wines} categoryId={activeCategoryId} />
         </div>
       </div>

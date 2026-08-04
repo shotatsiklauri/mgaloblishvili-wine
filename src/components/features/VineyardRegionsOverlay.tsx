@@ -107,8 +107,8 @@ export function VineyardRegionsOverlay({
       <svg
         aria-hidden="true"
         viewBox={MAP_VIEWBOX}
-        preserveAspectRatio="xMidYMid slice"
-        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full scale-[1.1] md:block"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full md:block"
       >
         <g transform={SOURCE_TO_MAP_TRANSFORM}>
           {regions.map((region) => {
@@ -159,8 +159,8 @@ export function VineyardRegionsOverlay({
 
       <svg
         viewBox={MAP_VIEWBOX}
-        preserveAspectRatio="xMidYMid slice"
-        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full scale-[1.1] md:block"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-0 z-[5] hidden h-full w-full md:block"
       >
         <g transform={SOURCE_TO_MAP_TRANSFORM}>
           {regions.map((region) => {

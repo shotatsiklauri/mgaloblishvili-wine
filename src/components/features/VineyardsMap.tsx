@@ -32,7 +32,7 @@ export async function VineyardsMap({
           fill
           priority
           sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden scale-[1.1] object-cover object-center md:block"
+          className="hidden object-fill object-center md:block"
         />
         <Image
           src="/images/map-mobile.jpg"

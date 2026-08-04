@@ -12,7 +12,7 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
       <div aria-hidden="true" className="absolute inset-0 opacity-70">
         <div
           className={cn(
-            "absolute inset-x-0 top-0 h-[calc(var(--desktop-fluid-unit)*357.85)] bg-white",
+            "absolute inset-x-0 top-0 h-[calc(var(--desktop-fluid-unit)*421)] bg-white",
             ready ? "exp-frost-band" : "exp-frost-band--pending",
           )}
         />
@@ -25,7 +25,7 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
       </div>
       <div
         className={cn(
-          "absolute top-[calc(var(--desktop-fluid-unit)*29.75)] left-[calc(var(--desktop-fluid-unit)*42.5)] flex h-[calc(var(--desktop-fluid-unit)*274.55)] w-[calc(var(--desktop-fluid-unit)*578)] flex-col justify-center",
+          "absolute top-[calc(var(--desktop-fluid-unit)*35)] left-[calc(var(--desktop-fluid-unit)*50)] flex h-[calc(var(--desktop-fluid-unit)*323)] w-[calc(var(--desktop-fluid-unit)*680)] flex-col justify-center",
           ready ? "exp-intro-text" : "exp-intro-text--pending",
         )}
       >

@@ -80,8 +80,8 @@ function EditorialExperiencePage({
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="experiences" />
       <main className="text-ink desktop:pt-0 desktop:mx-auto desktop:w-full desktop:max-w-[var(--frame-max)] flex-1 pt-16 md:pt-24">
-        <section className="desktop:flex desktop:pt-[calc(var(--desktop-fluid-unit)*92.65)] hidden">
-          <div className="relative h-[calc(var(--desktop-fluid-unit)*748)] w-[57.5%] overflow-hidden">
+        <section className="desktop:flex desktop:pt-[calc(var(--desktop-fluid-unit)*109)] hidden">
+          <div className="relative h-[calc(var(--desktop-fluid-unit)*880)] w-[57.5%] overflow-hidden">
             <Image
               src={peopleSrc}
               alt=""
@@ -103,7 +103,7 @@ function EditorialExperiencePage({
           </div>
 
           <div className="w-[42.5%]">
-            <div className="relative mt-[calc(var(--desktop-fluid-unit)*18.7)] h-[calc(var(--desktop-fluid-unit)*355.3)] overflow-hidden">
+            <div className="relative mt-[calc(var(--desktop-fluid-unit)*22)] h-[calc(var(--desktop-fluid-unit)*418)] overflow-hidden">
               <Image
                 src={wineSrc}
                 alt=""
@@ -112,8 +112,8 @@ function EditorialExperiencePage({
                 className="object-cover object-center"
               />
             </div>
-            <div className="mt-[calc(var(--desktop-fluid-unit)*44.2)] pl-[calc(var(--desktop-fluid-unit)*42.5)]">
-              <div className="relative h-[calc(var(--desktop-fluid-unit)*61.2)] w-[calc(var(--desktop-fluid-unit)*55.25)]">
+            <div className="mt-[calc(var(--desktop-fluid-unit)*52)] pl-[calc(var(--desktop-fluid-unit)*50)]">
+              <div className="relative h-[calc(var(--desktop-fluid-unit)*72)] w-[calc(var(--desktop-fluid-unit)*65)]">
                 <Image
                   src="/svgs/TheSymbol.svg"
                   alt=""
@@ -123,7 +123,7 @@ function EditorialExperiencePage({
                 />
               </div>
               <RegionScrollText
-                className="desktop:h-[calc(var(--desktop-fluid-unit)*253.3)] mt-[calc(var(--desktop-fluid-unit)*15.3)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full"
+                className="desktop:h-[calc(var(--desktop-fluid-unit)*298)] mt-[calc(var(--desktop-fluid-unit)*18)] w-[calc(var(--desktop-fluid-unit)*512)] max-w-full"
                 ariaLabel={experience.title}
               >
                 {secondSection ? (
@@ -135,7 +135,7 @@ function EditorialExperiencePage({
         </section>
 
         <section className="desktop:hidden">
-          <div className="relative min-h-[520px] overflow-hidden md:min-h-[600px]">
+          <div className="relative h-[420px] overflow-hidden md:h-[560px]">
             <Image
               src={peopleSrc}
               alt=""
@@ -144,13 +144,9 @@ function EditorialExperiencePage({
               sizes="100vw"
               className="object-cover object-center"
             />
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-[58%] bg-white/70 backdrop-blur-sm"
-            />
-            <div className="absolute inset-x-0 top-0 px-6 py-10 md:px-12 md:py-12">
-              {firstSection ? <ExperienceProse section={firstSection} /> : null}
-            </div>
+          </div>
+          <div className="px-6 py-10 md:px-12 md:py-12">
+            {firstSection ? <ExperienceProse section={firstSection} /> : null}
           </div>
           <div className="relative h-[272px] overflow-hidden md:h-[380px]">
             <Image
@@ -175,13 +171,13 @@ function EditorialExperiencePage({
           </div>
         </section>
 
-        <section className="desktop:mt-[calc(var(--desktop-fluid-unit)*129.2)] mt-10">
+        <section className="desktop:mt-[calc(var(--desktop-fluid-unit)*152)] mt-10">
           <Link
             href={mapHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open location in Google Maps"
-            className="desktop:rounded-[1.7px] relative block cursor-pointer overflow-hidden rounded-[2px]"
+            className="relative block cursor-pointer overflow-hidden rounded-[2px]"
           >
             <InViewReveal durationMs={800} zoom>
               <Image
@@ -200,7 +196,7 @@ function EditorialExperiencePage({
           </Link>
         </section>
 
-        <section className="desktop:min-h-[calc(var(--desktop-fluid-unit)*93.5)] flex items-center justify-center bg-white px-6 py-8">
+        <section className="desktop:min-h-[calc(var(--desktop-fluid-unit)*110)] flex items-center justify-center bg-white px-6 py-8">
           <SiteFooterMinimal tone="light" contact={contact} />
         </section>
       </main>
@@ -223,7 +219,7 @@ function ExperienceProse({
       )}
     >
       <h2 className="font-bold">{section.heading}</h2>
-      <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*17.136)] desktop:space-y-[calc(var(--desktop-fluid-unit)*13.464)] mt-5 space-y-4 font-light">
+      <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*20.16)] desktop:space-y-[calc(var(--desktop-fluid-unit)*15.84)] mt-5 space-y-4 font-light">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

@@ -98,7 +98,24 @@ export function MenuOverlay({
               aria-label="Mgaloblishvili — Home"
               className={cn(
                 "menu-stagger menu-stagger--logo",
-                "desktop:hidden absolute top-1/2 left-1/2 inline-flex -translate-x-1/2 -translate-y-1/2",
+                "absolute top-1/2 left-1/2 inline-flex -translate-x-1/2 -translate-y-1/2",
+                // Mobile/tablet: centred in the top bar. Desktop: centred in the
+                // band between the top of the screen and the top of the menu
+                // block, so the space above the wordmark matches the space
+                // below it. `top` is the wordmark's centre (-translate-y-1/2)
+                // and the bar starts at y=0, so this needs to be half of the
+                // menu block's top edge.
+                //
+                // That edge is set by the columns' `my-auto` centring, so it
+                // tracks viewport HEIGHT, not the fluid unit — measured tops:
+                // 94.4 @500, 138.5 @600, 283.6 @900, 319.3 @976, 526 @1440.
+                // Half of that fits `23.7svh - 71.5px` within ~7px everywhere,
+                // including width-limited windows. A plain `unit * N` offset
+                // does NOT work here: the unit is pinned at its 0.75px floor on
+                // short windows, which drops the wordmark onto the menu words
+                // (confirmed at 1440x500). The max() only guards absurdly short
+                // windows, keeping the wordmark clear of the top edge.
+                "desktop:top-[max(calc(var(--desktop-fluid-unit)*26),calc(23.7svh_-_71.5px))]",
                 focusRing("dark"),
               )}
             >
@@ -111,19 +128,6 @@ export function MenuOverlay({
           </div>
 
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
-            <Link
-              href="/"
-              onClick={() => handleOpenChange(false)}
-              aria-label="Mgaloblishvili — Home"
-              className={cn(
-                "menu-stagger menu-stagger--logo",
-                "desktop:mt-1.5 desktop:inline-flex desktop:shrink-0 desktop:self-center hidden",
-                focusRing("dark"),
-              )}
-            >
-              <Wordmark size="header" />
-            </Link>
-
             <nav aria-label="Primary" className="my-auto w-full">
               <ul className="desktop:hidden mx-auto flex w-full max-w-[320px] flex-col items-center gap-[15svh]">
                 {menuColumns.map((column, idx) => (

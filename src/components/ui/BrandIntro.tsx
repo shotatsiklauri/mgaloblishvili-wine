@@ -4,6 +4,19 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BRAND_INTRO_TOTAL_MS } from "@/components/ui/brandIntroTiming";
 
+/**
+ * The mark shown while the page loads. Its intrinsic size drives the stack's
+ * aspect ratio here and in `.brand-intro__stack` (globals.css) — both have to
+ * agree, or the two stacked layers stop lining up and the fill reveal skews.
+ */
+const INTRO_MARK = {
+  src: "/svgs/Product_of_Georgia.svg",
+  width: 603,
+  height: 152,
+} as const;
+
+const INTRO_MARK_RATIO = `${INTRO_MARK.width} / ${INTRO_MARK.height}`;
+
 function getIntroRouteKey(pathname: string) {
   if (pathname === "/wines" || pathname.startsWith("/wines/")) {
     return "/wines";
@@ -58,16 +71,16 @@ function BrandIntroLayer() {
         className="brand-intro__stack"
         style={{
           position: "relative",
-          aspectRatio: "245 / 50",
+          aspectRatio: INTRO_MARK_RATIO,
           flexShrink: 0,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/Mgaloblishvili-Logo.svg"
+          src={INTRO_MARK.src}
           alt=""
-          width={245}
-          height={50}
+          width={INTRO_MARK.width}
+          height={INTRO_MARK.height}
           className="brand-intro__logo brand-intro__logo--base"
           decoding="async"
           fetchPriority="high"
@@ -81,10 +94,10 @@ function BrandIntroLayer() {
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/Mgaloblishvili-Logo.svg"
+          src={INTRO_MARK.src}
           alt=""
-          width={245}
-          height={50}
+          width={INTRO_MARK.width}
+          height={INTRO_MARK.height}
           className="brand-intro__logo brand-intro__logo--reveal"
           decoding="async"
           style={{

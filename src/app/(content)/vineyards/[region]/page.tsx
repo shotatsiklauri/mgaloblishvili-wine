@@ -12,6 +12,8 @@ import { ContentFooter } from "@/components/layout/ContentFooter";
 import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
 import { IntroFlyIn } from "@/components/ui/IntroFlyIn";
 import { RegionScrollText } from "@/components/ui/RegionScrollText";
+import { BackLink } from "@/components/ui/BackLink";
+import { routes } from "@/data/routes";
 import { cn } from "@/lib/utils";
 
 type VineyardRegionParams = {
@@ -58,6 +60,19 @@ export default async function VineyardRegionPage({
           className="desktop:min-h-[var(--vr-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
         >
           <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*120))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
+            {/* Contextual way back to the map — the header link was the only
+                route back. Label comes from the content model so it is correct
+                in both locales. self-start keeps the hit area on the control
+                rather than stretching across the flex column; being the first
+                child, it shares the column's left edge with the symbol, the
+                title and the body copy. */}
+            <BackLink
+              href={routes.vineyards}
+              label={content.vineyards.title}
+              showLabel
+              className="desktop:mb-[calc(var(--desktop-fluid-unit)*22)] mb-6 self-start"
+            />
+
             <IntroFlyIn order={1}>
               <div className="desktop:aspect-[69/76] desktop:w-[calc(var(--desktop-fluid-unit)*69)] relative aspect-square w-24 overflow-hidden">
                 <Image

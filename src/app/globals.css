@@ -766,10 +766,14 @@ html::-webkit-scrollbar {
   animation: brand-intro-layer 1500ms ease-out both;
 }
 
+/* Ratio must match INTRO_MARK in BrandIntro.tsx (Product_of_Georgia.svg,
+   603 x 152). The widths below are unchanged, so the wordmark inside the
+   lockup keeps its previous size and the "product of georgia" line sits under
+   it. */
 .brand-intro__stack {
   position: relative;
   width: 188px;
-  aspect-ratio: 245 / 50;
+  aspect-ratio: 603 / 152;
 }
 
 @media (min-width: 640px) {

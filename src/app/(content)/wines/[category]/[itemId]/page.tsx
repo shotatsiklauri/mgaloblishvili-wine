@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getServerLocale } from "@/lib/locale";
 import { getResolvedContent, findWine, isWineCategoryId } from "@/data/content";
 import { routes } from "@/data/routes";
-import { cn } from "@/lib/utils";
-import { focusRing } from "@/lib/focus-ring";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
 import { IntroFlyIn } from "@/components/ui/IntroFlyIn";
 import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
+import { BackLink } from "@/components/ui/BackLink";
 
 type WineDetailParams = {
   params: Promise<{ category: string; itemId: string }>;
@@ -68,30 +66,10 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
         <section className="text-ink desktop:mx-auto desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] desktop:max-w-[var(--frame-max)] relative overflow-hidden">
           <div className="desktop:mx-0 desktop:max-w-[calc(var(--desktop-fluid-unit)*443.707)] desktop:px-0 desktop:py-0 desktop:pt-[calc(var(--desktop-fluid-unit)*121.176)] desktop:pl-[calc(var(--desktop-fluid-unit)*117.259)] relative z-10 mx-auto max-w-[520px] px-6 py-16 md:px-10 md:py-20">
-            <Link
+            <BackLink
               href={routes.wineCategory(category)}
-              aria-label={categoryLabel}
-              className={cn(
-                "group text-ink hover:text-accent inline-flex items-center rounded-sm",
-                "transition-colors duration-200 motion-reduce:transition-none",
-                focusRing("light"),
-              )}
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 60 10"
-                fill="none"
-                className="desktop:w-[max(40.8px,calc(var(--desktop-fluid-unit)*51.05))] h-auto w-[48px] transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transition-none"
-              >
-                <path
-                  d="M60 5H1M1 5L6 1M1 5L6 9"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
+              label={categoryLabel}
+            />
 
             <IntroFlyIn order={1}>
               <h2 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[max(23.8px,calc(var(--desktop-fluid-unit)*30.6))] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">

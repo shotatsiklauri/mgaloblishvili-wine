@@ -184,21 +184,27 @@ function HistoryTabPanel({
         className="desktop:min-h-[var(--history-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
       >
         <div className="desktop:pt-[max(78.2px,calc(var(--desktop-fluid-unit)*89.25))] desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16">
-          <div
-            className={cn(
-              // 15% smaller than the original 74 / 61.2 floor.
-              "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-24 overflow-hidden",
-              enter(1),
-            )}
-          >
-            <Image
-              src="/svgs/TheSymbol.svg"
-              alt=""
-              fill
-              unoptimized
-              className="object-contain"
-            />
-          </div>
+          {/* The Symbol tab is itself about this mark and shows it full size in
+              the photo beside the copy, so the small mark is dropped there. */}
+          {tab.id !== "symbol" ? (
+            <div
+              className={cn(
+                // Mobile/tablet: a further 30% off the 81.6 above (96 -> 81.6
+                // -> 57.12). Desktop is unchanged at 15% off: 74 -> 62.9, with
+                // a 61.2 -> 52.02 floor.
+                "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[57.12px] overflow-hidden",
+                enter(1),
+              )}
+            >
+              <Image
+                src="/svgs/TheSymbol.svg"
+                alt=""
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </div>
+          ) : null}
 
           <div className="desktop:mt-[max(25.5px,calc(var(--desktop-fluid-unit)*32.3))] desktop:max-w-none mt-9 max-w-[540px]">
             <h1

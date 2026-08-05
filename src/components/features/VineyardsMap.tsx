@@ -24,7 +24,18 @@ export async function VineyardsMap({
   const contact = await getResolvedContact(locale);
 
   return (
-    <section className="bg-surface-dark relative isolate flex min-h-[calc(100svh-4rem)] flex-1 flex-col overflow-hidden md:min-h-0">
+    <section
+      className={cn(
+        "bg-surface-dark relative isolate flex min-h-[calc(100svh-4rem)] flex-1 flex-col overflow-hidden",
+        // md+: give the section the artwork's own ratio, so covering it crops
+        // nothing — the full height of the map is visible. It is still never
+        // shorter than the space under the header, and on windows narrower than
+        // the artwork's ratio that min-height wins and cover trims the (empty)
+        // sides instead. flex-none stops the column stretching it back.
+        "md:aspect-[2230/1203] md:min-h-[calc(100svh_-_6rem)] md:flex-none",
+        "desktop:min-h-[calc(100svh_-_var(--desktop-fluid-unit)*120)]",
+      )}
+    >
       {/* Mobile keeps the full-bleed treatment. */}
       <div className="absolute inset-0 overflow-hidden md:hidden">
         <Image

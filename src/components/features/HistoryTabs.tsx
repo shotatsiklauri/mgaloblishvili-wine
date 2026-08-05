@@ -186,7 +186,8 @@ function HistoryTabPanel({
         <div className="desktop:pt-[max(78.2px,calc(var(--desktop-fluid-unit)*89.25))] desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16">
           <div
             className={cn(
-              "desktop:aspect-[87/96] desktop:w-[max(61.2px,calc(var(--desktop-fluid-unit)*74))] relative aspect-square w-24 overflow-hidden",
+              // 15% smaller than the original 74 / 61.2 floor.
+              "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-24 overflow-hidden",
               enter(1),
             )}
           >

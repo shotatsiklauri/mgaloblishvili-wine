@@ -79,7 +79,11 @@ function EditorialExperiencePage({
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="experiences" />
-      <main className="text-ink desktop:pt-0 desktop:mx-auto desktop:w-full desktop:max-w-[var(--frame-max)] flex-1 pt-16 md:pt-24">
+      {/* No --frame-max cap here: this page is full-bleed by design, so the
+          photo panels, the map and the footer strip run edge to edge. The
+          vertical rhythm inside still comes from the fluid unit, and the copy
+          keeps its 50px insets, so only the horizontal fills out. */}
+      <main className="text-ink desktop:pt-0 flex-1 pt-16 md:pt-24">
         <section className="desktop:flex desktop:pt-[calc(var(--desktop-fluid-unit)*109)] hidden">
           <div className="relative h-[calc(var(--desktop-fluid-unit)*880)] w-[57.5%] overflow-hidden">
             <Image

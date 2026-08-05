@@ -22,7 +22,18 @@ export function WinesView({
   const CategoryList = isIndex ? AnimatedCategoryList : "ul";
 
   const categoryLinks = (
-    <CategoryList className="desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)] space-y-[15px] text-center md:text-left">
+    <CategoryList
+      className={cn(
+        "desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)] space-y-[15px] text-center md:text-left",
+        // Index only: the flex parent centres this block, then -50% of its own
+        // height lifts it so the LAST word sits on the vertical centre of the
+        // band between header and footer (design reference). Expressed as a
+        // percentage of the block, so it stays correct if the number of
+        // categories changes. On a category page the block keeps its centred
+        // position so it stays aligned with the wine list beside it.
+        isIndex && "desktop:-translate-y-1/2",
+      )}
+    >
       {categories.map((category) => {
         const active = category.id === activeCategoryId;
         return (

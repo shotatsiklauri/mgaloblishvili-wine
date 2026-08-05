@@ -84,17 +84,15 @@ const REGION_SVG_OVERLAYS: Record<
 const MAP_VIEWBOX = "0 0 2230 1203";
 const SOURCE_TO_MAP_TRANSFORM = "matrix(0.85 0 0 0.8 240 180)";
 
-// The map is drawn at a FIXED size instead of stretching to the section, so it
-// no longer resizes as the window changes. Tune this one value to make it
-// bigger or smaller; the width follows the artwork's ratio, and the SVG layers
-// below share the same box, so the clickable regions follow automatically.
-// `100%` only takes over on windows too short to fit it, so it never overflows.
-// max-w-full only bites on windows narrower than the map (tablet), where it
-// falls back to the old full-width behaviour. Registration survives that: the
-// image uses object-fill and the SVG layers preserveAspectRatio="none", so both
-// stretch identically whatever the box ends up being.
+// The map artwork and both SVG layers must share ONE box, or the clickable
+// regions drift off the artwork. The box fills the section and the artwork
+// covers it: scaled up until no gap remains, cropping the overflow instead of
+// stretching, so the map never distorts. MAP_FIT is the SVG equivalent of CSS
+// `object-fit: cover` — the layers below must always use it and the image must
+// always use object-cover, or the two stop agreeing.
 const MAP_STAGE =
-  "pointer-events-none absolute top-1/2 left-1/2 hidden aspect-[2230/1203] h-[min(647px,100%)] w-auto max-w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden md:block";
+  "pointer-events-none absolute inset-0 hidden overflow-hidden md:block";
+const MAP_FIT = "xMidYMid slice";
 
 type VineyardRegionsOverlayProps = {
   regions: readonly VineyardRegion[];
@@ -124,7 +122,7 @@ export function VineyardRegionsOverlay({
         <svg
           aria-hidden="true"
           viewBox={MAP_VIEWBOX}
-          preserveAspectRatio="none"
+          preserveAspectRatio={MAP_FIT}
           className="pointer-events-none absolute inset-0 z-[5] h-full w-full"
         >
           <g transform={SOURCE_TO_MAP_TRANSFORM}>
@@ -176,7 +174,7 @@ export function VineyardRegionsOverlay({
 
         <svg
           viewBox={MAP_VIEWBOX}
-          preserveAspectRatio="none"
+          preserveAspectRatio={MAP_FIT}
           className="pointer-events-none absolute inset-0 z-[5] h-full w-full"
         >
           <g transform={SOURCE_TO_MAP_TRANSFORM}>
@@ -225,12 +223,8 @@ export function VineyardRegionsOverlay({
             // swallow clicks meant for the page.
             "pointer-events-auto absolute z-10 hidden text-left md:block",
             "md:top-[24.26%] md:right-4 md:h-[180px] md:w-[200px]",
-            // Desktop: placed as a share of the MAP box rather than the window,
-            // so the labels keep their spot on the artwork now that the map is a
-            // fixed size. 75.35% / 26.28% is where they sat in the 1440x900
-            // frame (left 1085 of 1440, top 205 of 780).
-            "desktop:top-[26.28%] desktop:right-auto desktop:left-[75.35%]",
-            "desktop:h-[225px] desktop:w-[225px]",
+            "desktop:top-[calc(var(--desktop-fluid-unit)*205)] desktop:right-auto desktop:left-[calc(50%+(var(--desktop-fluid-unit)*365))]",
+            "desktop:h-[max(180px,calc(var(--desktop-fluid-unit)*225))] desktop:w-[max(200px,calc(var(--desktop-fluid-unit)*225))]",
           )}
         >
           <ul className="flex h-full flex-col justify-between">
@@ -246,9 +240,7 @@ export function VineyardRegionsOverlay({
                   onFocus={enter(region.id)}
                   onBlur={leave}
                   className={cn(
-                    // Fixed at desktop, like the map it labels — fluid type would
-                    // outgrow the now-fixed map box on large screens.
-                    "desktop:text-[27px] inline-block rounded-sm font-serif text-[20px] leading-none font-light whitespace-nowrap",
+                    "inline-block rounded-sm font-serif text-[max(20px,calc(var(--desktop-fluid-unit)*27))] leading-none font-light whitespace-nowrap",
                     "transition-colors duration-300 ease-out motion-reduce:transition-none",
                     isHighlighted(region.id)
                       ? "text-ink-inverse"

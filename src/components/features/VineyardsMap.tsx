@@ -42,10 +42,9 @@ export async function VineyardsMap({
       </div>
 
       {/* Desktop: the map is handed to the overlay so the artwork and the
-          clickable regions live in one fixed-size box and stay registered to
-          each other. object-fill (not cover) is deliberate — it matches the
-          SVG layers' preserveAspectRatio="none", so the two agree even if the
-          CMS map is not exactly 2230x1203. */}
+          clickable regions live in one box and stay registered to each other.
+          object-cover fills the section edge to edge without stretching — it
+          must stay in step with the SVG layers' preserveAspectRatio slice. */}
       <VineyardRegionsOverlay
         regions={regions}
         activeRegionId={activeRegionId}
@@ -56,8 +55,8 @@ export async function VineyardsMap({
               alt="Map of Georgian vineyard regions"
               fill
               priority
-              sizes="1200px"
-              className="object-fill object-center"
+              sizes="100vw"
+              className="object-cover object-center"
             />
             <div
               aria-hidden="true"

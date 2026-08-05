@@ -93,7 +93,12 @@ function EditorialExperiencePage({
             <ExperienceFrostIntro>
               {firstSection ? (
                 <RegionScrollText
-                  className="desktop:h-full"
+                  // max-h, not h: at its natural height the copy is centred in
+                  // the frosted band by the justify-center above it, so the gaps
+                  // above and below it match. h-full would stretch it to fill
+                  // the band and pin the copy to the top. Long copy (ka) still
+                  // caps at the band height and scrolls.
+                  className="desktop:max-h-full"
                   ariaLabel={firstSection.heading}
                 >
                   <ExperienceProse section={firstSection} />

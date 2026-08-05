@@ -25,7 +25,13 @@ export function ExperienceFrostIntro({ children }: { children: ReactNode }) {
       </div>
       <div
         className={cn(
-          "absolute top-[calc(var(--desktop-fluid-unit)*35)] left-[calc(var(--desktop-fluid-unit)*50)] flex h-[calc(var(--desktop-fluid-unit)*323)] w-[calc(var(--desktop-fluid-unit)*680)] flex-col justify-center",
+          // The copy sits inside the frosted band with the SAME gap on all four
+          // sides: 50 (Figma 1440x900) px from left, right and top, and a height
+          // of 321 = the 421 band above minus that same 50 inset top and bottom.
+          // Left/right are set as insets rather than a width so the two gaps
+          // cannot drift apart.
+          "absolute top-[calc(var(--desktop-fluid-unit)*50)] right-[calc(var(--desktop-fluid-unit)*50)] left-[calc(var(--desktop-fluid-unit)*50)]",
+          "flex h-[calc(var(--desktop-fluid-unit)*321)] flex-col justify-center",
           ready ? "exp-intro-text" : "exp-intro-text--pending",
         )}
       >

@@ -200,7 +200,7 @@ plans.push({
   label: "Vineyards",
   build: async () => {
     const desktopMapImage = await imageField("map.jpg");
-    const mobileMapImage = await imageField("map-mobile.jpg");
+    const mobileMapImage = await imageField("map-mobile.jpeg");
     return {
       introHeading: bilingual(
         enContent.vineyards.introHeading ?? "",

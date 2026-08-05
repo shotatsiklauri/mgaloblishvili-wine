@@ -56,7 +56,10 @@ export default async function HomePage() {
       <nav
         aria-label="Sections"
         className={cn(
-          "hero-ui-enter hero-ui-enter--nav",
+          // home-section-nav: hook for the stronger decorative slash in
+          // globals.css — over video these need more contrast than they do on
+          // the solid dark header.
+          "home-section-nav hero-ui-enter hero-ui-enter--nav",
           "absolute top-[74.667%] left-1/2 z-10 -translate-x-1/2",
           "hidden md:flex md:items-start md:justify-center md:gap-x-16",
           "desktop:block desktop:w-full desktop:max-w-[var(--frame-max)]",

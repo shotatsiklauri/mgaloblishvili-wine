@@ -29,6 +29,12 @@
   text-transform: uppercase;
 }
 
+/* Home hero slashes sit over moving video, so they carry more alpha than the
+   30% used on the solid dark chrome. Unlayered, so it beats the utility. */
+.home-section-nav .decorative-slash {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
 .nav-word {
   font-size: 13.5px;
 }
@@ -74,6 +80,15 @@
     width: max(96px, calc(var(--desktop-fluid-unit) * 120));
     height: 0.5px;
     min-height: 0;
+  }
+
+  /* Home hero only. The base rule thins the slash to 0.425px at this
+     breakpoint, and a sub-pixel line that is also rotated gets antialiased down
+     to a fraction of its stated opacity — barely visible over the video. Give
+     it a whole pixel to sit on and more alpha. */
+  .home-section-nav .decorative-slash {
+    height: 1px;
+    min-height: 1px;
   }
 
   .site-header--figma .type-language {

@@ -89,7 +89,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
           ref={listRef}
           aria-label="Wine list"
           className={cn(
-            "wine-scroll-fade no-scrollbar w-full space-y-4 text-center",
+            "wine-scroll-fade no-scrollbar w-full space-y-4 leading-none text-center",
             "desktop:h-[min(45.9vh,calc(var(--desktop-fluid-unit)*306))] max-h-full md:h-[360px] md:overflow-y-auto md:pr-2 md:text-left md:whitespace-nowrap",
             scrollState.canScrollUp && "wine-scroll-fade--top",
             scrollState.canScrollDown && "wine-scroll-fade--bottom",
@@ -118,7 +118,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
       >
         {scrollState.visible ? (
           <span
-            className="bg-ink desktop:w-[2.55px] absolute left-1/2 w-[3px] -translate-x-1/2 rounded-full"
+            className="bg-ink desktop:w-[calc(var(--desktop-fluid-unit)*2.55)] absolute left-1/2 w-[3px] -translate-x-1/2 rounded-full"
             style={{ height: scrollState.height, top: scrollState.top }}
           />
         ) : null}

@@ -46,7 +46,7 @@ export async function HeaderContent({
           "relative flex w-full items-center",
           "desktop:overflow-hidden",
           "desktop:h-[calc(var(--desktop-fluid-unit)*120)] h-16 md:h-24",
-          "desktop:px-[max(17px,calc(var(--desktop-fluid-unit)*20))] px-5 md:px-6",
+          "desktop:px-[calc(var(--desktop-fluid-unit)*20)] px-5 md:px-6",
         )}
       >
         <HeaderFadeDown className="flex items-center">
@@ -54,7 +54,7 @@ export async function HeaderContent({
             trigger={
               <HamburgerButton
                 tone="light"
-                className="desktop:[&>span]:h-[max(49.3px,calc(var(--desktop-fluid-unit)*58))] desktop:[&>span]:w-[max(49.3px,calc(var(--desktop-fluid-unit)*58))]"
+                className="desktop:[&>span]:h-[calc(var(--desktop-fluid-unit)*58)] desktop:[&>span]:w-[calc(var(--desktop-fluid-unit)*58)]"
               />
             }
             menuColumns={menuColumns}
@@ -79,7 +79,7 @@ export async function HeaderContent({
                 index < 2 &&
                   "desktop:translate-y-[calc(var(--desktop-fluid-unit)*27.5)]",
               )}
-              underlineClassName="desktop:right-auto desktop:left-1/2 desktop:h-[2px] desktop:w-[max(117px,calc(var(--desktop-fluid-unit)*165))] desktop:-translate-x-1/2"
+              underlineClassName="desktop:right-auto desktop:left-1/2 desktop:h-[calc(var(--desktop-fluid-unit)*2)] desktop:w-[calc(var(--desktop-fluid-unit)*165)] desktop:-translate-x-1/2"
               className="h-full px-0"
             >
               {item.label}
@@ -96,7 +96,7 @@ export async function HeaderContent({
             >
               <Wordmark
                 size="header"
-                className="desktop:w-[max(180px,calc(var(--desktop-fluid-unit)*253))] desktop:[&_img]:w-full"
+                className="desktop:w-[calc(var(--desktop-fluid-unit)*253)] desktop:[&_img]:w-full"
               />
             </Link>
           </HeaderFadeDown>
@@ -106,7 +106,7 @@ export async function HeaderContent({
           <LanguageSwitcher
             current={locale}
             tone="dark"
-            className="desktop:h-[max(26px,calc(var(--desktop-fluid-unit)*30))] desktop:w-[max(22px,calc(var(--desktop-fluid-unit)*26))] desktop:justify-between desktop:gap-0"
+            className="desktop:h-[calc(var(--desktop-fluid-unit)*30)] desktop:w-[calc(var(--desktop-fluid-unit)*26)] desktop:justify-between desktop:gap-0"
           />
         </HeaderFadeDown>
       </div>

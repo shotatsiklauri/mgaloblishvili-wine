@@ -230,7 +230,7 @@ export function VineyardRegionsOverlay({
             "pointer-events-auto absolute z-10 hidden text-left md:block",
             "md:top-[24.26%] md:right-4 md:h-[180px] md:w-[200px]",
             "desktop:top-[calc(var(--desktop-fluid-unit)*205)] desktop:right-auto desktop:left-[calc(50%+(var(--desktop-fluid-unit)*365))]",
-            "desktop:h-[max(180px,calc(var(--desktop-fluid-unit)*225))] desktop:w-[max(200px,calc(var(--desktop-fluid-unit)*225))]",
+            "desktop:h-[calc(var(--desktop-fluid-unit)*225)] desktop:w-[calc(var(--desktop-fluid-unit)*225)]",
           )}
         >
           <ul className="flex h-full flex-col justify-between">
@@ -246,7 +246,7 @@ export function VineyardRegionsOverlay({
                   onFocus={enter(region.id)}
                   onBlur={leave}
                   className={cn(
-                    "inline-block rounded-sm font-serif text-[max(20px,calc(var(--desktop-fluid-unit)*27))] leading-none font-light whitespace-nowrap",
+                    "inline-block rounded-sm font-serif text-[calc(var(--desktop-fluid-unit)*27)] leading-none font-light whitespace-nowrap",
                     "transition-colors duration-300 ease-out motion-reduce:transition-none",
                     isHighlighted(region.id)
                       ? "text-ink-inverse"

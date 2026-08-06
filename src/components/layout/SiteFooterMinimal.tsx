@@ -20,7 +20,7 @@ const TONE_DOT = {
 } as const;
 
 const FOOTER_TYPE =
-  "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none desktop:text-[max(9.35px,calc(var(--desktop-fluid-unit)*10.166))]";
+  "font-sans font-normal tracking-normal text-[clamp(11px,0.83vw,13px)] leading-none desktop:text-[calc(var(--desktop-fluid-unit)*10.166)] desktop:leading-none";
 
 export function SiteFooterMinimal({
   tone = "light",
@@ -34,7 +34,7 @@ export function SiteFooterMinimal({
     return (
       <footer
         className={cn(
-          "flex w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5",
+          "flex w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5 desktop:gap-x-[calc(var(--desktop-fluid-unit)*6.8)] desktop:gap-y-[calc(var(--desktop-fluid-unit)*1.7)]",
           FOOTER_TYPE,
           "text-center",
           TONE_TEXT[tone],
@@ -53,7 +53,7 @@ export function SiteFooterMinimal({
   return (
     <footer
       className={cn(
-        "flex w-full flex-col items-center gap-1.5",
+        "flex w-full flex-col items-center gap-1.5 desktop:gap-[calc(var(--desktop-fluid-unit)*5.1)]",
         FOOTER_TYPE,
         "text-center",
         TONE_TEXT[tone],

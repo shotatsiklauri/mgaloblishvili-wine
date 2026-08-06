@@ -40,7 +40,7 @@ export function BackLink({
         "before:absolute before:inset-x-0 before:-inset-y-4 before:content-['']",
         "transition-colors duration-200 motion-reduce:transition-none",
         showLabel
-          ? "text-ink-muted hover:text-accent focus-visible:text-accent desktop:gap-[max(6px,calc(var(--desktop-fluid-unit)*8))] gap-2"
+          ? "text-ink-muted hover:text-accent focus-visible:text-accent desktop:gap-[calc(var(--desktop-fluid-unit)*8)] gap-2"
           : "text-ink hover:text-accent",
         focusRing("light"),
         className,
@@ -52,7 +52,7 @@ export function BackLink({
             aria-hidden="true"
             viewBox="0 0 16 10"
             fill="none"
-            className="desktop:w-[max(13.6px,calc(var(--desktop-fluid-unit)*16))] h-auto w-[16px] shrink-0 transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transition-none"
+            className="desktop:w-[calc(var(--desktop-fluid-unit)*16)] h-auto w-[16px] shrink-0 transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transition-none"
           >
             <path
               d="M15 5H1M1 5L5 1M1 5L5 9"
@@ -71,7 +71,7 @@ export function BackLink({
           aria-hidden="true"
           viewBox="0 0 60 10"
           fill="none"
-          className="desktop:w-[max(40.8px,calc(var(--desktop-fluid-unit)*51.05))] h-auto w-[48px] transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transition-none"
+          className="desktop:w-[calc(var(--desktop-fluid-unit)*51.05)] h-auto w-[48px] transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transition-none"
         >
           <path
             d="M60 5H1M1 5L6 1M1 5L6 9"

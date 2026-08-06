@@ -132,7 +132,7 @@ export function HeroVideo() {
             strokeWidth="1.7"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="size-4"
+            className="size-4 desktop:size-[calc(var(--desktop-fluid-unit)*13.6)]"
           >
             <path d="M11 5 6.5 9H3v6h3.5l4.5 4z" />
             <path d="m16 9 5 6" />
@@ -147,7 +147,7 @@ export function HeroVideo() {
             strokeWidth="1.7"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="size-4"
+            className="size-4 desktop:size-[calc(var(--desktop-fluid-unit)*13.6)]"
           >
             <path d="M11 5 6.5 9H3v6h3.5l4.5 4z" />
             <path d="M15.5 9.5a3.5 3.5 0 0 1 0 5" />

@@ -84,7 +84,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
           aria-label="History sections"
           className={cn(
             "grid grid-cols-1 sm:grid-cols-3",
-            "desktop:mx-auto desktop:h-[max(88.4px,calc(var(--desktop-fluid-unit)*102))] desktop:w-full desktop:max-w-[max(624px,calc(var(--desktop-fluid-unit)*832.32))]",
+            "desktop:mx-auto desktop:h-[calc(var(--desktop-fluid-unit)*102)] desktop:w-full desktop:max-w-[calc(var(--desktop-fluid-unit)*832.32)]",
           )}
         >
           {historyItems.map((tab) => (
@@ -93,9 +93,9 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               value={tab.id}
               className={cn(
                 "group relative flex cursor-pointer items-center justify-center py-5",
-                "desktop:items-start desktop:py-0 desktop:pt-[max(34px,calc(var(--desktop-fluid-unit)*44.2))]",
+                "desktop:items-start desktop:py-0 desktop:pt-[calc(var(--desktop-fluid-unit)*44.2)]",
                 "text-center font-sans leading-none font-semibold uppercase",
-                "desktop:text-[max(9.35px,calc(var(--desktop-fluid-unit)*10.2))] text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
+                "desktop:text-[calc(var(--desktop-fluid-unit)*10.2)] text-[clamp(11px,0.833vw,13px)] tracking-[0.3em]",
                 "transition-colors duration-300 ease-out motion-reduce:transition-none",
                 focusRing("light"),
                 "text-ink-muted hover:text-accent focus-visible:text-accent",
@@ -106,7 +106,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
               <span
                 aria-hidden="true"
                 className={cn(
-                  "desktop:h-[2.55px] pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black",
+                  "desktop:h-[calc(var(--desktop-fluid-unit)*2.55)] pointer-events-none absolute right-0 bottom-0 left-0 h-[3px] origin-left bg-black",
                   "scale-x-0 transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
                   "group-hover:scale-x-100 group-focus-visible:scale-x-100 group-data-[state=active]:scale-x-100",
                 )}
@@ -174,16 +174,33 @@ function HistoryTabPanel({
             "--history-band":
               "calc(100svh - var(--desktop-fluid-unit) * 120 - var(--history-tabs))",
             "--history-tabs":
-              "max(88.4px, calc(var(--desktop-fluid-unit) * 102))",
+              "calc(var(--desktop-fluid-unit) * 102)",
             "--history-photo":
-              "max(424px, calc(var(--desktop-fluid-unit) * 500))",
+              "calc(var(--desktop-fluid-unit) * 500)",
             "--history-gap":
               "calc((var(--history-band) - var(--history-photo)) / 2)",
+            // The symbol tab's photo is taller (495 + a 70 top offset) than the
+            // band can hold on short windows, where it used to run under the
+            // tab strip and get clipped. Cap it at whatever the band leaves.
+            "--history-symbol-photo":
+              "min(calc(var(--desktop-fluid-unit) * 495), calc(var(--history-band) - var(--desktop-fluid-unit) * 70))",
           } as CSSProperties
         }
         className="desktop:min-h-[var(--history-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
       >
-        <div className="desktop:pt-[max(78.2px,calc(var(--desktop-fluid-unit)*89.25))] desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16">
+        <div
+          className={cn(
+            "desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16",
+            tab.id === "symbol"
+              ? // This tab drops the small mark and runs a taller photo, so a
+                // top-aligned column left the copy floating high beside it.
+                // Mirror the photo's vertical box (same top offset, same
+                // height) and centre the copy inside it, so title and text sit
+                // on the photo's centre line.
+                "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:flex desktop:h-[var(--history-symbol-photo)] desktop:flex-col desktop:justify-center desktop:pt-0"
+              : "desktop:pt-[calc(var(--desktop-fluid-unit)*89.25)]",
+          )}
+        >
           {/* The Symbol tab is itself about this mark and shows it full size in
               the photo beside the copy, so the small mark is dropped there. */}
           {tab.id !== "symbol" ? (
@@ -191,7 +208,7 @@ function HistoryTabPanel({
               className={cn(
                 // Mobile/tablet is reduced by 30% from 57.12px to 39.984px.
                 // Desktop remains 62.9 Figma pixels with its existing floor.
-                "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[39.984px] overflow-hidden",
+                "desktop:aspect-[87/96] desktop:w-[calc(var(--desktop-fluid-unit)*62.9)] relative aspect-square w-[39.984px] overflow-hidden",
                 enter(1),
               )}
             >
@@ -205,10 +222,20 @@ function HistoryTabPanel({
             </div>
           ) : null}
 
-          <div className="desktop:mt-[max(25.5px,calc(var(--desktop-fluid-unit)*32.3))] desktop:max-w-none mt-9 max-w-[540px]">
+          <div
+            className={cn(
+              "desktop:max-w-none mt-9 max-w-[540px]",
+              // That top margin clears the small mark. The symbol tab has no
+              // mark, so on desktop it would just be dead space at the top of
+              // the centred column, pushing the copy below the photo's centre.
+              tab.id === "symbol"
+                ? "desktop:mt-0"
+                : "desktop:mt-[calc(var(--desktop-fluid-unit)*32.3)]",
+            )}
+          >
             <h1
               className={cn(
-                "desktop:text-[max(40px,calc(var(--desktop-fluid-unit)*48))] font-serif text-[44px] leading-none font-normal md:text-[48px]",
+                "desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[44px] leading-none font-normal md:text-[48px]",
                 enter(2),
               )}
             >
@@ -231,7 +258,7 @@ function HistoryTabPanel({
           className={cn(
             "desktop:aspect-auto relative aspect-[851/666] w-full overflow-hidden",
             tab.id === "symbol"
-              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:h-[calc(var(--desktop-fluid-unit)*495)] desktop:w-[calc(var(--desktop-fluid-unit)*742)] desktop:self-start"
+              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:h-[var(--history-symbol-photo)] desktop:w-[calc(var(--desktop-fluid-unit)*742)] desktop:self-start"
               : "desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center",
           )}
         >

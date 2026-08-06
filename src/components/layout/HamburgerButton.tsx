@@ -16,7 +16,7 @@ export const HamburgerButton = forwardRef<
       type="button"
       aria-label="Open menu"
       className={cn(
-        "desktop:h-8 desktop:w-8 inline-flex h-9 w-9 cursor-pointer items-center justify-center",
+        "desktop:h-[calc(var(--desktop-fluid-unit)*27.2)] desktop:w-[calc(var(--desktop-fluid-unit)*27.2)] inline-flex h-9 w-9 cursor-pointer items-center justify-center",
         "transition-colors duration-150",
         focusRing(tone === "light" ? "dark" : "light"),
         tone === "light"
@@ -28,7 +28,7 @@ export const HamburgerButton = forwardRef<
     >
       <span
         aria-hidden="true"
-        className="desktop:h-[max(49.3px,calc(var(--desktop-fluid-unit)*58))] desktop:w-[max(49.3px,calc(var(--desktop-fluid-unit)*58))] block h-[58px] w-[58px] shrink-0 bg-current"
+        className="desktop:h-[calc(var(--desktop-fluid-unit)*58)] desktop:w-[calc(var(--desktop-fluid-unit)*58)] block h-[58px] w-[58px] shrink-0 bg-current"
         style={{
           WebkitMask:
             "url('/svgs/line-pattern.svg') center / contain no-repeat",

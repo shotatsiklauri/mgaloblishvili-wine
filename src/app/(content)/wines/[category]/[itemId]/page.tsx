@@ -40,7 +40,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" />
       <main className="flex-1">
-        <section className="desktop:h-[max(306px,calc(var(--desktop-fluid-unit)*367.2))] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
+        <section className="desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
             durationMs={800}
@@ -59,7 +59,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             aria-hidden="true"
             className="from-surface-dark/35 via-surface-dark/10 to-surface-dark/35 absolute inset-0 bg-gradient-to-r"
           />
-          <h1 className="text-ink-inverse desktop:text-[max(34px,calc(var(--desktop-fluid-unit)*68.85))] relative z-10 px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
+          <h1 className="text-ink-inverse desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
             {wine.name}
           </h1>
         </section>
@@ -72,13 +72,13 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             />
 
             <IntroFlyIn order={1}>
-              <h2 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[max(23.8px,calc(var(--desktop-fluid-unit)*30.6))] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
+              <h2 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[calc(var(--desktop-fluid-unit)*30.6)] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
                 {wine.name}
               </h2>
             </IntroFlyIn>
 
             <IntroFlyIn order={2}>
-              <div className="text-ink/80 desktop:mt-[calc(var(--desktop-fluid-unit)*39.053)] desktop:text-[max(11.9px,calc(var(--desktop-fluid-unit)*13.6))] mt-8 space-y-4 font-serif text-[clamp(14px,1.111vw,18px)] leading-[1.45] font-light tracking-normal">
+              <div className="text-ink/80 desktop:mt-[calc(var(--desktop-fluid-unit)*39.053)] desktop:text-[calc(var(--desktop-fluid-unit)*13.6)] mt-8 space-y-4 font-serif text-[clamp(14px,1.111vw,18px)] leading-[1.45] font-light tracking-normal">
                 {wine.description.map((paragraph, idx) => (
                   <p key={idx}>{paragraph}</p>
                 ))}
@@ -87,7 +87,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
             {wine.grapeOrigin ? (
               <IntroFlyIn order={3}>
-                <p className="desktop:mt-[calc(var(--desktop-fluid-unit)*55.21)] desktop:text-[max(9.35px,calc(var(--desktop-fluid-unit)*10.2))] mt-9 font-sans text-[clamp(11px,0.833vw,13px)] leading-none font-medium tracking-normal uppercase">
+                <p className="desktop:mt-[calc(var(--desktop-fluid-unit)*55.21)] desktop:text-[calc(var(--desktop-fluid-unit)*10.2)] mt-9 font-sans text-[clamp(11px,0.833vw,13px)] leading-none font-medium tracking-normal uppercase">
                   <span className="text-accent">
                     {content.wines.originLabel}
                   </span>

@@ -89,29 +89,29 @@
 
 @media (min-width: 960px) {
   .nav-word {
-    font-size: 11.9px;
+    font-size: calc(var(--desktop-fluid-unit) * 11.9);
   }
 
   .nav-word--mtavruli {
-    font-size: 11.05px;
+    font-size: calc(var(--desktop-fluid-unit) * 11.05);
   }
 
   .site-header--figma .nav-word,
   .primary-nav-word--header-size .nav-word {
-    font-size: max(10.2px, calc(var(--desktop-fluid-unit) * 12));
+    font-size: calc(var(--desktop-fluid-unit) * 12);
     letter-spacing: 0.3em;
   }
 
   .site-header--figma .nav-word--mtavruli {
-    font-size: max(9.775px, calc(var(--desktop-fluid-unit) * 11));
+    font-size: calc(var(--desktop-fluid-unit) * 11);
   }
 
   .primary-nav-word--header-size .nav-word--mtavruli {
-    font-size: max(12px, calc(var(--desktop-fluid-unit) * 14));
+    font-size: calc(var(--desktop-fluid-unit) * 14);
   }
 
   .site-header--figma .decorative-slash {
-    width: max(96px, calc(var(--desktop-fluid-unit) * 120));
+    width: calc(var(--desktop-fluid-unit) * 120);
     height: 0.5px;
     min-height: 0;
   }
@@ -126,7 +126,7 @@
   }
 
   .site-header--figma .type-language {
-    font-size: max(10.2px, calc(var(--desktop-fluid-unit) * 12));
+    font-size: calc(var(--desktop-fluid-unit) * 12);
   }
 }
 
@@ -182,52 +182,58 @@
 
 @media (min-width: 960px) {
   html {
-    font-size: 85%;
+    /* Was a flat 85% (13.6px). Every rem-based utility -- padding, gaps, line
+       boxes, Tailwind's default type scale -- inherits from this, so a fixed
+       root font size left a large tail of fixed-px sizing that browser zoom
+       scaled 1:1. Driving it from the fluid unit makes all of that
+       proportional in one place. calc(unit * 13.6) is exactly 13.6px at
+       1440x900 (unit == 1), so the reference frame is unchanged. */
+    font-size: calc(var(--desktop-fluid-unit) * 13.6);
   }
 
   .type-menu {
-    font-size: 10.2px;
-    letter-spacing: 0.425px;
+    font-size: calc(var(--desktop-fluid-unit) * 10.2);
+    letter-spacing: calc(var(--desktop-fluid-unit) * 0.425);
   }
 
   .type-submenu {
-    font-size: max(15.3px, calc(var(--desktop-fluid-unit) * 15.3));
+    font-size: calc(var(--desktop-fluid-unit) * 15.3);
   }
 
   .type-headline {
-    font-size: 30.6px;
+    font-size: calc(var(--desktop-fluid-unit) * 30.6);
   }
 
   .type-body-editorial {
-    font-size: 11.9px;
+    font-size: calc(var(--desktop-fluid-unit) * 11.9);
   }
 
   .type-display-hero {
-    font-size: clamp(39.1px, 6.8vw, 78.2px);
+    font-size: calc(var(--desktop-fluid-unit) * 78.2);
   }
 
   .type-category-large {
-    font-size: clamp(28.9px, 4.25vw, 47.6px);
+    font-size: calc(var(--desktop-fluid-unit) * 47.6);
   }
 
   .category-index-word {
-    font-size: max(25.5px, calc(var(--desktop-fluid-unit) * 37.4));
+    font-size: calc(var(--desktop-fluid-unit) * 37.4);
   }
 
   .wine-list-word {
-    font-size: max(11.9px, calc(var(--desktop-fluid-unit) * 15.3));
+    font-size: calc(var(--desktop-fluid-unit) * 15.3);
   }
 
   .type-meta {
-    font-size: 9.35px;
+    font-size: calc(var(--desktop-fluid-unit) * 9.35);
   }
 
   .type-language {
-    font-size: max(9.35px, calc(var(--desktop-fluid-unit) * 11.05));
+    font-size: calc(var(--desktop-fluid-unit) * 11.05);
   }
 
   .vineyard-region-body {
-    font-size: max(14px, calc(var(--desktop-fluid-unit) * 15));
+    font-size: calc(var(--desktop-fluid-unit) * 15);
     line-height: clamp(1.45em, 2svh, 1.8em);
   }
 
@@ -265,7 +271,21 @@
 
 :root {
   color-scheme: light;
-  --desktop-fluid-unit: clamp(0.75px, min(0.069444vw, 0.111111svh), 2.75px);
+  /* 1px at the 1440x900 Figma frame. Width still anchors to 1440
+     (0.069444vw); the height term anchors to 765 (0.130719svh), not 900.
+     Rationale: on a typical laptop window (~1272x649) the 900 anchor pulled
+     the unit down to ~0.72, so every `max(<px>, unit * X)` floor took over
+     and the desktop layout became fixed-px. Fixed px is what browser zoom
+     scales 1:1, which made zooming out shrink the whole page instead of
+     leaving it alone. Anchoring the height axis at 765 puts the unit at
+     ~0.85 there -- the scale those floors were already producing -- so the
+     floors could be removed and every length is now viewport-relative.
+     vw/svh are immune to zoom: zooming out grows the viewport in CSS px by
+     exactly the factor the zoom shrinks them on screen, so the rendered
+     result is identical at any zoom level.
+     1440x900 is unaffected: the width term (1.0) is still the smaller of the
+     two there (height gives 1.176), so Figma px == code px as before. */
+  --desktop-fluid-unit: clamp(0.5px, min(0.069444vw, 0.130719svh), 2.75px);
   --frame-max: calc(var(--desktop-fluid-unit) * 1440);
   --motion-y-8: 8px;
   --motion-y-10: 10px;
@@ -277,12 +297,12 @@
 
 @media (min-width: 960px) {
   :root {
-    --motion-y-8: 6.8px;
-    --motion-y-10: 8.5px;
-    --motion-y-12: 10.2px;
-    --motion-offset-14: 11.9px;
-    --motion-x-48: 40.8px;
-    --brand-intro-blur: 13.6px;
+    --motion-y-8: calc(var(--desktop-fluid-unit) * 6.8);
+    --motion-y-10: calc(var(--desktop-fluid-unit) * 8.5);
+    --motion-y-12: calc(var(--desktop-fluid-unit) * 10.2);
+    --motion-offset-14: calc(var(--desktop-fluid-unit) * 11.9);
+    --motion-x-48: calc(var(--desktop-fluid-unit) * 40.8);
+    --brand-intro-blur: calc(var(--desktop-fluid-unit) * 13.6);
   }
 }
 
@@ -852,7 +872,7 @@ html::-webkit-scrollbar {
 
 @media (min-width: 960px) {
   .brand-intro__stack {
-    width: max(253px, calc(var(--desktop-fluid-unit) * 297.5));
+    width: calc(var(--desktop-fluid-unit) * 297.5);
   }
 }
 

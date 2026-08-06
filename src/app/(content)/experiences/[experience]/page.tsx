@@ -223,7 +223,7 @@ function ExperienceProse({
   return (
     <div
       className={cn(
-        "desktop:text-[max(14px,calc(var(--desktop-fluid-unit)*15))] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
+        "desktop:text-[calc(var(--desktop-fluid-unit)*15)] font-serif text-[15px] leading-[1.5] tracking-normal md:text-[16px]",
         className,
       )}
     >

@@ -52,14 +52,14 @@ export default async function VineyardRegionPage({
           style={
             {
               "--vr-band":
-                "max(calc(100svh - var(--desktop-fluid-unit) * 225), max(680px, calc(var(--desktop-fluid-unit) * 813)))",
-              "--vr-photo": "max(440px, calc(var(--desktop-fluid-unit) * 653))",
+                "max(calc(100svh - var(--desktop-fluid-unit) * 225), calc(var(--desktop-fluid-unit) * 813))",
+              "--vr-photo": "calc(var(--desktop-fluid-unit) * 653)",
               "--vr-gap": "calc((var(--vr-band) - var(--vr-photo)) / 2)",
             } as React.CSSProperties
           }
           className="desktop:min-h-[var(--vr-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[41.18%_58.82%] desktop:items-start desktop:py-0 grid w-full items-center"
         >
-          <div className="desktop:h-[var(--vr-band)] desktop:pt-[max(92px,calc(var(--desktop-fluid-unit)*120))] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
+          <div className="desktop:h-[var(--vr-band)] desktop:pt-[calc(var(--desktop-fluid-unit)*120)] desktop:pr-[min(var(--vr-gap),8vw)] desktop:pb-[var(--vr-gap)] desktop:pl-[calc(var(--desktop-fluid-unit)*50)] flex flex-col px-6 pt-28 pb-12 md:px-12 md:pt-36 md:pb-16">
             {/* Contextual way back to the map — the header link was the only
                 route back. Label comes from the content model so it is correct
                 in both locales. self-start keeps the hit area on the control
@@ -68,7 +68,7 @@ export default async function VineyardRegionPage({
                 title and the body copy. */}
             <div className="desktop:gap-[calc(var(--desktop-fluid-unit)*22)] flex items-center gap-4 self-start">
               <IntroFlyIn order={1} className="shrink-0">
-                <div className="desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[39.984px] overflow-hidden">
+                <div className="desktop:aspect-[87/96] desktop:w-[calc(var(--desktop-fluid-unit)*62.9)] relative aspect-square w-[39.984px] overflow-hidden">
                   <Image
                     src="/svgs/TheSymbol.svg"
                     alt=""
@@ -88,9 +88,9 @@ export default async function VineyardRegionPage({
               </IntroFlyIn>
             </div>
 
-            <div className="desktop:mt-[max(30px,calc(var(--desktop-fluid-unit)*38))] desktop:flex desktop:min-h-0 desktop:max-w-none desktop:flex-1 desktop:flex-col mt-9 max-w-[540px]">
+            <div className="desktop:mt-[calc(var(--desktop-fluid-unit)*38)] desktop:flex desktop:min-h-0 desktop:max-w-none desktop:flex-1 desktop:flex-col mt-9 max-w-[540px]">
               <IntroFlyIn order={2}>
-                <h1 className="desktop:text-[max(40px,calc(var(--desktop-fluid-unit)*48))] font-serif text-[44px] leading-none font-normal md:text-[48px]">
+                <h1 className="desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[44px] leading-none font-normal md:text-[48px]">
                   {region.title}
                 </h1>
               </IntroFlyIn>
@@ -98,7 +98,7 @@ export default async function VineyardRegionPage({
                 <IntroFlyIn order={3}>
                   <p
                     className={cn(
-                      "desktop:mt-[max(14px,calc(var(--desktop-fluid-unit)*19))] desktop:text-[max(14px,calc(var(--desktop-fluid-unit)*16))] desktop:leading-none desktop:font-light mt-3 font-sans text-[13px] leading-[1.35] font-normal",
+                      "desktop:mt-[calc(var(--desktop-fluid-unit)*19)] desktop:text-[calc(var(--desktop-fluid-unit)*16)] desktop:leading-none desktop:font-light mt-3 font-sans text-[13px] leading-[1.35] font-normal",
                       locale === "en" && "uppercase",
                     )}
                   >
@@ -109,7 +109,7 @@ export default async function VineyardRegionPage({
 
               <IntroFlyIn
                 order={4}
-                className="desktop:mt-[max(30.6px,calc(var(--desktop-fluid-unit)*33.2))] desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col mt-8 md:mt-9"
+                className="desktop:mt-[calc(var(--desktop-fluid-unit)*33.2)] desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col mt-8 md:mt-9"
               >
                 <RegionScrollText
                   className="desktop:flex desktop:min-h-0 desktop:flex-1 desktop:flex-col"

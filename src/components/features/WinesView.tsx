@@ -24,7 +24,9 @@ export function WinesView({
   const categoryLinks = (
     <CategoryList
       className={cn(
-        "desktop:-translate-y-1/2 desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)] space-y-[15px] text-center md:text-left",
+        // leading-none so the row height comes from the word, not from the
+        // font's integer-rounded metrics, which do not scale linearly.
+        "desktop:-translate-y-1/2 desktop:space-y-[calc(var(--desktop-fluid-unit)*12.75)] space-y-[15px] leading-none text-center md:text-left",
       )}
     >
       {categories.map((category) => {
@@ -62,7 +64,7 @@ export function WinesView({
       <div
         className={cn(
           "flex w-full flex-col items-center gap-10",
-          "desktop:gap-[2.55px] md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px]",
+          "desktop:gap-[calc(var(--desktop-fluid-unit)*2.55)] md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px]",
         )}
       >
         <div className="desktop:w-[calc(var(--desktop-fluid-unit)*184.464)] shrink-0 text-center md:w-[15.07vw] md:text-left">

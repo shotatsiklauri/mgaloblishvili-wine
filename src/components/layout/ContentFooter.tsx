@@ -19,7 +19,7 @@ export async function ContentFooter({
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center px-6",
+        "flex shrink-0 items-center justify-center px-6 desktop:px-[calc(var(--desktop-fluid-unit)*20.4)]",
         "desktop:min-h-[calc(var(--desktop-fluid-unit)*105)] min-h-[88px] md:min-h-[104px]",
         background === "white" ? "bg-white" : "bg-transparent",
       )}

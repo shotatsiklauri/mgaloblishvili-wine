@@ -65,7 +65,7 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-7 relative flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
+          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-[calc(var(--desktop-fluid-unit)*23.8)] relative flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
@@ -80,6 +80,7 @@ export function MenuOverlay({
                 viewBox="0 0 24 24"
                 width="36"
                 height="36"
+                className="desktop:h-[calc(var(--desktop-fluid-unit)*36)] desktop:w-[calc(var(--desktop-fluid-unit)*36)]"
                 aria-hidden="true"
                 focusable="false"
                 fill="none"
@@ -106,16 +107,20 @@ export function MenuOverlay({
                 // and the bar starts at y=0, so this needs to be half of the
                 // menu block's top edge.
                 //
-                // That edge is set by the columns' `my-auto` centring, so it
-                // tracks viewport HEIGHT, not the fluid unit — measured tops:
-                // 94.4 @500, 138.5 @600, 283.6 @900, 319.3 @976, 526 @1440.
-                // Half of that fits `23.7svh - 71.5px` within ~7px everywhere,
-                // including width-limited windows. A plain `unit * N` offset
-                // does NOT work here: the unit is pinned at its 0.75px floor on
-                // short windows, which drops the wordmark onto the menu words
-                // (confirmed at 1440x500). The max() only guards absurdly short
-                // windows, keeping the wordmark clear of the top edge.
-                "desktop:top-[max(calc(var(--desktop-fluid-unit)*26),calc(23.7svh_-_71.5px))]",
+                // That edge is set by the columns' `my-auto` centring, which
+                // works out to `50svh - unit * 112.8`: half the viewport, less
+                // a share of the chrome and the columns' own height, both of
+                // which now scale with the unit. Half of that is the offset
+                // below. Fitted against measured tops 176 @500, 229 @649,
+                // 286 @811 and 337 @900 -- within 0.2px at every one, in both
+                // the height-limited and width-limited regimes.
+                //
+                // Both terms are viewport-relative, so this holds at any browser
+                // zoom level. The previous form carried a fixed `- 71.5px`,
+                // which moved the wordmark 14px when zooming. The max() only
+                // guards absurdly short windows, keeping the wordmark clear of
+                // the top edge.
+                "desktop:top-[max(calc(var(--desktop-fluid-unit)*26),calc(25svh_-_var(--desktop-fluid-unit)*56.4))]",
                 focusRing("dark"),
               )}
             >
@@ -148,7 +153,7 @@ export function MenuOverlay({
                     >
                       <NavWord
                         className="menu-mobile-nav-word primary-nav-word--header-size"
-                        underlineClassName="top-full bottom-auto mt-7 left-1/2 right-auto w-[120px] -translate-x-1/2 origin-center desktop:mt-10 desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
+                        underlineClassName="top-full bottom-auto mt-7 left-1/2 right-auto w-[120px] -translate-x-1/2 origin-center desktop:mt-[calc(var(--desktop-fluid-unit)*34)] desktop:w-[calc(var(--desktop-fluid-unit)*140.25)]"
                       >
                         {column.title}
                       </NavWord>
@@ -160,7 +165,7 @@ export function MenuOverlay({
               <ul
                 className={cn(
                   "mx-auto hidden w-full",
-                  "desktop:max-w-[max(752px,calc(var(--desktop-fluid-unit)*1003))] max-w-[1180px]",
+                  "desktop:max-w-[calc(var(--desktop-fluid-unit)*1003)] max-w-[1180px]",
                   "grid-cols-4 gap-x-0",
                   "desktop:grid",
                 )}
@@ -197,7 +202,7 @@ export function MenuOverlay({
                       >
                         <NavWord
                           className="primary-nav-word--header-size"
-                          underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
+                          underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[calc(var(--desktop-fluid-unit)*140.25)]"
                         >
                           {column.title}
                         </NavWord>
@@ -210,7 +215,7 @@ export function MenuOverlay({
                               href={entry.href}
                               onClick={() => handleOpenChange(false)}
                               className={cn(
-                                "font-serif text-[max(14px,calc(var(--desktop-fluid-unit)*16))] leading-none font-light tracking-normal",
+                                "font-serif text-[calc(var(--desktop-fluid-unit)*16)] leading-none font-light tracking-normal",
                                 "text-center",
                                 "text-ink-inverse/55 hover:text-ink-inverse",
                                 "transition-colors duration-200 motion-reduce:transition-none",
@@ -232,7 +237,7 @@ export function MenuOverlay({
           <div className="shrink-0 px-6 md:px-10">
             <div
               aria-hidden="true"
-              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[max(462px,calc(var(--desktop-fluid-unit)*544))] mx-auto h-px w-full max-w-[640px] origin-center"
+              className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[calc(var(--desktop-fluid-unit)*544)] mx-auto h-px w-full max-w-[640px] origin-center"
             />
           </div>
 

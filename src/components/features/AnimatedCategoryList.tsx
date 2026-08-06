@@ -74,7 +74,12 @@ export function AnimatedCategoryList({
     <ul
       key={`${pathname}-${ready ? "ready" : "pending"}`}
       className={cn(
-        "category-enter-list",
+        // leading-none: without an explicit line-height the row height comes
+        // from the font's own (integer-rounded) ascent/descent, which does not
+        // scale linearly with font-size and left these rows a couple of px off
+        // between zoom levels. Pinning it makes the row exactly as tall as its
+        // word.
+        "category-enter-list leading-none",
         !ready && "category-enter-list--pending",
         className,
       )}

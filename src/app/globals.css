@@ -548,7 +548,29 @@ html::-webkit-scrollbar {
 .menu-divider-v {
   transform-origin: top;
   animation: menu-divider-grow-v 910ms ease-out both;
-  background: rgba(255, 255, 255, 0.3);
+  /* Tapered ends, matched to the reference design by sampling its pixels:
+     full strength (0.38) across the middle third, fading to nothing over the
+     outer third at each end. The ramp is NOT linear — the reference rises
+     quickly off the tip and eases into the plateau (measured alpha tracks
+     p^0.64 along the fade), which the stops below approximate. Keep the
+     stops; a plain two-stop fade reads visibly weaker in the fade zones. */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 3%,
+    rgba(255, 255, 255, 0.14) 7%,
+    rgba(255, 255, 255, 0.2) 12%,
+    rgba(255, 255, 255, 0.26) 18%,
+    rgba(255, 255, 255, 0.32) 25%,
+    rgba(255, 255, 255, 0.38) 33%,
+    rgba(255, 255, 255, 0.38) 67%,
+    rgba(255, 255, 255, 0.32) 75%,
+    rgba(255, 255, 255, 0.26) 82%,
+    rgba(255, 255, 255, 0.2) 88%,
+    rgba(255, 255, 255, 0.14) 93%,
+    rgba(255, 255, 255, 0.08) 97%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 .category-enter-list > li {

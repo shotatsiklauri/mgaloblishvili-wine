@@ -24,18 +24,7 @@ export async function VineyardsMap({
   const contact = await getResolvedContact(locale);
 
   return (
-    <section
-      className={cn(
-        "bg-surface-dark relative isolate flex min-h-[calc(100svh-4rem)] flex-1 flex-col overflow-hidden",
-        // md+: give the section the artwork's own ratio, so covering it crops
-        // nothing — the full height of the map is visible. It is still never
-        // shorter than the space under the header, and on windows narrower than
-        // the artwork's ratio that min-height wins and cover trims the (empty)
-        // sides instead. flex-none stops the column stretching it back.
-        "md:aspect-[2230/1203] md:min-h-[calc(100svh_-_6rem)] md:flex-none",
-        "desktop:min-h-[calc(100svh_-_var(--desktop-fluid-unit)*120)]",
-      )}
-    >
+    <section className="bg-surface-dark relative isolate flex min-h-[calc(100svh-4rem)] flex-1 flex-col overflow-hidden md:min-h-0">
       {/* Mobile keeps the full-bleed treatment. */}
       <div className="absolute inset-0 overflow-hidden md:hidden">
         <Image
@@ -54,8 +43,10 @@ export async function VineyardsMap({
 
       {/* Desktop: the map is handed to the overlay so the artwork and the
           clickable regions live in one box and stay registered to each other.
-          object-cover fills the section edge to edge without stretching — it
-          must stay in step with the SVG layers' preserveAspectRatio slice. */}
+          The asset is cropped to ~2:1 (see MAP_CROP in lib/sanity/adapter.ts),
+          near the shape of this section, so object-cover fills it edge to edge
+          while trimming only empty background — no gaps, no letterboxing, no
+          scroll. It must stay in step with the SVG layers' "slice". */}
       <VineyardRegionsOverlay
         regions={regions}
         activeRegionId={activeRegionId}

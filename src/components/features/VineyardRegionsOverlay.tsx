@@ -81,15 +81,21 @@ const REGION_SVG_OVERLAYS: Record<
   },
 };
 
-const MAP_VIEWBOX = "0 0 2230 1203";
-const SOURCE_TO_MAP_TRANSFORM = "matrix(0.85 0 0 0.8 240 180)";
+// The map asset is delivered centre-cropped to 2230x1080 (see MAP_CROP in
+// lib/sanity/adapter.ts and public/images/map.jpg). That removed 61.5px from
+// the top of the original 2230x1203 artwork, so the transform's y-translate is
+// 61.5 less than it used to be (180 -> 118.5). Region path coordinates are
+// untouched — they are still authored against the original artwork.
+const MAP_VIEWBOX = "0 0 2230 1080";
+const SOURCE_TO_MAP_TRANSFORM = "matrix(0.85 0 0 0.8 240 118.5)";
 
 // The map artwork and both SVG layers must share ONE box, or the clickable
 // regions drift off the artwork. The box fills the section and the artwork
-// covers it: scaled up until no gap remains, cropping the overflow instead of
-// stretching, so the map never distorts. MAP_FIT is the SVG equivalent of CSS
-// `object-fit: cover` — the layers below must always use it and the image must
-// always use object-cover, or the two stop agreeing.
+// covers it: the asset is already cropped to roughly the shape of that box, so
+// covering it fills edge to edge while trimming only empty background.
+// MAP_FIT is the SVG equivalent of CSS `object-fit: cover` — the layers below
+// must always use it and the map image must always use object-cover, or the
+// two stop agreeing and the hit areas slide off the regions.
 const MAP_STAGE =
   "pointer-events-none absolute inset-0 hidden overflow-hidden md:block";
 const MAP_FIT = "xMidYMid slice";

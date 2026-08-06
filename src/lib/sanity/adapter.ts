@@ -1,4 +1,4 @@
-import 'server-only'
+import "server-only";
 import type {
   Locale,
   SiteContent,
@@ -12,249 +12,274 @@ import type {
   Experience,
   ExperienceSection,
   ExperienceId,
-} from '@/data/content/types'
-import { sanityImageUrl } from './image'
+} from "@/data/content/types";
+import { sanityImageUrl, sanityImageUrlCropped } from "./image";
 
-type SanityBilingual = { en?: string | null; ka?: string | null } | null | undefined
+/**
+ * The vineyards map is delivered centre-cropped to this shape so it matches the
+ * area it has to fill and needs no letterboxing. `public/images/map.jpg` (the
+ * fallback) is cropped to the same size, and MAP_VIEWBOX in
+ * VineyardRegionsOverlay is calibrated to it — change one, change all three.
+ */
+const MAP_CROP = { width: 2230, height: 1080 } as const;
 
-type SanityParagraph = { en?: string | null; ka?: string | null }
+type SanityBilingual =
+  | { en?: string | null; ka?: string | null }
+  | null
+  | undefined;
 
-type SanitySlug = { current: string } | null | undefined
+type SanityParagraph = { en?: string | null; ka?: string | null };
 
-type SanityImageRef = {
-  asset?: { _ref?: string; _type?: string } | null
-  altEn?: string | null
-  altKa?: string | null
-} | null | undefined
+type SanitySlug = { current: string } | null | undefined;
+
+type SanityImageRef =
+  | {
+      asset?: { _ref?: string; _type?: string } | null;
+      altEn?: string | null;
+      altKa?: string | null;
+    }
+  | null
+  | undefined;
 
 export type SanityGlobalSettings = {
   contact?: {
-    address?: SanityBilingual
-    phone?: string | null
-    email?: string | null
-  } | null
-} | null
+    address?: SanityBilingual;
+    phone?: string | null;
+    email?: string | null;
+  } | null;
+} | null;
 
 export type SanityHistoryItem = {
-  _key?: string
-  sortOrder?: number | null
-  tabLabel?: SanityBilingual
-  heading?: SanityBilingual
-  body?: SanityParagraph[] | null
-  image?: SanityImageRef
-}
+  _key?: string;
+  sortOrder?: number | null;
+  tabLabel?: SanityBilingual;
+  heading?: SanityBilingual;
+  body?: SanityParagraph[] | null;
+  image?: SanityImageRef;
+};
 
 export type SanityHistory = {
-  items?: SanityHistoryItem[] | null
-} | null
+  items?: SanityHistoryItem[] | null;
+} | null;
 
 export type SanityVineyards = {
-  introHeading?: SanityBilingual
-  intro?: SanityParagraph[] | null
-  desktopMapImage?: SanityImageRef
-  mobileMapImage?: SanityImageRef
-} | null
+  introHeading?: SanityBilingual;
+  intro?: SanityParagraph[] | null;
+  desktopMapImage?: SanityImageRef;
+  mobileMapImage?: SanityImageRef;
+} | null;
 
 export type SanityVineyardRegion = {
-  slug?: SanitySlug
-  sortOrder?: number | null
-  title?: SanityBilingual
-  subtitle?: SanityBilingual
-  bodyBlocks?: SanityParagraph[] | null
-  images?: SanityImageRef[] | null
-}
+  slug?: SanitySlug;
+  sortOrder?: number | null;
+  title?: SanityBilingual;
+  subtitle?: SanityBilingual;
+  bodyBlocks?: SanityParagraph[] | null;
+  images?: SanityImageRef[] | null;
+};
 
 export type SanityWineCategory = {
-  slug?: SanitySlug
-  sortOrder?: number | null
-  title?: SanityBilingual
-}
+  slug?: SanitySlug;
+  sortOrder?: number | null;
+  title?: SanityBilingual;
+};
 
 export type SanityWineItem = {
-  itemId?: string | null
+  itemId?: string | null;
   category?: {
-    slug?: SanitySlug
-    title?: SanityBilingual
-  } | null
-  sortOrder?: number | null
-  name?: SanityBilingual
-  grapeOrigin?: SanityBilingual
-  descriptionLines?: SanityParagraph[] | null
-  heroImage?: SanityImageRef
-  bottleImage?: SanityImageRef
-}
+    slug?: SanitySlug;
+    title?: SanityBilingual;
+  } | null;
+  sortOrder?: number | null;
+  name?: SanityBilingual;
+  grapeOrigin?: SanityBilingual;
+  descriptionLines?: SanityParagraph[] | null;
+  heroImage?: SanityImageRef;
+  bottleImage?: SanityImageRef;
+};
 
 type SanityExperienceSection = {
-  heading?: SanityBilingual
-  body?: SanityParagraph[] | null
-}
+  heading?: SanityBilingual;
+  body?: SanityParagraph[] | null;
+};
 
 export type SanityExperienceItem = {
-  slug?: SanitySlug
-  sortOrder?: number | null
-  title?: SanityBilingual
-  sections?: SanityExperienceSection[] | null
-  bodyBlocks?: SanityParagraph[] | null
-  heroImage?: SanityImageRef
-  image1?: SanityImageRef
-  image2?: SanityImageRef
-  mapImage?: SanityImageRef
-  mapUrl?: string | null
-}
+  slug?: SanitySlug;
+  sortOrder?: number | null;
+  title?: SanityBilingual;
+  sections?: SanityExperienceSection[] | null;
+  bodyBlocks?: SanityParagraph[] | null;
+  heroImage?: SanityImageRef;
+  image1?: SanityImageRef;
+  image2?: SanityImageRef;
+  mapImage?: SanityImageRef;
+  mapUrl?: string | null;
+};
 
 export type SanityAllContent = {
-  globalSettings?: SanityGlobalSettings
-  history?: SanityHistory
-  vineyards?: SanityVineyards
-  vineyardRegions?: SanityVineyardRegion[] | null
-  wineCategories?: SanityWineCategory[] | null
-  wineItems?: SanityWineItem[] | null
-  experienceItems?: SanityExperienceItem[] | null
-}
+  globalSettings?: SanityGlobalSettings;
+  history?: SanityHistory;
+  vineyards?: SanityVineyards;
+  vineyardRegions?: SanityVineyardRegion[] | null;
+  wineCategories?: SanityWineCategory[] | null;
+  wineItems?: SanityWineItem[] | null;
+  experienceItems?: SanityExperienceItem[] | null;
+};
 
 function pick(field: SanityBilingual, locale: Locale): string {
-  if (!field) return ''
-  return field[locale] ?? field.en ?? ''
+  if (!field) return "";
+  return field[locale] ?? field.en ?? "";
 }
 
 function pickParagraphs(
   paragraphs: SanityParagraph[] | null | undefined,
   locale: Locale,
 ): readonly string[] {
-  if (!paragraphs) return []
+  if (!paragraphs) return [];
   return paragraphs
-    .map((p) => (p[locale] ?? p.en ?? '').trim())
-    .filter((s) => s.length > 0)
+    .map((p) => (p[locale] ?? p.en ?? "").trim())
+    .filter((s) => s.length > 0);
 }
 
 function slugValue(slug: SanitySlug): string {
-  return slug?.current ?? ''
+  return slug?.current ?? "";
 }
 
-const HISTORY_IDS: HistoryItemId[] = ['encounter', 'crossroads', 'symbol']
+const HISTORY_IDS: HistoryItemId[] = ["encounter", "crossroads", "symbol"];
 
 function adaptHistory(
   raw: SanityHistory,
   locale: Locale,
-): SiteContent['history'] {
+): SiteContent["history"] {
   const items: HistoryItem[] = (raw?.items ?? []).map((item, i) => {
-    const imageUrl = sanityImageUrl(item.image) || undefined
+    const imageUrl = sanityImageUrl(item.image) || undefined;
     return {
-      id: HISTORY_IDS[i] ?? ('encounter' as HistoryItemId),
+      id: HISTORY_IDS[i] ?? ("encounter" as HistoryItemId),
       title: pick(item.tabLabel, locale),
       body: pickParagraphs(item.body, locale),
       ...(imageUrl ? { imageUrl } : {}),
-    }
-  })
+    };
+  });
 
   return {
-    title: '',
+    title: "",
     items,
-  }
+  };
 }
 
 function adaptVineyards(
   raw: SanityVineyards,
   regions: SanityVineyardRegion[],
   locale: Locale,
-): SiteContent['vineyards'] {
+): SiteContent["vineyards"] {
   const adaptedRegions: VineyardRegion[] = regions.map((r) => {
-    const image1Url = sanityImageUrl(r.images?.[0]) || undefined
-    const image2Url = sanityImageUrl(r.images?.[1]) || undefined
+    const image1Url = sanityImageUrl(r.images?.[0]) || undefined;
+    const image2Url = sanityImageUrl(r.images?.[1]) || undefined;
     return {
-      id: (slugValue(r.slug) as VineyardRegionId) || 'kakheti',
+      id: (slugValue(r.slug) as VineyardRegionId) || "kakheti",
       title: pick(r.title, locale),
       subtitle: pick(r.subtitle, locale) || undefined,
       body: pickParagraphs(r.bodyBlocks, locale),
       ...(image1Url ? { image1Url } : {}),
       ...(image2Url ? { image2Url } : {}),
-    }
-  })
+    };
+  });
 
-  const mapImageUrl = sanityImageUrl(raw?.desktopMapImage) || undefined
-  const mapMobileImageUrl = sanityImageUrl(raw?.mobileMapImage) || undefined
+  const mapImageUrl =
+    sanityImageUrlCropped(
+      raw?.desktopMapImage,
+      MAP_CROP.width,
+      MAP_CROP.height,
+    ) || undefined;
+  const mapMobileImageUrl = sanityImageUrl(raw?.mobileMapImage) || undefined;
 
   return {
-    title: '',
+    title: "",
     introHeading: pick(raw?.introHeading, locale) || undefined,
     intro: pickParagraphs(raw?.intro, locale),
     regions: adaptedRegions,
     ...(mapImageUrl ? { mapImageUrl } : {}),
     ...(mapMobileImageUrl ? { mapMobileImageUrl } : {}),
-  }
+  };
 }
 
 function adaptWines(
   categories: SanityWineCategory[],
   items: SanityWineItem[],
   locale: Locale,
-): SiteContent['wines'] {
+): SiteContent["wines"] {
   const adaptedCategories: WineCategory[] = categories.map((c) => ({
-    id: (slugValue(c.slug) as WineCategoryId) || 'wines',
+    id: (slugValue(c.slug) as WineCategoryId) || "wines",
     label: pick(c.title, locale),
-  }))
+  }));
 
   const adaptedItems: Wine[] = items
     .filter((w) => !!w.itemId)
     .map((w) => {
-      const categorySlug = slugValue(w.category?.slug) as WineCategoryId | undefined
-      const heroImageUrl = sanityImageUrl(w.heroImage) || undefined
-      const bottleImageUrl = sanityImageUrl(w.bottleImage) || undefined
+      const categorySlug = slugValue(w.category?.slug) as
+        | WineCategoryId
+        | undefined;
+      const heroImageUrl = sanityImageUrl(w.heroImage) || undefined;
+      const bottleImageUrl = sanityImageUrl(w.bottleImage) || undefined;
       return {
         id: w.itemId!,
         name: pick(w.name, locale),
         description: pickParagraphs(w.descriptionLines, locale),
         grapeOrigin: pick(w.grapeOrigin, locale),
-        ...(categorySlug && categorySlug !== 'wines' ? { categoryId: categorySlug } : {}),
+        ...(categorySlug && categorySlug !== "wines"
+          ? { categoryId: categorySlug }
+          : {}),
         ...(heroImageUrl ? { heroImageUrl } : {}),
         ...(bottleImageUrl ? { bottleImageUrl } : {}),
-      }
-    })
+      };
+    });
 
   return {
-    title: '',
-    originLabel: '',
+    title: "",
+    originLabel: "",
     intro: [],
     categories: adaptedCategories,
     items: adaptedItems,
-  }
+  };
 }
 
 function mergeWineCategories(
   cmsCategories: readonly WineCategory[],
   staticCategories: readonly WineCategory[],
 ): readonly WineCategory[] {
-  if (cmsCategories.length === 0) return staticCategories
+  if (cmsCategories.length === 0) return staticCategories;
 
-  const cmsById = new Map(cmsCategories.map((c) => [c.id, c]))
+  const cmsById = new Map(cmsCategories.map((c) => [c.id, c]));
   return staticCategories.map((staticCategory) => {
-    const cmsLabel = cmsById.get(staticCategory.id)?.label.trim()
-    return cmsLabel ? { id: staticCategory.id, label: cmsLabel } : staticCategory
-  })
+    const cmsLabel = cmsById.get(staticCategory.id)?.label.trim();
+    return cmsLabel
+      ? { id: staticCategory.id, label: cmsLabel }
+      : staticCategory;
+  });
 }
 
 function mergeWineItems(
   cmsItems: readonly Wine[],
   staticItems: readonly Wine[],
 ): readonly Wine[] {
-  if (cmsItems.length === 0) return staticItems
+  if (cmsItems.length === 0) return staticItems;
 
-  const mergedItems = [...cmsItems]
-  const mergedIds = new Set(cmsItems.map((item) => item.id))
+  const mergedItems = [...cmsItems];
+  const mergedIds = new Set(cmsItems.map((item) => item.id));
 
   for (const staticItem of staticItems) {
-    if (mergedIds.has(staticItem.id)) continue
+    if (mergedIds.has(staticItem.id)) continue;
 
-    const categoryId = staticItem.categoryId ?? 'wines'
+    const categoryId = staticItem.categoryId ?? "wines";
     const lastCategoryIndex = mergedItems.findLastIndex(
-      (item) => (item.categoryId ?? 'wines') === categoryId,
-    )
+      (item) => (item.categoryId ?? "wines") === categoryId,
+    );
 
-    mergedItems.splice(lastCategoryIndex + 1, 0, staticItem)
-    mergedIds.add(staticItem.id)
+    mergedItems.splice(lastCategoryIndex + 1, 0, staticItem);
+    mergedIds.add(staticItem.id);
   }
 
-  return mergedItems
+  return mergedItems;
 }
 
 function adaptExperienceSections(
@@ -267,33 +292,35 @@ function adaptExperienceSections(
         heading: pick(section.heading, locale),
         body: pickParagraphs(section.body, locale),
       }))
-      .filter((section) => section.heading.length > 0 || section.body.length > 0)
+      .filter(
+        (section) => section.heading.length > 0 || section.body.length > 0,
+      );
   }
 
-  const paragraphs = pickParagraphs(item.bodyBlocks, locale)
+  const paragraphs = pickParagraphs(item.bodyBlocks, locale);
   if (paragraphs.length > 0) {
-    return [{ heading: paragraphs[0] ?? '', body: paragraphs.slice(1) }]
+    return [{ heading: paragraphs[0] ?? "", body: paragraphs.slice(1) }];
   }
 
-  return []
+  return [];
 }
 
 function adaptExperiences(
   items: SanityExperienceItem[],
   locale: Locale,
-): SiteContent['experiences'] {
+): SiteContent["experiences"] {
   const adaptedItems: Experience[] = items.map((item) => {
-    const sections = adaptExperienceSections(item, locale)
-    const hasCmsSections = sections.length > 0
+    const sections = adaptExperienceSections(item, locale);
+    const hasCmsSections = sections.length > 0;
 
-    const heroImageUrl = sanityImageUrl(item.heroImage) || undefined
-    const image1Url = sanityImageUrl(item.image1) || undefined
-    const image2Url = sanityImageUrl(item.image2) || undefined
-    const mapImageUrl = sanityImageUrl(item.mapImage) || undefined
-    const mapUrl = item.mapUrl || undefined
+    const heroImageUrl = sanityImageUrl(item.heroImage) || undefined;
+    const image1Url = sanityImageUrl(item.image1) || undefined;
+    const image2Url = sanityImageUrl(item.image2) || undefined;
+    const mapImageUrl = sanityImageUrl(item.mapImage) || undefined;
+    const mapUrl = item.mapUrl || undefined;
 
     return {
-      id: (slugValue(item.slug) as ExperienceId) || 'gastronomy',
+      id: (slugValue(item.slug) as ExperienceId) || "gastronomy",
       title: pick(item.title, locale),
       sections,
       ...(hasCmsSections ? { hasCmsSections: true as const } : {}),
@@ -302,13 +329,13 @@ function adaptExperiences(
       ...(image2Url ? { image2Url } : {}),
       ...(mapImageUrl ? { mapImageUrl } : {}),
       ...(mapUrl ? { mapUrl } : {}),
-    }
-  })
+    };
+  });
 
   return {
-    title: '',
+    title: "",
     items: adaptedItems,
-  }
+  };
 }
 
 export function adaptCmsToContent(
@@ -316,18 +343,18 @@ export function adaptCmsToContent(
   locale: Locale,
   staticFallback: SiteContent,
 ): SiteContent {
-  const history = adaptHistory(raw.history ?? null, locale)
+  const history = adaptHistory(raw.history ?? null, locale);
   const vineyards = adaptVineyards(
     raw.vineyards ?? null,
     raw.vineyardRegions ?? [],
     locale,
-  )
+  );
   const wines = adaptWines(
     raw.wineCategories ?? [],
     raw.wineItems ?? [],
     locale,
-  )
-  const experiences = adaptExperiences(raw.experienceItems ?? [], locale)
+  );
+  const experiences = adaptExperiences(raw.experienceItems ?? [], locale);
 
   return {
     locale,
@@ -336,14 +363,17 @@ export function adaptCmsToContent(
     history: {
       ...history,
       title: history.title || staticFallback.history.title,
-      items: history.items.length > 0 ? history.items : staticFallback.history.items,
+      items:
+        history.items.length > 0 ? history.items : staticFallback.history.items,
     },
 
     vineyards: {
       ...vineyards,
       title: vineyards.title || staticFallback.vineyards.title,
       intro:
-        vineyards.intro.length > 0 ? vineyards.intro : staticFallback.vineyards.intro,
+        vineyards.intro.length > 0
+          ? vineyards.intro
+          : staticFallback.vineyards.intro,
       regions:
         vineyards.regions.length > 0
           ? vineyards.regions
@@ -370,5 +400,5 @@ export function adaptCmsToContent(
           ? experiences.items
           : staticFallback.experiences.items,
     },
-  }
+  };
 }

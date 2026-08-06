@@ -189,10 +189,9 @@ function HistoryTabPanel({
           {tab.id !== "symbol" ? (
             <div
               className={cn(
-                // Mobile/tablet: a further 30% off the 81.6 above (96 -> 81.6
-                // -> 57.12). Desktop is unchanged at 15% off: 74 -> 62.9, with
-                // a 61.2 -> 52.02 floor.
-                "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[57.12px] overflow-hidden",
+                // Mobile/tablet is reduced by 30% from 57.12px to 39.984px.
+                // Desktop remains 62.9 Figma pixels with its existing floor.
+                "desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[39.984px] overflow-hidden",
                 enter(1),
               )}
             >
@@ -217,7 +216,7 @@ function HistoryTabPanel({
             </h1>
             <div
               className={cn(
-                "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*27.2)] desktop:font-light desktop:tracking-normal mt-8 space-y-0 md:mt-9",
+                "vineyard-region-body vineyard-region-lead history-region-lead type-body-editorial text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*27.2)] desktop:space-y-0 desktop:font-light desktop:tracking-normal mt-8 space-y-6 md:mt-9",
                 enter(3),
               )}
             >

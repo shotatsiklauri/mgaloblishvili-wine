@@ -227,7 +227,7 @@ function ExperienceProse({
         className,
       )}
     >
-      <h2 className="font-bold">{section.heading}</h2>
+      <h2 className="font-medium">{section.heading}</h2>
       <div className="text-ink/85 desktop:mt-[calc(var(--desktop-fluid-unit)*20.16)] desktop:space-y-[calc(var(--desktop-fluid-unit)*15.84)] mt-5 space-y-4 font-light">
         {section.body.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>

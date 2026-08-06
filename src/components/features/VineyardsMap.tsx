@@ -79,7 +79,7 @@ export async function VineyardsMap({
                     activeRegionId === region.id ? "page" : undefined
                   }
                   className={cn(
-                    "type-submenu inline-block rounded-sm text-[27px] leading-[1.5]",
+                    "type-submenu inline-block rounded-sm text-[21.6px] leading-[1.5]",
                     "text-ink-inverse/62 transition-colors duration-300 ease-out",
                     "hover:text-accent focus-visible:text-accent",
                     "motion-reduce:transition-none",

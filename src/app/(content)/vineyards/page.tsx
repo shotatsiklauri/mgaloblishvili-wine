@@ -16,7 +16,10 @@ export default async function VineyardsPage() {
   // sized by its own ratio, so it never needs more room than there is.
   return (
     <div className="bg-surface-dark flex min-h-[calc(100svh)] flex-col overflow-x-hidden md:h-[calc(100svh)] md:overflow-hidden">
-      <HeaderContent activeId="vineyards" />
+      <HeaderContent
+        activeId="vineyards"
+        className="desktop:bg-surface-dark border-transparent bg-transparent"
+      />
       <main className="flex flex-1 flex-col overflow-x-hidden md:min-h-0 md:overflow-hidden">
         <VineyardsMap
           regions={content.vineyards.regions}

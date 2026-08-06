@@ -209,6 +209,10 @@
   }
 }
 
+.history-region-lead > p:first-child::first-letter {
+  font-weight: 500;
+}
+
 @utility type-meta {
   font-family: var(--font-sans);
   font-weight: 400;

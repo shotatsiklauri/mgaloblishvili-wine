@@ -66,24 +66,27 @@ export default async function VineyardRegionPage({
                 rather than stretching across the flex column; being the first
                 child, it shares the column's left edge with the symbol, the
                 title and the body copy. */}
-            <BackLink
-              href={routes.vineyards}
-              label={content.vineyards.title}
-              showLabel
-              className="desktop:mb-[calc(var(--desktop-fluid-unit)*22)] mb-6 self-start"
-            />
+            <div className="desktop:gap-[calc(var(--desktop-fluid-unit)*22)] flex items-center gap-4 self-start">
+              <IntroFlyIn order={1} className="shrink-0">
+                <div className="desktop:aspect-[87/96] desktop:w-[max(52.02px,calc(var(--desktop-fluid-unit)*62.9))] relative aspect-square w-[39.984px] overflow-hidden">
+                  <Image
+                    src="/svgs/TheSymbol.svg"
+                    alt=""
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
+                </div>
+              </IntroFlyIn>
 
-            <IntroFlyIn order={1}>
-              <div className="desktop:aspect-[69/76] desktop:w-[calc(var(--desktop-fluid-unit)*69)] relative aspect-square w-24 overflow-hidden">
-                <Image
-                  src="/svgs/TheSymbol.svg"
-                  alt=""
-                  fill
-                  unoptimized
-                  className="object-contain"
+              <IntroFlyIn order={1} className="shrink-0">
+                <BackLink
+                  href={routes.vineyards}
+                  label={content.vineyards.title}
+                  showLabel
                 />
-              </div>
-            </IntroFlyIn>
+              </IntroFlyIn>
+            </div>
 
             <div className="desktop:mt-[max(30px,calc(var(--desktop-fluid-unit)*38))] desktop:flex desktop:min-h-0 desktop:max-w-none desktop:flex-1 desktop:flex-col mt-9 max-w-[540px]">
               <IntroFlyIn order={2}>

@@ -1,13 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  FEATURE_VIDEO_SRC,
+  markIntroMediaLoading,
+  markIntroMediaReady,
+} from "@/components/ui/introMediaReadiness";
 
 export function SubtleVideoBackground() {
   const [shouldPlay, setShouldPlay] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = () => setShouldPlay(!mediaQuery.matches);
+    const updateMotionPreference = () => {
+      if (mediaQuery.matches) {
+        setShouldPlay(false);
+        markIntroMediaReady("content");
+        return;
+      }
+
+      markIntroMediaLoading("content");
+      setShouldPlay(true);
+    };
 
     updateMotionPreference();
     mediaQuery.addEventListener("change", updateMotionPreference);
@@ -29,11 +43,12 @@ export function SubtleVideoBackground() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
+          onCanPlayThrough={() => markIntroMediaReady("content")}
+          onError={() => markIntroMediaReady("content")}
           className="absolute inset-0 h-full w-full object-cover opacity-[0.31] [filter:grayscale(1)_contrast(0.75)_brightness(1.15)]"
         >
-          <source src="/Video_Mgaloblishvili.webm" type="video/webm" />
-          <source src="/Video_Mgaloblishvili.mp4" type="video/mp4" />
+          <source src={FEATURE_VIDEO_SRC} type="video/mp4" />
         </video>
       ) : null}
       <div className="bg-surface/80 absolute inset-0" />

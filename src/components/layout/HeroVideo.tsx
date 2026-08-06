@@ -4,8 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { focusRing } from "@/lib/focus-ring";
 import { cn } from "@/lib/utils";
+import {
+  FEATURE_VIDEO_SRC,
+  markIntroMediaLoading,
+  markIntroMediaReady,
+} from "@/components/ui/introMediaReadiness";
 
-const POSTER_SRC = "/Video_Mgaloblishvili-poster.jpg";
+const POSTER_SRC = "/Mgaloblishvili-AD-poster.jpg";
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -18,6 +23,7 @@ export function HeroVideo() {
 
     video.muted = true;
     video.defaultMuted = true;
+    markIntroMediaLoading("home");
 
     const tryPlay = () => {
       const played = video.play();
@@ -28,6 +34,9 @@ export function HeroVideo() {
 
     tryPlay();
     if (!video.paused && video.readyState >= 3) setPlaying(true);
+    if (video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+      markIntroMediaReady("home");
+    }
 
     video.addEventListener("playing", onPlaying);
     video.addEventListener("loadeddata", tryPlay);
@@ -87,13 +96,14 @@ export function HeroVideo() {
         preload="auto"
         disablePictureInPicture
         poster={POSTER_SRC}
+        onCanPlayThrough={() => markIntroMediaReady("home")}
+        onError={() => markIntroMediaReady("home")}
         className={cn(
           "absolute inset-0 -z-10 h-full w-full object-cover transition-opacity duration-700 ease-out motion-reduce:transition-none",
           playing ? "opacity-100" : "opacity-0",
         )}
       >
-        <source src="/Video_Mgaloblishvili.webm" type="video/webm" />
-        <source src="/Video_Mgaloblishvili.mp4" type="video/mp4" />
+        <source src={FEATURE_VIDEO_SRC} type="video/mp4" />
       </video>
 
       <div

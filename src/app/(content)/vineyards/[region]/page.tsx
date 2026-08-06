@@ -117,7 +117,7 @@ export default async function VineyardRegionPage({
                 >
                   <div
                     className={cn(
-                      "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:shrink-0 desktop:font-light desktop:tracking-normal space-y-0",
+                      "vineyard-region-body vineyard-region-lead type-body-editorial text-ink/85 desktop:shrink-0 desktop:space-y-0 desktop:font-light desktop:tracking-normal space-y-6",
                     )}
                   >
                     {region.body.map((paragraph, idx) => (

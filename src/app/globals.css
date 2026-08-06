@@ -43,6 +43,40 @@
   font-size: 12.5px;
 }
 
+@media (max-width: 959px) {
+  .menu-mobile-nav-word .nav-word {
+    font-size: clamp(10px, 2.8vw, 12px);
+  }
+
+  .menu-mobile-nav-word .nav-word--mtavruli {
+    font-size: clamp(9.5px, 2.6vw, 11px);
+  }
+
+  .menu-mobile-nav-word .decorative-slash {
+    width: clamp(72px, 21vw, 90px);
+  }
+}
+
+@media (max-width: 959px) and (max-height: 500px) {
+  .menu-overlay-scroll-region {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .menu-mobile-columns {
+    gap: 16px;
+  }
+
+  .menu-mobile-nav-word .nav-word,
+  .menu-mobile-nav-word .nav-word--mtavruli {
+    font-size: 9px;
+  }
+
+  .menu-mobile-nav-word .decorative-slash {
+    width: 54px;
+  }
+}
+
 @media (min-width: 768px) {
   .nav-word {
     font-size: 14px;
@@ -736,8 +770,7 @@ html::-webkit-scrollbar {
 }
 
 @keyframes brand-intro-layer {
-  0%,
-  74% {
+  0% {
     opacity: 1;
     visibility: visible;
   }
@@ -767,7 +800,10 @@ html::-webkit-scrollbar {
   -webkit-backdrop-filter: blur(var(--brand-intro-blur)) saturate(0.9);
   backdrop-filter: blur(var(--brand-intro-blur)) saturate(0.9);
   pointer-events: none;
-  animation: brand-intro-layer 1500ms ease-out both;
+}
+
+.brand-intro--exit {
+  animation: brand-intro-layer 400ms ease-out both;
 }
 
 /* Ratio must match INTRO_MARK in BrandIntro.tsx (Product_of_Georgia.svg,
@@ -881,8 +917,8 @@ html::-webkit-scrollbar {
   .exp-intro-text--pending {
     opacity: 1 !important;
   }
-  .brand-intro {
-    animation-duration: 400ms !important;
+  .brand-intro--exit {
+    animation-duration: 1ms !important;
   }
   .brand-intro__logo--base {
     opacity: 0 !important;

@@ -127,9 +127,9 @@ export function MenuOverlay({
             </div>
           </div>
 
-          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
+          <div className="menu-overlay-scroll-region flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
             <nav aria-label="Primary" className="my-auto w-full">
-              <ul className="desktop:hidden mx-auto flex w-full max-w-[320px] flex-col items-center gap-[15svh]">
+              <ul className="menu-mobile-columns desktop:hidden mx-auto flex w-full max-w-[280px] flex-col items-center gap-[clamp(32px,9svh,64px)]">
                 {menuColumns.map((column, idx) => (
                   <li
                     key={column.id}
@@ -142,13 +142,13 @@ export function MenuOverlay({
                       href={column.href}
                       onClick={() => handleOpenChange(false)}
                       className={cn(
-                        "group relative inline-flex items-center pb-3",
+                        "group relative inline-flex items-center pb-2",
                         focusRing("dark", 4),
                       )}
                     >
                       <NavWord
-                        className="primary-nav-word--header-size"
-                        underlineClassName="top-full bottom-auto mt-10 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
+                        className="menu-mobile-nav-word primary-nav-word--header-size"
+                        underlineClassName="top-full bottom-auto mt-7 left-1/2 right-auto w-[120px] -translate-x-1/2 origin-center desktop:mt-10 desktop:w-[max(119px,calc(var(--desktop-fluid-unit)*140.25))]"
                       >
                         {column.title}
                       </NavWord>

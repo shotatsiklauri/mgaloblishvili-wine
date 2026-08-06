@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { BRAND_INTRO_TOTAL_MS } from "@/components/ui/brandIntroTiming";
+import {
+  BRAND_INTRO_EXIT_MS,
+  BRAND_INTRO_MINIMUM_MS,
+} from "@/components/ui/brandIntroTiming";
+import {
+  INTRO_MEDIA_READY_EVENT,
+  isIntroMediaReady,
+  type IntroMediaScope,
+} from "@/components/ui/introMediaReadiness";
 
 /**
  * The mark shown while the page loads. Its intrinsic size drives the stack's
@@ -25,9 +33,27 @@ function getIntroRouteKey(pathname: string) {
   return pathname;
 }
 
+function getIntroMediaScope(pathname: string): IntroMediaScope | null {
+  if (pathname === "/") return "home";
+  if (
+    pathname === "/history" ||
+    pathname === "/vineyards" ||
+    pathname.startsWith("/vineyards/") ||
+    pathname === "/wines" ||
+    pathname.startsWith("/wines/") ||
+    pathname === "/experiences" ||
+    pathname.startsWith("/experiences/")
+  ) {
+    return "content";
+  }
+
+  return null;
+}
+
 export function BrandIntro() {
   const pathname = usePathname();
   const introRouteKey = getIntroRouteKey(pathname);
+  const mediaScope = getIntroMediaScope(pathname);
   const [restoreNonce, setRestoreNonce] = useState(0);
 
   useEffect(() => {
@@ -40,22 +66,66 @@ export function BrandIntro() {
     return () => window.removeEventListener("pageshow", onPageShow);
   }, []);
 
-  return <BrandIntroLayer key={`${introRouteKey}|${restoreNonce}`} />;
+  return (
+    <BrandIntroLayer
+      key={`${introRouteKey}|${restoreNonce}`}
+      mediaScope={mediaScope}
+    />
+  );
 }
 
-function BrandIntroLayer() {
-  const [done, setDone] = useState(false);
+function BrandIntroLayer({
+  mediaScope,
+}: {
+  mediaScope: IntroMediaScope | null;
+}) {
+  const [phase, setPhase] = useState<"visible" | "exiting" | "done">(
+    "visible",
+  );
 
   useEffect(() => {
-    const t = window.setTimeout(() => setDone(true), BRAND_INTRO_TOTAL_MS);
-    return () => window.clearTimeout(t);
-  }, []);
+    let minimumElapsed = false;
+    let mediaReady = mediaScope === null || isIntroMediaReady(mediaScope);
+    let exitTimer: number | undefined;
 
-  if (done) return null;
+    const beginExit = () => {
+      if (!minimumElapsed || !mediaReady || exitTimer !== undefined) return;
+      setPhase("exiting");
+      exitTimer = window.setTimeout(
+        () => setPhase("done"),
+        BRAND_INTRO_EXIT_MS,
+      );
+    };
+
+    const onMediaReady = (event: Event) => {
+      const customEvent = event as CustomEvent<{ scope: IntroMediaScope }>;
+      if (customEvent.detail.scope !== mediaScope) return;
+      mediaReady = true;
+      beginExit();
+    };
+
+    const minimumTimer = window.setTimeout(() => {
+      minimumElapsed = true;
+      if (mediaScope !== null) {
+        mediaReady = isIntroMediaReady(mediaScope);
+      }
+      beginExit();
+    }, BRAND_INTRO_MINIMUM_MS);
+
+    window.addEventListener(INTRO_MEDIA_READY_EVENT, onMediaReady);
+
+    return () => {
+      window.clearTimeout(minimumTimer);
+      if (exitTimer !== undefined) window.clearTimeout(exitTimer);
+      window.removeEventListener(INTRO_MEDIA_READY_EVENT, onMediaReady);
+    };
+  }, [mediaScope]);
+
+  if (phase === "done") return null;
 
   return (
     <div
-      className="brand-intro"
+      className={`brand-intro${phase === "exiting" ? " brand-intro--exit" : ""}`}
       aria-hidden="true"
       style={{
         position: "fixed",

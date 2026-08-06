@@ -42,20 +42,12 @@ export default async function ExperiencePage({ params }: ExperiencePageParams) {
   const experience = findExperience(content, experienceId);
   if (!experience) notFound();
 
-  const gastronomyExperience = findExperience(content, "gastronomy");
-  const textExperience =
-    experience.id === "winery" &&
-    !experience.hasCmsSections &&
-    gastronomyExperience
-      ? gastronomyExperience
-      : experience;
-
   const contact = await getResolvedContact(locale);
 
   return (
     <EditorialExperiencePage
       experience={experience}
-      sections={textExperience.sections}
+      sections={experience.sections}
       contact={contact}
     />
   );

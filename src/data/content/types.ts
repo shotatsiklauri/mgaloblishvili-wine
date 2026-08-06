@@ -61,7 +61,6 @@ export type Experience = {
   readonly id: ExperienceId;
   readonly title: string;
   readonly sections: readonly ExperienceSection[];
-  readonly hasCmsSections?: boolean;
   readonly heroImageUrl?: string;
   readonly image1Url?: string;
   readonly image2Url?: string;

@@ -18,12 +18,6 @@ const PANEL_PHOTOS: Record<HistoryItemId, string> = {
   symbol: "/images/TheSymbol.jpg",
 };
 
-// Tabs listed here ignore the CMS image and always use the local file above.
-// The Symbol's CMS asset is stale and the available Sanity token is read-only,
-// so it cannot be replaced in the CMS right now. Remove the id from this set
-// once the correct image is published in Studio, so the field is editable again.
-const USE_LOCAL_PHOTO = new Set<HistoryItemId>(["symbol"]);
-
 type Direction = "fwd" | "back";
 
 export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
@@ -134,9 +128,7 @@ function HistoryTabPanel({
   slideClass,
   onExitEnd,
 }: HistoryTabPanelProps) {
-  const photoSrc = USE_LOCAL_PHOTO.has(tab.id)
-    ? PANEL_PHOTOS[tab.id]
-    : (tab.imageUrl ?? PANEL_PHOTOS[tab.id]);
+  const photoSrc = tab.imageUrl ?? PANEL_PHOTOS[tab.id];
   const ready = useIntroReady();
 
   const introActive = ready && (isActive || isExiting);

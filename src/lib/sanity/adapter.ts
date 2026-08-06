@@ -305,13 +305,43 @@ function adaptExperienceSections(
   return [];
 }
 
+/**
+ * Per-item merge, matching `mergeWineItems`. A CMS document that exists but
+ * leaves a field empty must not wipe out the static copy for that item —
+ * `experienceItem-winery` has no `sections` in Sanity, and taking the CMS list
+ * wholesale used to drop the winery's own text entirely.
+ */
+function mergeExperiences(
+  cmsItems: readonly Experience[],
+  staticItems: readonly Experience[],
+): readonly Experience[] {
+  if (cmsItems.length === 0) return staticItems;
+
+  const staticById = new Map(staticItems.map((item) => [item.id, item]));
+  const merged = cmsItems.map((cmsItem) => {
+    const staticItem = staticById.get(cmsItem.id);
+    if (!staticItem) return cmsItem;
+    return {
+      ...cmsItem,
+      title: cmsItem.title || staticItem.title,
+      sections:
+        cmsItem.sections.length > 0 ? cmsItem.sections : staticItem.sections,
+    };
+  });
+
+  const mergedIds = new Set(merged.map((item) => item.id));
+  return [
+    ...merged,
+    ...staticItems.filter((item) => !mergedIds.has(item.id)),
+  ];
+}
+
 function adaptExperiences(
   items: SanityExperienceItem[],
   locale: Locale,
 ): SiteContent["experiences"] {
   const adaptedItems: Experience[] = items.map((item) => {
     const sections = adaptExperienceSections(item, locale);
-    const hasCmsSections = sections.length > 0;
 
     const heroImageUrl = sanityImageUrl(item.heroImage) || undefined;
     const image1Url = sanityImageUrl(item.image1) || undefined;
@@ -323,7 +353,6 @@ function adaptExperiences(
       id: (slugValue(item.slug) as ExperienceId) || "gastronomy",
       title: pick(item.title, locale),
       sections,
-      ...(hasCmsSections ? { hasCmsSections: true as const } : {}),
       ...(heroImageUrl ? { heroImageUrl } : {}),
       ...(image1Url ? { image1Url } : {}),
       ...(image2Url ? { image2Url } : {}),
@@ -395,10 +424,10 @@ export function adaptCmsToContent(
     experiences: {
       ...experiences,
       title: experiences.title || staticFallback.experiences.title,
-      items:
-        experiences.items.length > 0
-          ? experiences.items
-          : staticFallback.experiences.items,
+      items: mergeExperiences(
+        experiences.items,
+        staticFallback.experiences.items,
+      ),
     },
   };
 }

@@ -300,7 +300,13 @@ export const enContent: SiteContent = {
             body: [
               "The journey from vine to bottle is an inspiring one.",
               "The grape selection process begins in the vineyard, where only the finest bunches are hand-picked. This is a crucial stage that strongly impacts the character and quality of the wine.",
-              "Following a visual inspection, the grapes undergo a two-stage selection process at our winery: manual and mechanical sorting, using appropriate sieves and vibrating tables for precise grape selection. Mgaloblishvili winery is equipped with the state-of-the-art Bucher machinery, which is calibrated to the specific needs of each grape variety to ensure the fruit is handled with the utmost delicacy.",
+            ],
+          },
+          {
+            heading:
+              "Following a visual inspection, the grapes undergo a two-stage selection process at our winery: manual and mechanical sorting, using appropriate sieves and vibrating tables for precise grape selection.",
+            body: [
+              "Mgaloblishvili winery is equipped with the state-of-the-art Bucher machinery, which is calibrated to the specific needs of each grape variety to ensure the fruit is handled with the utmost delicacy.",
               "As a result, we achieve perfectly intact, destemmed grapes and gently press them to yield sweet, high-quality wine.",
             ],
           },

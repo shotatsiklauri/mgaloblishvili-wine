@@ -39,7 +39,9 @@ export function NavWord({
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute -right-10 -left-10 h-[3px] origin-left bg-white desktop:-right-[calc(var(--desktop-fluid-unit)*34)] desktop:-left-[calc(var(--desktop-fluid-unit)*34)] desktop:h-[calc(var(--desktop-fluid-unit)*2.55)]",
+          "pointer-events-none absolute h-[3px] origin-left bg-white desktop:h-[calc(var(--desktop-fluid-unit)*2.55)]",
+          !underlineClassName &&
+            "-right-10 -left-10 desktop:-right-[calc(var(--desktop-fluid-unit)*34)] desktop:-left-[calc(var(--desktop-fluid-unit)*34)]",
           "transition-transform duration-[1420ms] ease-out motion-reduce:transition-none",
           active
             ? "scale-x-100"

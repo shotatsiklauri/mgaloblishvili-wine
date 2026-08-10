@@ -15,7 +15,7 @@ export default async function HistoryPage() {
   return (
     <div className="flex min-h-[calc(100svh)] flex-col desktop:h-[calc(100svh)] desktop:overflow-hidden">
       <HeaderContent activeId="history" />
-      <main className="flex flex-1 flex-col pt-16 md:pt-24 desktop:min-h-0 desktop:overflow-hidden desktop:pt-0">
+      <main className="flex flex-1 flex-col pt-24 desktop:min-h-0 desktop:overflow-hidden desktop:pt-0">
         <HistoryTabs items={content.history.items} />
       </main>
     </div>

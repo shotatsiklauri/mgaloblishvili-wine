@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { MenuColumn } from "@/data/navigation";
 import type { Locale } from "@/data/content";
@@ -37,6 +38,7 @@ export function MenuOverlay({
   currentLocale,
 }: MenuOverlayProps) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen);
@@ -65,12 +67,12 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-[calc(var(--desktop-fluid-unit)*23.8)] relative flex h-16 shrink-0 items-center justify-between px-5 md:h-24 md:px-6">
+          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-[calc(var(--desktop-fluid-unit)*23.8)] relative flex h-24 shrink-0 items-center justify-between px-5 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
-                "inline-flex h-9 w-9 items-center justify-center",
-                "text-ink-inverse/85 hover:text-accent cursor-pointer transition-colors duration-200",
+                "desktop:ml-0 desktop:h-9 desktop:w-9 -ml-5 inline-flex h-[52px] w-[52px] items-center justify-center",
+                "text-ink-inverse/85 desktop:hover:text-accent cursor-pointer transition-colors duration-200",
                 focusRing("dark"),
               )}
               aria-label="Close menu"
@@ -80,7 +82,7 @@ export function MenuOverlay({
                 viewBox="0 0 24 24"
                 width="36"
                 height="36"
-                className="desktop:h-[calc(var(--desktop-fluid-unit)*36)] desktop:w-[calc(var(--desktop-fluid-unit)*36)]"
+                className="desktop:h-[calc(var(--desktop-fluid-unit)*36)] desktop:w-[calc(var(--desktop-fluid-unit)*36)] h-[52px] w-[52px]"
                 aria-hidden="true"
                 focusable="false"
                 fill="none"
@@ -100,6 +102,7 @@ export function MenuOverlay({
               className={cn(
                 "menu-stagger menu-stagger--logo",
                 "absolute top-1/2 left-1/2 inline-flex -translate-x-1/2 -translate-y-1/2",
+                "desktop:w-auto w-[220px] md:w-[270px]",
                 // Mobile/tablet: centred in the top bar. Desktop: centred in the
                 // band between the top of the screen and the top of the menu
                 // block, so the space above the wordmark matches the space
@@ -124,42 +127,58 @@ export function MenuOverlay({
                 focusRing("dark"),
               )}
             >
-              <Wordmark size="header" />
+              <Wordmark
+                size="header"
+                className="desktop:w-auto desktop:[&_img]:w-[calc(var(--desktop-fluid-unit)*238)] w-full [&_img]:w-full"
+              />
             </Link>
 
-            <div className="menu-stagger menu-stagger--lang">
+            <div className="menu-stagger menu-stagger--lang desktop:mr-0 -mr-4">
               <LanguageSwitcher current={currentLocale} tone="dark" />
             </div>
           </div>
 
           <div className="menu-overlay-scroll-region flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
-            <nav aria-label="Primary" className="my-auto w-full">
-              <ul className="menu-mobile-columns desktop:hidden mx-auto flex w-full max-w-[280px] flex-col items-center gap-[clamp(32px,9svh,64px)]">
-                {menuColumns.map((column, idx) => (
-                  <li
-                    key={column.id}
-                    className={cn(
-                      "menu-stagger flex w-full flex-col items-center",
-                      COLUMN_STAGGER[idx],
-                    )}
-                  >
-                    <Link
-                      href={column.href}
-                      onClick={() => handleOpenChange(false)}
+            <nav
+              aria-label="Primary"
+              className="desktop:translate-y-0 my-auto w-full translate-y-[clamp(0px,calc(100svh_-_700px),24px)]"
+            >
+              <ul className="menu-mobile-columns desktop:hidden mx-auto flex w-full max-w-[320px] flex-col items-center gap-[clamp(32px,calc(33.333svh_-_123.333px),140px)]">
+                {menuColumns.map((column, idx) => {
+                  const isActive =
+                    pathname === column.href ||
+                    pathname.startsWith(`${column.href}/`);
+
+                  return (
+                    <li
+                      key={column.id}
                       className={cn(
-                        "group relative inline-flex items-center pb-2",
-                        focusRing("dark", 4),
+                        "menu-stagger flex w-full flex-col items-center",
+                        COLUMN_STAGGER[idx],
                       )}
                     >
-                      <NavWord
-                        className="menu-mobile-nav-word primary-nav-word--header-size"
-                        underlineClassName="top-full bottom-auto mt-7 left-1/2 right-auto w-[120px] -translate-x-1/2 origin-center desktop:mt-[calc(var(--desktop-fluid-unit)*34)] desktop:w-[calc(var(--desktop-fluid-unit)*140.25)]"
+                      <Link
+                        href={column.href}
+                        aria-current={isActive ? "page" : undefined}
+                        onClick={() => handleOpenChange(false)}
+                        className={cn(
+                          "group relative inline-flex items-center pb-3",
+                          focusRing("dark", 4),
+                        )}
                       >
-                        {column.title}
-                      </NavWord>
-                    </Link>
-                  </li>
-                ))}
+                        <NavWord
+                          className="menu-mobile-nav-word primary-nav-word--header-size"
+                          underlineClassName={cn(
+                            "top-full bottom-auto mt-7 left-1/2 right-auto w-[165px] -translate-x-1/2 origin-center desktop:mt-[calc(var(--desktop-fluid-unit)*34)] desktop:w-[calc(var(--desktop-fluid-unit)*140.25)]",
+                            isActive && "scale-x-100",
+                          )}
+                        >
+                          {column.title}
+                        </NavWord>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
 
               <ul

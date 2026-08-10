@@ -45,7 +45,7 @@ export async function HeaderContent({
         className={cn(
           "relative flex w-full items-center",
           "desktop:overflow-hidden",
-          "desktop:h-[calc(var(--desktop-fluid-unit)*120)] h-16 md:h-24",
+          "desktop:h-[calc(var(--desktop-fluid-unit)*120)] h-24",
           "desktop:px-[calc(var(--desktop-fluid-unit)*20)] px-5 md:px-6",
         )}
       >
@@ -96,7 +96,7 @@ export async function HeaderContent({
             >
               <Wordmark
                 size="header"
-                className="desktop:w-[calc(var(--desktop-fluid-unit)*253)] desktop:[&_img]:w-full"
+                className="desktop:w-[calc(var(--desktop-fluid-unit)*253)] w-[220px] md:w-[270px] [&_img]:w-full"
               />
             </Link>
           </HeaderFadeDown>

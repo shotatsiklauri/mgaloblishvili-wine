@@ -171,27 +171,12 @@ function HistoryTabPanel({
               "calc(var(--desktop-fluid-unit) * 500)",
             "--history-gap":
               "calc((var(--history-band) - var(--history-photo)) / 2)",
-            // The symbol tab's photo is taller (495 + a 70 top offset) than the
-            // band can hold on short windows, where it used to run under the
-            // tab strip and get clipped. Cap it at whatever the band leaves.
-            "--history-symbol-photo":
-              "min(calc(var(--desktop-fluid-unit) * 495), calc(var(--history-band) - var(--desktop-fluid-unit) * 70))",
           } as CSSProperties
         }
         className="desktop:min-h-[var(--history-band)] desktop:mx-auto desktop:max-w-[var(--frame-max)] desktop:grid-cols-[46.25%_53.75%] desktop:items-start desktop:py-0 grid w-full items-center"
       >
         <div
-          className={cn(
-            "desktop:pr-[min(var(--history-gap),12vw)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16",
-            tab.id === "symbol"
-              ? // This tab drops the small mark and runs a taller photo, so a
-                // top-aligned column left the copy floating high beside it.
-                // Mirror the photo's vertical box (same top offset, same
-                // height) and centre the copy inside it, so title and text sit
-                // on the photo's centre line.
-                "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:flex desktop:h-[var(--history-symbol-photo)] desktop:flex-col desktop:justify-center desktop:pt-0"
-              : "desktop:pt-[calc(var(--desktop-fluid-unit)*89.25)]",
-          )}
+          className="desktop:pr-[min(var(--history-gap),12vw)] desktop:pt-[calc(var(--desktop-fluid-unit)*89.25)] desktop:pb-0 desktop:pl-[calc(var(--desktop-fluid-unit)*42.5)] px-6 pt-6 pb-12 md:px-12 md:pt-8 md:pb-16"
         >
           {/* The Symbol tab is itself about this mark and shows it full size in
               the photo beside the copy, so the small mark is dropped there. */}
@@ -217,11 +202,8 @@ function HistoryTabPanel({
           <div
             className={cn(
               "desktop:max-w-none mt-9 max-w-[540px]",
-              // That top margin clears the small mark. The symbol tab has no
-              // mark, so on desktop it would just be dead space at the top of
-              // the centred column, pushing the copy below the photo's centre.
               tab.id === "symbol"
-                ? "desktop:mt-0"
+                ? "desktop:mt-[calc(var(--desktop-fluid-unit)*101.7)]"
                 : "desktop:mt-[calc(var(--desktop-fluid-unit)*32.3)]",
             )}
           >
@@ -247,12 +229,7 @@ function HistoryTabPanel({
         </div>
 
         <div
-          className={cn(
-            "desktop:aspect-auto relative aspect-[851/666] w-full overflow-hidden",
-            tab.id === "symbol"
-              ? "desktop:mt-[calc(var(--desktop-fluid-unit)*70)] desktop:h-[var(--history-symbol-photo)] desktop:w-[calc(var(--desktop-fluid-unit)*742)] desktop:self-start"
-              : "desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center",
-          )}
+          className="desktop:aspect-auto desktop:mr-[calc(var(--desktop-fluid-unit)*27.2)] desktop:h-[var(--history-photo)] desktop:w-auto desktop:self-center relative aspect-[851/666] w-full overflow-hidden"
         >
           <div
             className={cn(

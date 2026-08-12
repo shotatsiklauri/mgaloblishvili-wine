@@ -159,7 +159,7 @@ function EditorialExperiencePage({
             />
           </div>
           <div className="px-6 py-10 md:px-12 md:py-12">
-            <div className="relative mb-6 h-[72px] w-[65px]">
+            <div className="relative mb-6 aspect-square w-[39.984px] overflow-hidden">
               <Image
                 src="/svgs/TheSymbol.svg"
                 alt=""

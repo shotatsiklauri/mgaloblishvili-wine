@@ -131,7 +131,7 @@ export default async function VineyardRegionPage({
           <div className="desktop:aspect-auto desktop:h-[var(--vr-photo)] desktop:self-center relative aspect-[851/666] w-full overflow-hidden">
             <IntroAwareHorizontalReveal
               className="absolute inset-0"
-              durationMs={800}
+              durationMs={1040}
             >
               <Image
                 src={region.image1Url ?? "/images/vineyard-kakheti.png"}
@@ -144,8 +144,8 @@ export default async function VineyardRegionPage({
             </IntroAwareHorizontalReveal>
 
             <IntroAwareHorizontalReveal
-              delayMs={500}
-              durationMs={800}
+              delayMs={650}
+              durationMs={1040}
               className="absolute inset-y-0 left-0 z-10 w-[15%]"
             >
               <div

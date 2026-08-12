@@ -43,7 +43,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
         <section className="desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
-            durationMs={800}
+            durationMs={1040}
             revealFrom="25%"
           >
             <Image
@@ -101,7 +101,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </div>
 
           <div className="desktop:absolute desktop:top-[calc(var(--desktop-fluid-unit)*113.962)] desktop:left-[61.11%] desktop:block desktop:pb-0 flex justify-center pb-16">
-            <IntroAwareHorizontalReveal durationMs={800} className="w-fit">
+            <IntroAwareHorizontalReveal durationMs={1040} className="w-fit">
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
                 alt=""

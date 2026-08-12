@@ -71,7 +71,7 @@ export function MenuOverlay({
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
-                "desktop:ml-0 desktop:h-9 desktop:w-9 -ml-5 inline-flex h-[52px] w-[52px] items-center justify-center",
+                "inline-flex h-9 w-9 items-center justify-center",
                 "text-ink-inverse/85 desktop:hover:text-accent cursor-pointer transition-colors duration-200",
                 focusRing("dark"),
               )}
@@ -133,17 +133,17 @@ export function MenuOverlay({
               />
             </Link>
 
-            <div className="menu-stagger menu-stagger--lang desktop:mr-0 -mr-4">
+            <div className="menu-stagger menu-stagger--lang">
               <LanguageSwitcher current={currentLocale} tone="dark" />
             </div>
           </div>
 
-          <div className="menu-overlay-scroll-region flex min-h-0 flex-1 flex-col overflow-y-auto px-6 py-8 md:px-10">
+          <div className="menu-overlay-scroll-region flex min-h-0 flex-1 flex-col overflow-y-auto px-6 md:px-10 desktop:py-8">
             <nav
               aria-label="Primary"
-              className="desktop:translate-y-0 my-auto w-full translate-y-[clamp(0px,calc(100svh_-_700px),24px)]"
+              className="flex min-h-0 w-full flex-1 desktop:my-auto desktop:block desktop:flex-none desktop:translate-y-0"
             >
-              <ul className="menu-mobile-columns desktop:hidden mx-auto flex w-full max-w-[320px] flex-col items-center gap-[clamp(32px,calc(33.333svh_-_123.333px),140px)]">
+              <ul className="menu-mobile-columns mx-auto flex min-h-0 w-full max-w-[320px] flex-1 flex-col items-center justify-evenly desktop:hidden">
                 {menuColumns.map((column, idx) => {
                   const isActive =
                     pathname === column.href ||

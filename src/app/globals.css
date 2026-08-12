@@ -615,7 +615,7 @@ html::-webkit-scrollbar {
 
 .wine-list-enter {
   opacity: 0;
-  animation: wine-list-fade-right 1176ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: wine-list-fade-right 1529ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .horizontal-reveal-enter--pending {
@@ -625,7 +625,7 @@ html::-webkit-scrollbar {
 
 .horizontal-reveal-enter {
   will-change: clip-path;
-  animation: reveal-left-to-right 1704ms ease-out both;
+  animation: reveal-left-to-right 2215ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 .vertical-reveal-enter--pending {
@@ -653,7 +653,7 @@ html::-webkit-scrollbar {
 }
 .exp-frost-strip {
   will-change: clip-path;
-  animation: exp-frost-right 800ms ease-out both;
+  animation: exp-frost-right 1040ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .exp-intro-text--pending {
   opacity: 0;
@@ -663,7 +663,7 @@ html::-webkit-scrollbar {
 }
 
 .intro-flyin {
-  animation: intro-flyin 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: intro-flyin 936ms cubic-bezier(0.4, 0, 0.2, 1) both;
   will-change: transform, opacity;
 }
 .intro-flyin--pending {
@@ -674,17 +674,17 @@ html::-webkit-scrollbar {
   animation-delay: 0ms;
 }
 .intro-flyin--2 {
-  animation-delay: 40ms;
+  animation-delay: 52ms;
 }
 .intro-flyin--3 {
-  animation-delay: 80ms;
+  animation-delay: 104ms;
 }
 .intro-flyin--4 {
-  animation-delay: 120ms;
+  animation-delay: 156ms;
 }
 
 .intro-zoom {
-  animation: intro-zoom 1750ms ease-out 800ms both;
+  animation: intro-zoom 1750ms ease-out 1040ms both;
   will-change: transform;
 }
 
@@ -729,16 +729,16 @@ html::-webkit-scrollbar {
   }
 }
 .history-panel-enter-fwd {
-  animation: history-panel-in-right 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: history-panel-in-right 780ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .history-panel-enter-back {
-  animation: history-panel-in-left 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: history-panel-in-left 780ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .history-panel-exit-fwd {
-  animation: history-panel-out-left 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: history-panel-out-left 780ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .history-panel-exit-back {
-  animation: history-panel-out-right 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation: history-panel-out-right 780ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @media (min-width: 768px) {

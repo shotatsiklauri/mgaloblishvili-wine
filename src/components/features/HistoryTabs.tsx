@@ -241,7 +241,7 @@ function HistoryTabPanel({
                   ? "horizontal-reveal-enter--pending"
                   : "",
             )}
-            style={introActive ? { animationDuration: "800ms" } : undefined}
+            style={introActive ? { animationDuration: "1040ms" } : undefined}
           >
             <Image
               src={photoSrc}

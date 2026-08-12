@@ -73,7 +73,7 @@ export function HistoryTabs({ items: historyItems }: HistoryTabsProps) {
         })}
       </div>
 
-      <div className="hidden shrink-0 bg-white desktop:block">
+      <div className="shrink-0 bg-white">
         <Tabs.List
           aria-label="History sections"
           className={cn(
@@ -141,10 +141,10 @@ function HistoryTabPanel({
         : "";
 
   const layout = isExiting
-    ? "block desktop:absolute desktop:inset-0"
+    ? "absolute inset-0 block"
     : isActive
-      ? "block desktop:min-h-0 desktop:flex-1"
-      : "block desktop:hidden";
+      ? "desktop:min-h-0 desktop:flex-1"
+      : "hidden";
 
   const handleAnimationEnd = (event: AnimationEvent<HTMLDivElement>) => {
     if (isExiting && event.animationName.startsWith("history-panel-out")) {
@@ -156,7 +156,6 @@ function HistoryTabPanel({
     <Tabs.Content
       value={tab.id}
       forceMount
-      hidden={false}
       tabIndex={-1}
       onAnimationEnd={handleAnimationEnd}
       className={cn("outline-none", layout, slideClass)}

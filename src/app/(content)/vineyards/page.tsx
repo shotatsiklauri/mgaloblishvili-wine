@@ -24,7 +24,6 @@ export default async function VineyardsPage() {
         <VineyardsMap
           regions={content.vineyards.regions}
           mapImageUrl={content.vineyards.mapImageUrl}
-          mapMobileImageUrl={content.vineyards.mapMobileImageUrl}
         />
       </main>
     </div>

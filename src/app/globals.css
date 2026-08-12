@@ -618,6 +618,24 @@ html::-webkit-scrollbar {
   animation: wine-list-fade-right 1529ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+@keyframes wine-category-shift-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-55px);
+  }
+}
+
+@media (max-width: 767px) {
+  .wine-category-open {
+    transform: translateX(-55px);
+    animation: wine-category-shift-left 1040ms cubic-bezier(0.4, 0, 0.2, 1)
+      both;
+    will-change: transform;
+  }
+}
+
 .horizontal-reveal-enter--pending {
   -webkit-clip-path: inset(0 var(--reveal-from, 100%) 0 0);
   clip-path: inset(0 var(--reveal-from, 100%) 0 0);
@@ -905,6 +923,9 @@ html::-webkit-scrollbar {
   .menu-divider-v {
     animation-duration: 1ms !important;
     animation-delay: 0ms !important;
+  }
+  .wine-category-open {
+    animation: none !important;
   }
   .hero-ui-enter,
   .menu-stagger,

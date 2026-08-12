@@ -16,11 +16,11 @@ type ExperiencesViewProps = {
 
 export function ExperiencesView({ experiences }: ExperiencesViewProps) {
   return (
-    <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-14 pr-6 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
+    <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-56 pr-6 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       {/* -50% of the block's own height lifts it so the last word sits on the
           vertical centre of the band between header and footer, matching the
           wines index. See WinesView for the same treatment. */}
-      <AnimatedCategoryList className="desktop:-translate-y-1/2 space-y-1 text-left">
+      <AnimatedCategoryList className="desktop:-translate-y-1/2 space-y-[15px] text-left leading-none md:space-y-1">
         {experiences.map((experience) => (
           <li key={experience.id}>
             <Link

@@ -40,7 +40,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" />
       <main className="flex-1">
-        <section className="desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none desktop:items-center desktop:pb-0 relative flex h-[240px] max-h-[520px] items-end justify-center overflow-hidden pb-3 md:h-[300px]">
+        <section className="desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
             durationMs={1040}
@@ -59,7 +59,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             aria-hidden="true"
             className="from-surface-dark/35 via-surface-dark/10 to-surface-dark/35 absolute inset-0 bg-gradient-to-r"
           />
-          <h1 className="text-ink-inverse desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
+          <h1 className="text-ink-inverse desktop:translate-y-0 desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 translate-y-5 px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
             {wine.name}
           </h1>
         </section>

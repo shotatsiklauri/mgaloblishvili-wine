@@ -53,21 +53,21 @@ export function WinesView({
 
   if (activeCategoryId === undefined) {
     return (
-      <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-14 pr-6 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
+      <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-[168px] pr-6 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
         {categoryLinks}
       </div>
     );
   }
 
   return (
-    <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-14 pr-4 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
+    <div className="desktop:items-center desktop:py-0 desktop:pl-[calc(var(--desktop-fluid-unit)*215.064)] flex flex-1 items-start justify-start pt-[168px] pr-4 pb-6 pl-[75px] md:items-start md:justify-start md:pt-[18vh] md:pl-[17.57vw]">
       <div
         className={cn(
           "flex w-full min-w-0 flex-row items-start gap-3",
           "desktop:gap-[calc(var(--desktop-fluid-unit)*2.55)] md:w-auto md:flex-row md:items-start md:justify-start md:gap-[3px]",
         )}
       >
-        <div className="desktop:w-[calc(var(--desktop-fluid-unit)*184.464)] w-[118px] shrink-0 text-left md:w-[15.07vw]">
+        <div className="wine-category-open desktop:w-[calc(var(--desktop-fluid-unit)*184.464)] w-[118px] shrink-0 text-left md:w-[15.07vw]">
           {categoryLinks}
         </div>
 

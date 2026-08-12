@@ -150,6 +150,17 @@ function EditorialExperiencePage({
           <div className="px-6 py-10 md:px-12 md:py-12">
             {firstSection ? <ExperienceProse section={firstSection} /> : null}
           </div>
+          {experience.id === "gastronomy" ? (
+            <div className="relative h-[272px] overflow-hidden md:h-[380px]">
+              <Image
+                src={wineSrc}
+                alt=""
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+              />
+            </div>
+          ) : null}
           <IntroAwareHorizontalReveal
             className="px-6 py-10 md:px-12 md:py-12"
             durationMs={1040}

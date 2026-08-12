@@ -132,6 +132,7 @@ export default async function VineyardRegionPage({
             <IntroAwareHorizontalReveal
               className="absolute inset-0"
               durationMs={1040}
+              zoom
             >
               <Image
                 src={region.image1Url ?? "/images/vineyard-kakheti.png"}
@@ -139,7 +140,7 @@ export default async function VineyardRegionPage({
                 fill
                 priority
                 sizes="(min-width: 960px) 58vw, 100vw"
-                className="intro-zoom object-cover"
+                className="object-cover"
               />
             </IntroAwareHorizontalReveal>
 

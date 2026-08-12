@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
 import { InViewReveal } from "@/components/ui/InViewReveal";
+import { IntroAwareHorizontalReveal } from "@/components/ui/IntroAwareHorizontalReveal";
 import { ExperienceFrostIntro } from "@/components/ui/ExperienceFrostIntro";
 import { RegionScrollText } from "@/components/ui/RegionScrollText";
 import { getResolvedContact, type ResolvedContact } from "@/lib/sanity/contact";
@@ -149,16 +150,10 @@ function EditorialExperiencePage({
           <div className="px-6 py-10 md:px-12 md:py-12">
             {firstSection ? <ExperienceProse section={firstSection} /> : null}
           </div>
-          <div className="relative h-[272px] overflow-hidden md:h-[380px]">
-            <Image
-              src={wineSrc}
-              alt=""
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </div>
-          <div className="px-6 py-10 md:px-12 md:py-12">
+          <IntroAwareHorizontalReveal
+            className="px-6 py-10 md:px-12 md:py-12"
+            durationMs={1040}
+          >
             <div className="relative mb-6 aspect-square w-[39.984px] overflow-hidden">
               <Image
                 src="/svgs/TheSymbol.svg"
@@ -169,7 +164,7 @@ function EditorialExperiencePage({
               />
             </div>
             {secondSection ? <ExperienceProse section={secondSection} /> : null}
-          </div>
+          </IntroAwareHorizontalReveal>
         </section>
 
         <section className="desktop:mt-[calc(var(--desktop-fluid-unit)*152)] mt-10">

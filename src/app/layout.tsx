@@ -42,6 +42,20 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${fontSans.variable} ${fontSerif.variable} ${fontSerifGeorgian.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="icon"
+          href="/svgs/TheSymbol-light.svg"
+          type="image/svg+xml"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          href="/svgs/TheSymbol-dark.svg"
+          type="image/svg+xml"
+          media="(prefers-color-scheme: dark)"
+        />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         {children}
         <BrandIntro />

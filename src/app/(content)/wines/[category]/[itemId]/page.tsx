@@ -59,7 +59,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             aria-hidden="true"
             className="from-surface-dark/35 via-surface-dark/10 to-surface-dark/35 absolute inset-0 bg-gradient-to-r"
           />
-          <h1 className="text-ink-inverse desktop:translate-y-0 desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 translate-y-[30px] px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
+          <h1 className="text-ink-inverse desktop:translate-y-0 desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 translate-y-[55px] px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
             {wine.name}
           </h1>
         </section>

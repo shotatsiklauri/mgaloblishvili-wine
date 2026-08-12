@@ -82,15 +82,15 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
   return (
     <div
       key={categoryId}
-      className="wine-list-enter desktop:gap-[calc(var(--desktop-fluid-unit)*30.6)] flex w-full items-stretch justify-center gap-8 md:w-auto md:gap-[2.5vw]"
+      className="wine-list-enter desktop:gap-[calc(var(--desktop-fluid-unit)*30.6)] flex w-full min-w-0 items-stretch justify-start gap-3 md:w-auto md:gap-[2.5vw]"
     >
-      <div className="wine-scroll-area flex w-full items-start justify-center md:w-auto">
+      <div className="wine-scroll-area flex min-w-0 flex-1 items-start justify-start md:w-auto md:flex-none">
         <ul
           ref={listRef}
           aria-label="Wine list"
           className={cn(
-            "wine-scroll-fade no-scrollbar w-full space-y-4 leading-none text-center",
-            "desktop:h-[min(45.9vh,calc(var(--desktop-fluid-unit)*306))] max-h-full md:h-[360px] md:overflow-y-auto md:pr-2 md:text-left md:whitespace-nowrap",
+            "wine-scroll-fade no-scrollbar h-[280px] w-full space-y-4 overflow-y-auto pr-2 text-left leading-none whitespace-nowrap",
+            "desktop:h-[min(45.9vh,calc(var(--desktop-fluid-unit)*306))] max-h-full md:h-[360px]",
             scrollState.canScrollUp && "wine-scroll-fade--top",
             scrollState.canScrollDown && "wine-scroll-fade--bottom",
           )}
@@ -114,7 +114,7 @@ export function WineScrollList({ wines, categoryId }: WineScrollListProps) {
 
       <div
         aria-hidden="true"
-        className="bg-ink/15 wine-scroll-track relative hidden w-px shrink-0 md:block"
+        className="bg-ink/15 wine-scroll-track relative block h-[280px] w-px shrink-0 md:h-[360px]"
       >
         {scrollState.visible ? (
           <span

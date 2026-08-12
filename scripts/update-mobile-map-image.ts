@@ -1,40 +1,13 @@
-/**
- * One-off: upload public/images/map-mobile.jpeg and point the vineyards
- * document's `mobileMapImage` at it. Patches ONLY that field — modelled on
- * scripts/update-symbol-image.ts, not the full seed (which rewrites every doc).
- */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createClient } from "next-sanity";
-
-function loadEnvFile(filename: string) {
-  const filePath = resolve(process.cwd(), filename);
-  if (!existsSync(filePath)) return;
-  const content = readFileSync(filePath, "utf8");
-  for (const line of content.split("\n")) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
-    const eqIndex = trimmed.indexOf("=");
-    if (eqIndex === -1) continue;
-    const key = trimmed.slice(0, eqIndex).trim();
-    let value = trimmed.slice(eqIndex + 1).trim();
-    const quoted =
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"));
-    if (quoted) value = value.slice(1, -1);
-    if (process.env[key] === undefined) process.env[key] = value;
-  }
-}
-
-loadEnvFile(".env.local");
-loadEnvFile(".env");
 
 const PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? "2024-06-18";
 const WRITE_TOKEN = process.env.SANITY_API_WRITE_TOKEN;
 
-const FILENAME = "map-mobile.jpeg";
+const FILENAME = "map-mobile.jpg";
 
 if (!PROJECT_ID || !DATASET) {
   console.error("Missing Sanity project/dataset env vars.");

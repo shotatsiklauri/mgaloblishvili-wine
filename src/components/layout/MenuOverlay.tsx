@@ -57,7 +57,7 @@ export function MenuOverlay({
         />
         <Dialog.Content
           className={cn(
-            "bg-surface-dark text-ink-inverse fixed inset-0 z-50 h-[calc(100svh)] overflow-hidden",
+            "bg-surface-dark text-ink-inverse fixed inset-0 z-50 isolate h-[calc(100svh)] overflow-hidden",
             "flex flex-col",
           )}
           aria-label="Site menu"
@@ -67,7 +67,14 @@ export function MenuOverlay({
             Browse history, vineyards, wines, and experiences.
           </Dialog.Description>
 
-          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-[calc(var(--desktop-fluid-unit)*23.8)] relative flex h-24 shrink-0 items-center justify-between px-5 md:px-6">
+          <div
+            aria-hidden="true"
+            className="menu-watermark pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden"
+          >
+            <div className="menu-watermark__mark" />
+          </div>
+
+          <div className="desktop:h-[calc(var(--desktop-fluid-unit)*120)] desktop:px-[calc(var(--desktop-fluid-unit)*23.8)] relative z-10 flex h-24 shrink-0 items-center justify-between px-5 md:px-6">
             <Dialog.Close
               className={cn(
                 "menu-stagger menu-stagger--close",
@@ -138,7 +145,7 @@ export function MenuOverlay({
             </div>
           </div>
 
-          <div className="menu-overlay-scroll-region flex min-h-0 flex-1 flex-col overflow-y-auto px-6 md:px-10 desktop:py-8">
+          <div className="menu-overlay-scroll-region relative z-10 flex min-h-0 flex-1 flex-col overflow-y-auto px-6 md:px-10 desktop:py-8">
             <nav
               aria-label="Primary"
               className="flex min-h-0 w-full flex-1 desktop:my-auto desktop:block desktop:flex-none desktop:translate-y-0"
@@ -253,14 +260,14 @@ export function MenuOverlay({
             </nav>
           </div>
 
-          <div className="shrink-0 px-6 md:px-10">
+          <div className="relative z-10 shrink-0 px-6 md:px-10">
             <div
               aria-hidden="true"
               className="menu-stagger menu-stagger--rule bg-ink-inverse/12 desktop:max-w-[calc(var(--desktop-fluid-unit)*544)] mx-auto h-px w-full max-w-[640px] origin-center"
             />
           </div>
 
-          <div className="menu-stagger menu-stagger--contact shrink-0 px-6 py-6 md:py-8">
+          <div className="menu-stagger menu-stagger--contact relative z-10 shrink-0 px-6 py-6 md:py-8">
             <SiteFooterMinimal layout="stacked" tone="dark" />
           </div>
         </Dialog.Content>

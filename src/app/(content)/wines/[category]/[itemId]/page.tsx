@@ -101,14 +101,16 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
           </div>
 
           <div className="desktop:absolute desktop:top-[calc(var(--desktop-fluid-unit)*113.962)] desktop:left-[61.11%] desktop:block desktop:pb-0 flex justify-center pb-16">
-            <IntroAwareHorizontalReveal durationMs={1040} className="w-fit">
+            <IntroAwareHorizontalReveal
+              durationMs={1040}
+              className="desktop:w-[calc(var(--desktop-fluid-unit)*261.821)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
+            >
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
                 alt=""
-                width={308}
-                height={1114}
+                fill
                 sizes="(min-width: 960px) 22vw, (min-width: 768px) 214px, 70vw"
-                className="desktop:max-h-none desktop:w-[calc(var(--desktop-fluid-unit)*261.821)] desktop:max-w-none h-auto max-h-[660px] w-[min(70vw,167px)] max-w-full object-contain md:max-h-[820px] md:w-[min(48vw,214px)]"
+                className="object-contain object-center"
               />
             </IntroAwareHorizontalReveal>
           </div>

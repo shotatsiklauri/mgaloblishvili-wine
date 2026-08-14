@@ -1,5 +1,4 @@
 import { cn, toMtavruliIfGeorgian } from "@/lib/utils";
-import { DecorativeSlash } from "@/components/ui/DecorativeSlash";
 
 type NavWordProps = {
   active?: boolean;
@@ -34,7 +33,6 @@ export function NavWord({
         >
           {label}
         </span>
-        {!active ? <DecorativeSlash /> : null}
       </span>
       <span
         aria-hidden="true"

@@ -17,8 +17,8 @@ export const SITE_SOCIAL_LINKS = [
     href: "https://www.instagram.com/wine.mgaloblishvili?igsh=dmd5eTJqc251MWF2",
   },
   {
-    id: "twitter",
-    label: "Twitter",
+    id: "x",
+    label: "X",
     href: "https://x.com/wmgaloblishvili",
   },
 ] as const;

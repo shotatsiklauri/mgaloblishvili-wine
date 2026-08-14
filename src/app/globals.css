@@ -29,12 +29,6 @@
   text-transform: uppercase;
 }
 
-/* Home hero slashes sit over moving video, so they carry more alpha than the
-   30% used on the solid dark chrome. Unlayered, so it beats the utility. */
-.home-section-nav .decorative-slash {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
 .nav-word {
   font-size: 13.5px;
 }
@@ -51,10 +45,6 @@
   .menu-mobile-nav-word .nav-word--mtavruli {
     font-size: 12.5px;
   }
-
-  .menu-mobile-nav-word .decorative-slash {
-    width: 125px;
-  }
 }
 
 @media (max-width: 959px) and (max-height: 500px) {
@@ -70,10 +60,6 @@
   .menu-mobile-nav-word .nav-word,
   .menu-mobile-nav-word .nav-word--mtavruli {
     font-size: 9px;
-  }
-
-  .menu-mobile-nav-word .decorative-slash {
-    width: 54px;
   }
 }
 
@@ -108,21 +94,6 @@
 
   .primary-nav-word--header-size .nav-word--mtavruli {
     font-size: calc(var(--desktop-fluid-unit) * 14);
-  }
-
-  .site-header--figma .decorative-slash {
-    width: calc(var(--desktop-fluid-unit) * 120);
-    height: 0.5px;
-    min-height: 0;
-  }
-
-  /* Home hero only. The base rule thins the slash to 0.425px at this
-     breakpoint, and a sub-pixel line that is also rotated gets antialiased down
-     to a fraction of its stated opacity — barely visible over the video. Give
-     it a whole pixel to sit on and more alpha. */
-  .home-section-nav .decorative-slash {
-    height: 1px;
-    min-height: 1px;
   }
 
   .site-header--figma .type-language {

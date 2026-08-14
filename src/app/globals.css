@@ -545,8 +545,8 @@ html::-webkit-scrollbar {
 .menu-watermark__mark {
   position: absolute;
   top: 50%;
-  left: 57.5%;
-  width: 55.566vw;
+  left: 65%;
+  width: 160vw;
   aspect-ratio: 109.09 / 138.21;
   opacity: 0.3;
   transform: translate(-50%, -50%);
@@ -585,6 +585,7 @@ html::-webkit-scrollbar {
 
 @media (min-width: 768px) {
   .menu-watermark__mark {
+    left: 57.5%;
     width: 52.92vw;
   }
 }

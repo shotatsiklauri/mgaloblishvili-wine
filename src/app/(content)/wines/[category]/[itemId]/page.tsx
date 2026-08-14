@@ -40,7 +40,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" />
       <main className="flex-1">
-        <section className="desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
+        <section className="bg-surface-dark desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
             durationMs={1040}
@@ -52,16 +52,13 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-contain object-right"
             />
           </IntroAwareHorizontalReveal>
           <div
             aria-hidden="true"
             className="from-surface-dark/35 via-surface-dark/10 to-surface-dark/35 absolute inset-0 bg-gradient-to-r"
           />
-          <h1 className="text-ink-inverse desktop:translate-y-0 desktop:text-[calc(var(--desktop-fluid-unit)*68.85)] relative z-10 translate-y-[55px] px-6 text-center font-serif text-[clamp(40px,5.625vw,92px)] leading-none font-light">
-            {wine.name}
-          </h1>
         </section>
 
         <section className="text-ink desktop:mx-auto desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] desktop:max-w-[var(--frame-max)] relative overflow-hidden">
@@ -72,9 +69,9 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             />
 
             <IntroFlyIn order={1}>
-              <h2 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[calc(var(--desktop-fluid-unit)*30.6)] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
+              <h1 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[calc(var(--desktop-fluid-unit)*30.6)] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
                 {wine.name}
-              </h2>
+              </h1>
             </IntroFlyIn>
 
             <IntroFlyIn order={2}>

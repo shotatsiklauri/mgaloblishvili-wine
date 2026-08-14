@@ -34,7 +34,7 @@ export async function VineyardsMap({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-contain object-center"
         />
         <div
           aria-hidden="true"

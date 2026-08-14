@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import mobileMapImage from "../../../public/images/map-mobile.jpg";
 import type { VineyardRegion, VineyardRegionId } from "@/data/content";
 import { routes } from "@/data/routes";
 import { SiteFooterMinimal } from "@/components/layout/SiteFooterMinimal";
@@ -28,7 +29,7 @@ export async function VineyardsMap({
       {/* Mobile keeps the full-bleed treatment. */}
       <div className="absolute inset-0 overflow-hidden md:hidden">
         <Image
-          src="/images/map-mobile.jpg"
+          src={mobileMapImage}
           alt="Map of Georgian vineyard regions"
           fill
           priority
@@ -68,8 +69,8 @@ export async function VineyardsMap({
         }
       />
 
-      <div className="absolute top-1/2 left-1/2 z-10 w-full max-w-[310px] -translate-x-1/2 -translate-y-1/2 px-6 md:hidden">
-        <nav aria-label="Vineyard regions" className="w-full text-center">
+      <div className="absolute right-6 bottom-[228px] left-[75px] z-10 md:hidden">
+        <nav aria-label="Vineyard regions" className="w-full text-left">
           <ul className="space-y-3">
             {regions.map((region) => (
               <li key={region.id}>

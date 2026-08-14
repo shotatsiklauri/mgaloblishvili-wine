@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import * as Dialog from "@radix-ui/react-dialog";
 import type { MenuColumn } from "@/data/navigation";
 import type { Locale } from "@/data/content";
+import { SITE_SOCIAL_LINKS } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { focusRing } from "@/lib/focus-ring";
 import { NavWord } from "@/components/ui/NavWord";
@@ -31,6 +32,47 @@ const DIVIDER_STAGGER = [
   "menu-divider-v--2",
   "menu-divider-v--3",
 ] as const;
+
+type SocialPlatform = (typeof SITE_SOCIAL_LINKS)[number]["id"];
+
+function SocialIcon({ platform }: { platform: SocialPlatform }) {
+  if (platform === "facebook") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path
+          fill="currentColor"
+          d="M13.5 8H16V4.5h-2.5C10.5 4.5 9 6.3 9 9v2H6v3.5h3V22h3.5v-7.5h3L16 11h-3.5V9c0-.7.3-1 1-1Z"
+        />
+      </svg>
+    );
+  }
+
+  if (platform === "instagram") {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.4" cy="6.7" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        fill="currentColor"
+        d="M21.3 6.1c-.7.3-1.4.5-2.2.6a3.8 3.8 0 0 0 1.7-2.1c-.8.5-1.6.8-2.5 1a3.8 3.8 0 0 0-6.6 2.6c0 .3 0 .6.1.9a10.8 10.8 0 0 1-7.9-4c-.3.6-.5 1.3-.5 2 0 1.3.7 2.5 1.7 3.2-.6 0-1.2-.2-1.7-.5 0 1.9 1.3 3.4 3.1 3.8-.3.1-.7.2-1 .2-.3 0-.5 0-.7-.1.5 1.6 1.9 2.7 3.6 2.7A7.7 7.7 0 0 1 3.6 18H2.7a10.8 10.8 0 0 0 5.8 1.7c7 0 10.8-5.8 10.8-10.8v-.5c.8-.6 1.4-1.3 2-2.1Z"
+      />
+    </svg>
+  );
+}
 
 export function MenuOverlay({
   trigger,
@@ -268,6 +310,27 @@ export function MenuOverlay({
           </div>
 
           <div className="menu-stagger menu-stagger--contact relative z-10 shrink-0 px-6 py-6 md:py-8">
+            <nav aria-label="Social media" className="mb-3 md:mb-4">
+              <ul className="flex items-center justify-center gap-1">
+                {SITE_SOCIAL_LINKS.map((social) => (
+                  <li key={social.id}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${social.label} (opens in a new tab)`}
+                      className={cn(
+                        "text-ink-inverse/45 hover:text-ink-inverse inline-flex h-9 w-9 items-center justify-center transition-colors duration-300 ease-out motion-reduce:transition-none",
+                        "[&_svg]:h-7 [&_svg]:w-7",
+                        focusRing("dark"),
+                      )}
+                    >
+                      <SocialIcon platform={social.id} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
             <SiteFooterMinimal layout="stacked" tone="dark" />
           </div>
         </Dialog.Content>

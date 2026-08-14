@@ -546,7 +546,7 @@ html::-webkit-scrollbar {
   position: absolute;
   top: 50%;
   left: 57.5%;
-  width: 46.305vw;
+  width: 55.566vw;
   aspect-ratio: 109.09 / 138.21;
   opacity: 0.3;
   transform: translate(-50%, -50%);
@@ -585,13 +585,13 @@ html::-webkit-scrollbar {
 
 @media (min-width: 768px) {
   .menu-watermark__mark {
-    width: 44.1vw;
+    width: 52.92vw;
   }
 }
 
 @media (min-width: 960px) {
   .menu-watermark__mark {
-    width: calc(var(--desktop-fluid-unit) * 450.8);
+    width: calc(var(--desktop-fluid-unit) * 540.96);
   }
 }
 

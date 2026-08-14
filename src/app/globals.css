@@ -514,23 +514,38 @@ html::-webkit-scrollbar {
   animation-duration: 650ms;
   animation-delay: 260ms;
 }
-@keyframes menu-watermark-fill {
-  0% {
-    -webkit-clip-path: inset(100% 0 0 0);
-    clip-path: inset(100% 0 0 0);
+@keyframes menu-watermark-illumination {
+  0%,
+  8% {
+    background-position: 50% 0%;
     opacity: 0;
   }
+
+  20% {
+    opacity: 0.72;
+  }
+
+  62% {
+    background-position: 50% 100%;
+    opacity: 1;
+  }
+
+  78% {
+    background-position: 50% 100%;
+    opacity: 0.55;
+  }
+
+  92%,
   100% {
-    -webkit-clip-path: inset(0 0 0 0);
-    clip-path: inset(0 0 0 0);
-    opacity: 0.045;
+    background-position: 50% 100%;
+    opacity: 0;
   }
 }
 
 .menu-watermark__mark {
   position: relative;
-  width: 94.5vw;
-  aspect-ratio: 245.12 / 50;
+  width: 66.15vw;
+  aspect-ratio: 109.09 / 138.21;
 }
 
 .menu-watermark__mark::before,
@@ -538,32 +553,41 @@ html::-webkit-scrollbar {
   position: absolute;
   inset: 0;
   content: "";
-  background-color: #ffffff;
-  -webkit-mask: url("/images/Mgaloblishvili-Logo.svg") center / contain no-repeat;
-  mask: url("/images/Mgaloblishvili-Logo.svg") center / contain no-repeat;
+  -webkit-mask: url("/svgs/Symbol-For-Background.svg") center / contain no-repeat;
+  mask: url("/svgs/Symbol-For-Background.svg") center / contain no-repeat;
 }
 
 .menu-watermark__mark::before {
-  opacity: 0.018;
+  background-color: #ffffff;
+  opacity: 0.03;
 }
 
 .menu-watermark__mark::after {
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0.095) 32%,
+    rgba(255, 255, 255, 0.06) 47%,
+    rgba(255, 255, 255, 0.02) 59%,
+    rgba(255, 255, 255, 0) 73%
+  );
+  background-position: 50% 0%;
+  background-size: 100% 300%;
   opacity: 0;
-  -webkit-clip-path: inset(100% 0 0 0);
-  clip-path: inset(100% 0 0 0);
-  animation: menu-watermark-fill 1600ms cubic-bezier(0.22, 1, 0.36, 1) 280ms
-    both;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.025));
+  animation: menu-watermark-illumination 6.2s ease-in-out infinite;
+  will-change: background-position, opacity;
 }
 
 @media (min-width: 768px) {
   .menu-watermark__mark {
-    width: 63vw;
+    width: 44.1vw;
   }
 }
 
 @media (min-width: 960px) {
   .menu-watermark__mark {
-    width: calc(var(--desktop-fluid-unit) * 644);
+    width: calc(var(--desktop-fluid-unit) * 450.8);
   }
 }
 
@@ -1016,12 +1040,11 @@ html::-webkit-scrollbar {
     opacity: 1 !important;
   }
   .menu-watermark__mark::before {
-    opacity: 0 !important;
+    opacity: 0.03 !important;
   }
   .menu-watermark__mark::after {
     animation: none !important;
-    -webkit-clip-path: none !important;
-    clip-path: none !important;
-    opacity: 0.045 !important;
+    filter: none !important;
+    opacity: 0 !important;
   }
 }

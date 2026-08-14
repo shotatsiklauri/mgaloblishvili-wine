@@ -209,7 +209,7 @@ function HistoryTabPanel({
           >
             <h1
               className={cn(
-                "desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[44px] leading-none font-normal md:text-[48px]",
+                "desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[35.2px] leading-none font-normal md:text-[48px]",
                 enter(2),
               )}
             >

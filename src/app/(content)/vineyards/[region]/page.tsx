@@ -90,7 +90,7 @@ export default async function VineyardRegionPage({
 
             <div className="desktop:mt-[calc(var(--desktop-fluid-unit)*38)] desktop:flex desktop:min-h-0 desktop:max-w-none desktop:flex-1 desktop:flex-col mt-9 max-w-[540px]">
               <IntroFlyIn order={2}>
-                <h1 className="desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[44px] leading-none font-normal md:text-[48px]">
+                <h1 className="desktop:text-[calc(var(--desktop-fluid-unit)*48)] font-serif text-[35.2px] leading-none font-normal md:text-[48px]">
                   {region.title}
                 </h1>
               </IntroFlyIn>

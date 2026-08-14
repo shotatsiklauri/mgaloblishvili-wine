@@ -69,7 +69,7 @@ export async function VineyardsMap({
         }
       />
 
-      <div className="absolute right-6 bottom-[228px] left-[75px] z-10 md:hidden">
+      <div className="absolute top-1/2 right-6 left-[75px] z-10 -translate-y-1/2 md:hidden">
         <nav aria-label="Vineyard regions" className="w-full text-left">
           <ul className="space-y-3">
             {regions.map((region) => (

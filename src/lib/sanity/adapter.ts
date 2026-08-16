@@ -267,15 +267,37 @@ function mergeWineItems(
   const mergedItems = [...cmsItems];
   const mergedIds = new Set(cmsItems.map((item) => item.id));
 
-  for (const staticItem of staticItems) {
+  for (const [staticIndex, staticItem] of staticItems.entries()) {
     if (mergedIds.has(staticItem.id)) continue;
 
     const categoryId = staticItem.categoryId ?? "wines";
+    const previousStaticItem = staticItems
+      .slice(0, staticIndex)
+      .findLast(
+        (item) => (item.categoryId ?? "wines") === categoryId,
+      );
+    const previousItemIndex = previousStaticItem
+      ? mergedItems.findIndex((item) => item.id === previousStaticItem.id)
+      : -1;
+    const nextStaticItem = staticItems.slice(staticIndex + 1).find(
+      (item) =>
+        (item.categoryId ?? "wines") === categoryId &&
+        mergedIds.has(item.id),
+    );
+    const nextItemIndex = nextStaticItem
+      ? mergedItems.findIndex((item) => item.id === nextStaticItem.id)
+      : -1;
     const lastCategoryIndex = mergedItems.findLastIndex(
       (item) => (item.categoryId ?? "wines") === categoryId,
     );
+    const insertionIndex =
+      previousItemIndex >= 0
+        ? previousItemIndex + 1
+        : nextItemIndex >= 0
+          ? nextItemIndex
+          : lastCategoryIndex + 1;
 
-    mergedItems.splice(lastCategoryIndex + 1, 0, staticItem);
+    mergedItems.splice(insertionIndex, 0, staticItem);
     mergedIds.add(staticItem.id);
   }
 

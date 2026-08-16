@@ -174,6 +174,17 @@ export const enContent: SiteContent = {
         grapeOrigin: "Alvani village, Akhmeta microzone, Kakheti",
       },
       {
+        id: "kisi-reserve",
+        name: "Kisi Reserve",
+        description: [
+          "Dry red wine that is aged in French oak barrels for 12 months.",
+          "The wine showcases a cherry-red color and features aromas of berries and currants.",
+          "Saperavi Reserve is marked by a balanced, velvety taste with a touch of tannin.",
+        ],
+        grapeOrigin: "Akura village, Telavi, Kakheti",
+        bottleImageUrl: "/images/Kisi-Reserve.png",
+      },
+      {
         id: "kakhuri-mtsvane",
         name: "Kakhuri Mtsvane",
         description: [

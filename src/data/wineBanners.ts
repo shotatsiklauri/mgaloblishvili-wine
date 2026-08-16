@@ -1,8 +1,10 @@
 const LOCAL_WINE_BANNERS: Readonly<Record<string, string>> = {
+  chacha: "/images/VSOP-Banner.jpg",
   "kakhuri-mtsvane": "/images/Kakhuri-Mtsvane-Banner.jpg",
   kindzmarauli: "/images/Kindzmarauli-Banner.jpg",
   kisi: "/images/Kisi-Banner.jpg",
   "kisi-reserve": "/images/Kisi-Reserve-Banner.jpg",
+  krakhuna: "/images/Tsolikouri-Banner.jpg",
   "rkatsiteli-amber": "/images/Rkatsiteli-Amber-Banner.jpg",
   rkatsiteli: "/images/Rkatsiteli-Banner.jpg",
   "rkatsiteli-batonnage": "/images/Rkatsiteli-Batonnage-Banner.jpg",
@@ -12,7 +14,9 @@ const LOCAL_WINE_BANNERS: Readonly<Record<string, string>> = {
   tsinandali: "/images/Tsinandali-Banner.jpg",
   tsolikouri: "/images/Tsolikouri-Banner.jpg",
   tvishi: "/images/Tvishi-Banner.jpg",
+  vs: "/images/VSOP-Banner.jpg",
   vsop: "/images/VSOP-Banner.jpg",
+  xo: "/images/VSOP-Banner.jpg",
 };
 
 export function getLocalWineBanner(itemId: string): string | undefined {

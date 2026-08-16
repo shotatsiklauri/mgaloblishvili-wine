@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getServerLocale } from "@/lib/locale";
 import { getResolvedContent, findWine, isWineCategoryId } from "@/data/content";
 import { routes } from "@/data/routes";
+import { getLocalWineBanner } from "@/data/wineBanners";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
 import { IntroFlyIn } from "@/components/ui/IntroFlyIn";
@@ -36,6 +37,10 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
   const categoryLabel =
     content.wines.categories.find((c) => c.id === category)?.label ??
     content.nav.wines;
+  const heroImageUrl =
+    getLocalWineBanner(wine.id) ??
+    wine.heroImageUrl ??
+    "/images/wine_page_header.webp";
 
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
@@ -48,7 +53,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
             revealFrom="25%"
           >
             <Image
-              src={wine.heroImageUrl ?? "/images/wine_page_header.webp"}
+              src={heroImageUrl}
               alt=""
               fill
               priority

@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getServerLocale } from "@/lib/locale";
+import { cn } from "@/lib/utils";
 import { getResolvedContent, findWine, isWineCategoryId } from "@/data/content";
 import { routes } from "@/data/routes";
-import { getLocalWineBanner } from "@/data/wineBanners";
+import {
+  getLocalMobileWineBanner,
+  getLocalWineBanner,
+} from "@/data/wineBanners";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
 import { IntroFlyIn } from "@/components/ui/IntroFlyIn";
@@ -41,25 +45,46 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
     getLocalWineBanner(wine.id) ??
     wine.heroImageUrl ??
     "/images/wine_page_header.webp";
+  const mobileHeroImageUrl = getLocalMobileWineBanner(wine.id);
 
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
       <HeaderContent activeId="wines" />
       <main className="flex-1">
-        <section className="bg-surface-dark desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative flex h-[240px] max-h-[520px] items-center justify-center overflow-hidden md:h-[300px]">
+        <section
+          className={cn(
+            "bg-surface-dark desktop:mt-0 desktop:aspect-auto desktop:h-[calc(var(--desktop-fluid-unit)*367.2)] desktop:max-h-none relative mt-24 flex items-center justify-center overflow-hidden",
+            mobileHeroImageUrl
+              ? "aspect-[14/5] h-auto max-h-none md:h-auto"
+              : "h-[240px] max-h-[520px] md:h-[300px]",
+          )}
+        >
           <IntroAwareHorizontalReveal
             className="absolute inset-0"
             durationMs={1040}
             revealFrom="25%"
           >
-            <Image
-              src={heroImageUrl}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="desktop:object-contain object-cover object-right"
-            />
+            <picture className="absolute inset-0 block">
+              {mobileHeroImageUrl ? (
+                <source
+                  media="(max-width: 959px)"
+                  srcSet={mobileHeroImageUrl}
+                />
+              ) : null}
+              <Image
+                src={heroImageUrl}
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className={cn(
+                  "desktop:object-contain object-cover",
+                  mobileHeroImageUrl
+                    ? "object-[100%_100%] desktop:object-right"
+                    : "object-right",
+                )}
+              />
+            </picture>
           </IntroAwareHorizontalReveal>
           <div
             aria-hidden="true"

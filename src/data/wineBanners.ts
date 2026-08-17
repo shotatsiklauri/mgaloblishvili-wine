@@ -19,6 +19,14 @@ const LOCAL_WINE_BANNERS: Readonly<Record<string, string>> = {
   xo: "/images/VSOP-Banner.jpg",
 };
 
+const LOCAL_MOBILE_WINE_BANNERS: Readonly<Record<string, string>> = {
+  saperavi: "/images/mob-test.jpg",
+};
+
 export function getLocalWineBanner(itemId: string): string | undefined {
   return LOCAL_WINE_BANNERS[itemId];
+}
+
+export function getLocalMobileWineBanner(itemId: string): string | undefined {
+  return LOCAL_MOBILE_WINE_BANNERS[itemId];
 }

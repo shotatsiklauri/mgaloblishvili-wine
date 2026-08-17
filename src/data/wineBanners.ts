@@ -20,7 +20,22 @@ const LOCAL_WINE_BANNERS: Readonly<Record<string, string>> = {
 };
 
 const LOCAL_MOBILE_WINE_BANNERS: Readonly<Record<string, string>> = {
-  saperavi: "/images/mob-test.jpg",
+  "kakhuri-mtsvane": "/images/Kakhuri-Mtsvane-Mobile-Banner.jpg",
+  kindzmarauli: "/images/Kindzmarauli-Mobile-Banner.jpg",
+  kisi: "/images/Kisi-Mobile-Banner.jpg",
+  "kisi-reserve": "/images/Kisi-Reserve-Mobile-Banner.jpg",
+  krakhuna: "/images/Krakhuna-Mobile-Banner.jpg",
+  "rkatsiteli-amber": "/images/Rkatsiteli-Amber-Mobile-Banner.jpg",
+  rkatsiteli: "/images/Rkatsiteli-Mobile-Banner.jpg",
+  "rkatsiteli-batonnage": "/images/Rkatsiteli-Batonnage-Mobile-Banner.jpg",
+  saperavi: "/images/Saperavi-Mobile-Banner.jpg",
+  "saperavi-reserve": "/images/Saperavi-Reserve-Mobile-Banner.jpg",
+  "tavkveri-rose": "/images/Tavkveri-Mobile-Banner.jpg",
+  tsinandali: "/images/Tsinandali-Mobile-Banner.jpg",
+  tsolikouri: "/images/Tsolikouri-Mobile-Banner.jpg",
+  tvishi: "/images/Tvishi.jpg",
+  vs: "/images/VS-Mobile-Banner.jpg",
+  vsop: "/images/VSOP-Mobile-Banner.jpg",
 };
 
 export function getLocalWineBanner(itemId: string): string | undefined {

@@ -58,7 +58,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               fill
               priority
               sizes="100vw"
-              className="object-contain object-right"
+              className="desktop:object-contain object-cover object-right"
             />
           </IntroAwareHorizontalReveal>
           <div
@@ -69,45 +69,38 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
 
         <section className="text-ink desktop:mx-auto desktop:min-h-[calc(var(--desktop-fluid-unit)*1113.84)] desktop:max-w-[var(--frame-max)] relative overflow-hidden">
           <div className="desktop:mx-0 desktop:max-w-[calc(var(--desktop-fluid-unit)*443.707)] desktop:px-0 desktop:py-0 desktop:pt-[calc(var(--desktop-fluid-unit)*121.176)] desktop:pl-[calc(var(--desktop-fluid-unit)*117.259)] relative z-10 mx-auto max-w-[520px] px-6 py-16 md:px-10 md:py-20">
-            <InViewReveal
-              direction="horizontal"
-              durationMs={1040}
-              rootMargin="0px 0px -45% 0px"
-              waitForScroll
-            >
-              <BackLink
-                href={routes.wineCategory(category)}
-                label={categoryLabel}
-              />
+            <BackLink
+              href={routes.wineCategory(category)}
+              label={categoryLabel}
+            />
 
-              <IntroFlyIn order={1}>
-                <h1 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[calc(var(--desktop-fluid-unit)*30.6)] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
-                  {wine.name}
-                </h1>
+            <IntroFlyIn order={1}>
+              <h1 className="desktop:mt-[calc(var(--desktop-fluid-unit)*31.824)] desktop:text-[calc(var(--desktop-fluid-unit)*30.6)] mt-10 font-serif text-[clamp(28px,2.5vw,44px)] leading-none font-normal">
+                {wine.name}
+              </h1>
+            </IntroFlyIn>
+
+            <IntroFlyIn order={2}>
+              <div className="text-ink/80 desktop:mt-[calc(var(--desktop-fluid-unit)*39.053)] desktop:text-[calc(var(--desktop-fluid-unit)*13.6)] mt-8 space-y-4 font-serif text-[clamp(14px,1.111vw,18px)] leading-[1.45] font-light tracking-normal">
+                {wine.description.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+            </IntroFlyIn>
+
+            {wine.grapeOrigin ? (
+              <IntroFlyIn order={3}>
+                <p className="desktop:mt-[calc(var(--desktop-fluid-unit)*55.21)] desktop:text-[calc(var(--desktop-fluid-unit)*10.2)] mt-9 font-sans text-[clamp(11px,0.833vw,13px)] leading-none font-medium tracking-normal uppercase">
+                  <span className="text-accent">
+                    {content.wines.originLabel}
+                  </span>
+                  <span aria-hidden="true" className="text-ink-muted mx-2">
+                    |
+                  </span>
+                  <span className="text-ink">{wine.grapeOrigin}</span>
+                </p>
               </IntroFlyIn>
-
-              <IntroFlyIn order={2}>
-                <div className="text-ink/80 desktop:mt-[calc(var(--desktop-fluid-unit)*39.053)] desktop:text-[calc(var(--desktop-fluid-unit)*13.6)] mt-8 space-y-4 font-serif text-[clamp(14px,1.111vw,18px)] leading-[1.45] font-light tracking-normal">
-                  {wine.description.map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))}
-                </div>
-              </IntroFlyIn>
-
-              {wine.grapeOrigin ? (
-                <IntroFlyIn order={3}>
-                  <p className="desktop:mt-[calc(var(--desktop-fluid-unit)*55.21)] desktop:text-[calc(var(--desktop-fluid-unit)*10.2)] mt-9 font-sans text-[clamp(11px,0.833vw,13px)] leading-none font-medium tracking-normal uppercase">
-                    <span className="text-accent">
-                      {content.wines.originLabel}
-                    </span>
-                    <span aria-hidden="true" className="text-ink-muted mx-2">
-                      |
-                    </span>
-                    <span className="text-ink">{wine.grapeOrigin}</span>
-                  </p>
-                </IntroFlyIn>
-              ) : null}
-            </InViewReveal>
+            ) : null}
           </div>
 
           <div className="desktop:absolute desktop:top-[calc(var(--desktop-fluid-unit)*113.962)] desktop:left-[61.11%] desktop:block desktop:pb-0 flex justify-center pb-16">
@@ -116,7 +109,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               rootMargin="0px 0px -45% 0px"
               waitForImages
               waitForScroll
-              className="desktop:w-[calc(var(--desktop-fluid-unit)*261.821)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
+              className="wine-bottle-scroll-reveal desktop:w-[calc(var(--desktop-fluid-unit)*261.821)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
             >
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}

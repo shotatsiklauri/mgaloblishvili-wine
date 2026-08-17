@@ -709,6 +709,15 @@ html::-webkit-scrollbar {
   animation: reveal-top-to-bottom 800ms ease-out both;
 }
 
+@media (max-width: 959px) {
+  .wine-bottle-scroll-reveal > .vertical-reveal-enter,
+  .wine-bottle-scroll-reveal > .vertical-reveal-enter--pending {
+    animation: none;
+    -webkit-clip-path: none;
+    clip-path: none;
+  }
+}
+
 .exp-frost-band--pending {
   -webkit-clip-path: inset(100% 0 0 0);
   clip-path: inset(100% 0 0 0);

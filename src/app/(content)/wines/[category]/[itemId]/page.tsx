@@ -78,7 +78,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
                 priority
                 sizes="100vw"
                 className={cn(
-                  "desktop:object-contain object-cover",
+                  "object-cover",
                   mobileHeroImageUrl
                     ? "object-[100%_100%] desktop:object-right"
                     : "object-right",
@@ -134,7 +134,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               rootMargin="0px 0px -45% 0px"
               waitForImages
               waitForScroll
-              className="wine-bottle-scroll-reveal desktop:w-[calc(var(--desktop-fluid-unit)*261.821)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
+              className="wine-bottle-scroll-reveal desktop:w-[calc(var(--desktop-fluid-unit)*269.5)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
             >
               <Image
                 src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}

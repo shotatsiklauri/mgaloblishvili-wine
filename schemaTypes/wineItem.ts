@@ -48,6 +48,11 @@ export const wineItem = defineType({
       'Banner image shown at the top of the wine detail page.',
     ),
     bilingualImage(
+      'mobileHeroImage',
+      'Hero Image (Mobile)',
+      'Banner image shown on phones. If empty, phones use the Hero Image above.',
+    ),
+    bilingualImage(
       'bottleImage',
       'Bottle Image',
       'Product bottle photo shown on the wine detail page.',

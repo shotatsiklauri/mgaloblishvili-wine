@@ -6,6 +6,10 @@ import { createClient, type SanityClient } from "next-sanity";
 import { enContent } from "../src/data/content/en";
 import { kaContent } from "../src/data/content/ka";
 import { SITE_CONTACT } from "../src/data/site";
+import {
+  getLocalMobileWineBanner,
+  getLocalWineBanner,
+} from "../src/data/wineBanners";
 import type {
   Experience,
   ExperienceId,
@@ -78,6 +82,22 @@ const client: SanityClient | null = EXECUTE
       useCdn: false,
     })
   : null;
+
+// Read-only: lists documents this seed doesn't manage. Without a token it can
+// only see published documents, not drafts.
+const readClient: SanityClient = createClient({
+  projectId: PROJECT_ID,
+  dataset: DATASET,
+  apiVersion: API_VERSION,
+  ...(WRITE_TOKEN ? { token: WRITE_TOKEN } : {}),
+  useCdn: false,
+  perspective: "raw",
+});
+
+/** "/images/Kisi-Banner.jpg" -> "Kisi-Banner.jpg" (files live in public/images). */
+function publicImageFile(url: string | undefined): string | undefined {
+  return url?.startsWith("/images/") ? url.slice("/images/".length) : undefined;
+}
 
 const IMAGES_DIR = resolve(process.cwd(), "public/images");
 const assetRefCache = new Map<
@@ -223,9 +243,12 @@ enContent.vineyards.regions.forEach((region: VineyardRegion, index: number) => {
     label: `Vineyard Region — ${region.title}`,
     build: async () => {
       const kaRegion = kaRegionsById.get(id);
-      const image1 = await imageField("vazi.webp");
-      const image2 = await imageField("bucket.webp");
-      const images = [image1, image2].filter(
+      // The region page shows only the first image; locally every region
+      // falls back to the same photo.
+      const image1 = await imageField(
+        publicImageFile(region.image1Url) ?? "vineyard-kakheti.png",
+      );
+      const images = [image1].filter(
         (
           img,
         ): img is {
@@ -285,8 +308,19 @@ enContent.wines.items.forEach((wine: Wine, index: number) => {
     label: `Wine Item — ${wine.name}`,
     build: async () => {
       const kaWine = kaWinesById.get(wine.id);
-      const heroImage = await imageField("wine_page_header.webp");
-      const bottleImage = await imageField("wine_bottle.png");
+      // Same images the site shows locally for this wine.
+      const heroImage = await imageField(
+        publicImageFile(getLocalWineBanner(wine.id)) ??
+          publicImageFile(wine.heroImageUrl) ??
+          "wine_page_header.webp",
+      );
+      const mobileHeroFile = publicImageFile(getLocalMobileWineBanner(wine.id));
+      const mobileHeroImage = mobileHeroFile
+        ? await imageField(mobileHeroFile)
+        : undefined;
+      const bottleImage = await imageField(
+        publicImageFile(wine.bottleImageUrl) ?? "wine_bottle.png",
+      );
       return {
         itemId: wine.id,
         category: {
@@ -304,6 +338,7 @@ enContent.wines.items.forEach((wine: Wine, index: number) => {
           kaWine?.description ?? [],
         ),
         ...(heroImage ? { heroImage } : {}),
+        ...(mobileHeroImage ? { mobileHeroImage } : {}),
         ...(bottleImage ? { bottleImage } : {}),
       };
     },
@@ -384,6 +419,24 @@ async function main() {
       console.log(`  [dry-run] would create/update`);
     }
     created += 1;
+  }
+
+  // Report only: documents of these types this seed doesn't write, and drafts
+  // (Studio shows a draft instead of the published version). Nothing is
+  // deleted here.
+  const managedTypes = Array.from(new Set(plans.map((plan) => plan.type)));
+  const staleIds = await readClient.fetch<string[]>(
+    `*[_type in $types && (_id in path("drafts.**") || !(_id in $ids))]._id`,
+    { types: managedTypes, ids: plans.map((plan) => plan.id) },
+  );
+  console.log("");
+  if (staleIds.length === 0) {
+    console.log("No old documents or drafts left over.");
+  } else {
+    console.log(
+      `${staleIds.length} old documents/drafts not managed by this seed:`,
+    );
+    for (const id of staleIds) console.log(`  • ${id}`);
   }
 
   console.log("");

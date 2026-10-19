@@ -56,7 +56,11 @@ export default async function RootLayout({
           media="(prefers-color-scheme: dark)"
         />
       </head>
-      <body className="flex min-h-full flex-col font-sans">
+      {/* Extensions like Grammarly inject attributes on <body> before hydration. */}
+      <body
+        suppressHydrationWarning
+        className="flex min-h-full flex-col font-sans"
+      >
         {children}
         <BrandIntro />
       </body>

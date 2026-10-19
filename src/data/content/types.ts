@@ -34,6 +34,7 @@ export type Wine = {
   readonly grapeOrigin: string;
   readonly categoryId?: WineCategoryId;
   readonly heroImageUrl?: string;
+  readonly mobileHeroImageUrl?: string;
   readonly bottleImageUrl?: string;
 };
 

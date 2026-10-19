@@ -95,6 +95,7 @@ export type SanityWineItem = {
   grapeOrigin?: SanityBilingual;
   descriptionLines?: SanityParagraph[] | null;
   heroImage?: SanityImageRef;
+  mobileHeroImage?: SanityImageRef;
   bottleImage?: SanityImageRef;
 };
 
@@ -220,6 +221,7 @@ function adaptWines(
         | WineCategoryId
         | undefined;
       const heroImageUrl = sanityImageUrl(w.heroImage) || undefined;
+      const mobileHeroImageUrl = sanityImageUrl(w.mobileHeroImage) || undefined;
       const bottleImageUrl = sanityImageUrl(w.bottleImage) || undefined;
       return {
         id: w.itemId!,
@@ -230,6 +232,7 @@ function adaptWines(
           ? { categoryId: categorySlug }
           : {}),
         ...(heroImageUrl ? { heroImageUrl } : {}),
+        ...(mobileHeroImageUrl ? { mobileHeroImageUrl } : {}),
         ...(bottleImageUrl ? { bottleImageUrl } : {}),
       };
     });
@@ -264,7 +267,15 @@ function mergeWineItems(
 ): readonly Wine[] {
   if (cmsItems.length === 0) return staticItems;
 
-  const mergedItems = [...cmsItems];
+  // A CMS wine without a bottle photo keeps the local one (e.g. Kisi Reserve's
+  // own bottle) instead of dropping to the generic placeholder.
+  const staticById = new Map(staticItems.map((item) => [item.id, item]));
+  const mergedItems = cmsItems.map((item) => {
+    const staticBottle = staticById.get(item.id)?.bottleImageUrl;
+    return !item.bottleImageUrl && staticBottle
+      ? { ...item, bottleImageUrl: staticBottle }
+      : item;
+  });
   const mergedIds = new Set(cmsItems.map((item) => item.id));
 
   for (const [staticIndex, staticItem] of staticItems.entries()) {
@@ -273,17 +284,16 @@ function mergeWineItems(
     const categoryId = staticItem.categoryId ?? "wines";
     const previousStaticItem = staticItems
       .slice(0, staticIndex)
-      .findLast(
-        (item) => (item.categoryId ?? "wines") === categoryId,
-      );
+      .findLast((item) => (item.categoryId ?? "wines") === categoryId);
     const previousItemIndex = previousStaticItem
       ? mergedItems.findIndex((item) => item.id === previousStaticItem.id)
       : -1;
-    const nextStaticItem = staticItems.slice(staticIndex + 1).find(
-      (item) =>
-        (item.categoryId ?? "wines") === categoryId &&
-        mergedIds.has(item.id),
-    );
+    const nextStaticItem = staticItems
+      .slice(staticIndex + 1)
+      .find(
+        (item) =>
+          (item.categoryId ?? "wines") === categoryId && mergedIds.has(item.id),
+      );
     const nextItemIndex = nextStaticItem
       ? mergedItems.findIndex((item) => item.id === nextStaticItem.id)
       : -1;
@@ -352,10 +362,7 @@ function mergeExperiences(
   });
 
   const mergedIds = new Set(merged.map((item) => item.id));
-  return [
-    ...merged,
-    ...staticItems.filter((item) => !mergedIds.has(item.id)),
-  ];
+  return [...merged, ...staticItems.filter((item) => !mergedIds.has(item.id))];
 }
 
 function adaptExperiences(

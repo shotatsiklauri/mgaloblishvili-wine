@@ -41,11 +41,16 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
   const categoryLabel =
     content.wines.categories.find((c) => c.id === category)?.label ??
     content.nav.wines;
+  // CMS first, then the local banners in public/images. A CMS desktop banner
+  // without a CMS mobile one is shown on phones too, so a banner replaced in
+  // Studio never sits next to a stale local mobile crop.
   const heroImageUrl =
-    getLocalWineBanner(wine.id) ??
     wine.heroImageUrl ??
+    getLocalWineBanner(wine.id) ??
     "/images/wine_page_header.webp";
-  const mobileHeroImageUrl = getLocalMobileWineBanner(wine.id);
+  const mobileHeroImageUrl =
+    wine.mobileHeroImageUrl ??
+    (wine.heroImageUrl ? undefined : getLocalMobileWineBanner(wine.id));
 
   return (
     <div className="flex min-h-[calc(100svh)] flex-col">
@@ -80,7 +85,7 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
                 className={cn(
                   "object-cover",
                   mobileHeroImageUrl
-                    ? "object-[100%_100%] desktop:object-right"
+                    ? "desktop:object-right object-[100%_100%]"
                     : "object-right",
                 )}
               />

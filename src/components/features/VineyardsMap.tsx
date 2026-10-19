@@ -14,12 +14,14 @@ type VineyardsMapProps = {
   regions: readonly VineyardRegion[];
   activeRegionId?: VineyardRegionId;
   mapImageUrl?: string;
+  mapMobileImageUrl?: string;
 };
 
 export async function VineyardsMap({
   regions,
   activeRegionId,
   mapImageUrl,
+  mapMobileImageUrl,
 }: VineyardsMapProps) {
   const locale = await getServerLocale();
   const contact = await getResolvedContact(locale);
@@ -29,7 +31,7 @@ export async function VineyardsMap({
       {/* Mobile keeps the full-bleed treatment. */}
       <div className="absolute inset-0 overflow-hidden md:hidden">
         <Image
-          src={mobileMapImage}
+          src={mapMobileImageUrl ?? mobileMapImage}
           alt="Map of Georgian vineyard regions"
           fill
           priority

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type {
   Locale,
   Experience,
@@ -49,12 +50,14 @@ export async function getCmsContent(
   }
 }
 
-export async function getResolvedContent(
-  locale: Locale = defaultLocale,
-): Promise<SiteContent> {
-  const cms = await getCmsContent(locale);
-  return cms ?? getStaticContent(locale);
-}
+// Memoized per request: generateMetadata and the page both call this, and
+// without cache() each call would run the full CMS query again.
+export const getResolvedContent = cache(
+  async (locale: Locale = defaultLocale): Promise<SiteContent> => {
+    const cms = await getCmsContent(locale);
+    return cms ?? getStaticContent(locale);
+  },
+);
 
 export function findWine(content: SiteContent, id: string): Wine | undefined {
   return content.wines.items.find((wine) => wine.id === id);

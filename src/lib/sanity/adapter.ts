@@ -267,15 +267,7 @@ function mergeWineItems(
 ): readonly Wine[] {
   if (cmsItems.length === 0) return staticItems;
 
-  // A CMS wine without a bottle photo keeps the local one (e.g. Kisi Reserve's
-  // own bottle) instead of dropping to the generic placeholder.
-  const staticById = new Map(staticItems.map((item) => [item.id, item]));
-  const mergedItems = cmsItems.map((item) => {
-    const staticBottle = staticById.get(item.id)?.bottleImageUrl;
-    return !item.bottleImageUrl && staticBottle
-      ? { ...item, bottleImageUrl: staticBottle }
-      : item;
-  });
+  const mergedItems = [...cmsItems];
   const mergedIds = new Set(cmsItems.map((item) => item.id));
 
   for (const [staticIndex, staticItem] of staticItems.entries()) {

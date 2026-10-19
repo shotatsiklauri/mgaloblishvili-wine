@@ -182,7 +182,6 @@ export const enContent: SiteContent = {
           "Saperavi Reserve is marked by a balanced, velvety taste with a touch of tannin.",
         ],
         grapeOrigin: "Akura village, Telavi, Kakheti",
-        bottleImageUrl: "/images/Kisi-Reserve.png",
       },
       {
         id: "kakhuri-mtsvane",

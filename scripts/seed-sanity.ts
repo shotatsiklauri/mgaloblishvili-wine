@@ -9,6 +9,7 @@ import { SITE_CONTACT } from "../src/data/site";
 import {
   getLocalMobileWineBanner,
   getLocalWineBanner,
+  getLocalWineBottle,
 } from "../src/data/wineBanners";
 import type {
   Experience,
@@ -319,7 +320,9 @@ enContent.wines.items.forEach((wine: Wine, index: number) => {
         ? await imageField(mobileHeroFile)
         : undefined;
       const bottleImage = await imageField(
-        publicImageFile(wine.bottleImageUrl) ?? "wine_bottle.png",
+        publicImageFile(getLocalWineBottle(wine.id)) ??
+          publicImageFile(wine.bottleImageUrl) ??
+          "wine_bottle.png",
       );
       return {
         itemId: wine.id,

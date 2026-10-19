@@ -8,6 +8,7 @@ import { routes } from "@/data/routes";
 import {
   getLocalMobileWineBanner,
   getLocalWineBanner,
+  getLocalWineBottle,
 } from "@/data/wineBanners";
 import { HeaderContent } from "@/components/layout/HeaderContent";
 import { ContentFooter } from "@/components/layout/ContentFooter";
@@ -142,7 +143,11 @@ export default async function WineDetailPage({ params }: WineDetailParams) {
               className="wine-bottle-scroll-reveal desktop:w-[calc(var(--desktop-fluid-unit)*269.5)] relative aspect-[308/1114] w-[min(70vw,167px)] overflow-hidden md:w-[min(48vw,214px)]"
             >
               <Image
-                src={wine.bottleImageUrl ?? "/images/wine_bottle.png"}
+                src={
+                  wine.bottleImageUrl ??
+                  getLocalWineBottle(wine.id) ??
+                  "/images/wine_bottle.png"
+                }
                 alt=""
                 fill
                 loading="eager"

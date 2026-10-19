@@ -38,10 +38,34 @@ const LOCAL_MOBILE_WINE_BANNERS: Readonly<Record<string, string>> = {
   vsop: "/images/VSOP-Mobile-Banner.jpg",
 };
 
+// XO and Chacha have no photo yet and use the generic /images/wine_bottle.png.
+const LOCAL_WINE_BOTTLES: Readonly<Record<string, string>> = {
+  "kakhuri-mtsvane": "/images/Bottles/Kakhuri-Mtsvane.png",
+  kindzmarauli: "/images/Bottles/Kindzmarauli.png",
+  kisi: "/images/Bottles/Kisi.png",
+  "kisi-reserve": "/images/Bottles/Kisi-Reserve.png",
+  krakhuna: "/images/Bottles/Krakhuna.png",
+  "rkatsiteli-amber": "/images/Bottles/Rkatsiteli-Amber.png",
+  rkatsiteli: "/images/Bottles/Rkatsiteli.png",
+  "rkatsiteli-batonnage": "/images/Bottles/Rkatsiteli-Batonnage.png",
+  saperavi: "/images/Bottles/Saperavi.png",
+  "saperavi-reserve": "/images/Bottles/Saperavi-Reserve.png",
+  "tavkveri-rose": "/images/Bottles/Tavkveri.png",
+  tsinandali: "/images/Bottles/Tsinandali.png",
+  tsolikouri: "/images/Bottles/Tsolikouri.png",
+  tvishi: "/images/Bottles/Tvishi.png",
+  vs: "/images/Bottles/VS.png",
+  vsop: "/images/Bottles/VSOP.png",
+};
+
 export function getLocalWineBanner(itemId: string): string | undefined {
   return LOCAL_WINE_BANNERS[itemId];
 }
 
 export function getLocalMobileWineBanner(itemId: string): string | undefined {
   return LOCAL_MOBILE_WINE_BANNERS[itemId];
+}
+
+export function getLocalWineBottle(itemId: string): string | undefined {
+  return LOCAL_WINE_BOTTLES[itemId];
 }
